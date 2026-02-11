@@ -1,1850 +1,1778 @@
+lOkay bro : I'm making a pos for my future cafe look at this
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>VK Software’s Studio - Where Every Journey Holds a Secret.</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Official website for VK Software's Studio. Explore our innovative games and software like 'To the Life', 'Mood Tracker', 'Motivateme', and 'M&M'.">
-  <link rel="icon" href="favicon.ico">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-app-pub-7502821186819058"
-     crossorigin="anonymous"></script>
-  <style>
-    /* CSS Variables */
-    :root {
-      --primary-bg: #0a0a0a;
-      --text-color: #e0e0e0; /* Slightly lighter for futuristic feel */
-      --accent-color: #00ffff; /* Bright Cyan */
-      --accent-hover: #00e6e6; /* Slightly darker cyan for hover */
-      --accent-glow: rgba(0, 255, 255, 0.6);
-      --accent-glow-strong: rgba(0, 255, 255, 0.8);
-      --dark-panel-bg: #1a1a1a; /* Darker background for solid elements */
-      --glass-bg-light: rgba(255, 255, 255, 0.08); /* More transparent */
-      --glass-bg-dark: rgba(0, 0, 0, 0.6); /* Darker, slightly opaque glass */
-
-      --border-accent: 3px solid var(--accent-color);
-      --border-dark: 3px solid #333;
-      --border-glass: 2px solid rgba(0, 255, 255, 0.4); /* Refined glass border */
-      --shadow-accent-light: 0 0 15px var(--accent-glow);
-      --shadow-accent-medium: 0 0 20px var(--accent-glow); /* Stronger medium glow */
-      --shadow-accent-heavy: 0 0 40px var(--accent-glow-strong); /* Very strong glow */
-
-      --spacing-sm: 10px;
-      --spacing-md: 20px;
-      --spacing-lg: 30px;
-      --spacing-xl: 40px;
-
-      --font-size-base: 1rem;
-      --font-size-sm: 0.9rem;
-      --font-size-lg: 1.2rem;
-      --font-size-xl: 2.2rem; /* Slightly larger for impact */
-      --font-size-heading: 2.8rem; /* More prominent headings */
-
-      --transition-fast: 0.2s ease-out;
-      --transition-medium: 0.3s ease-out;
-      --transition-slow: 0.4s ease-out;
-      
-      /* --- NEW ROYAL THEME VARIABLES --- */
-      --royal-gold: #FFD700; /* Solid Gold */
-      --royal-red: #8B0000; /* Dark Red/Maroon */
-      --royal-glow: rgba(255, 215, 0, 0.8);
-    }
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VK POS (Adaptive UI)</title>
+<style>
+    /* =======================================================
+    REVISED BRIGHT, SMOOTH & CLEAN STYLES
+    =======================================================
+    */
     /* Base Styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background-color: var(--primary-bg);
-      color: var(--text-color);
-      font-family: 'Segoe UI', 'Arial', sans-serif; /* Fallback for futuristic font */
-      /* If using Google Font, uncomment: */
-      /* font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif; */
-      padding: var(--spacing-md);
-      text-align: center;
-      overflow-x: hidden;
-      position: relative; /* For background effects */
-      min-height: 100vh; /* Ensure full height for background */
-
-      /* Futuristic Background Pattern */
-      background-image:
-        radial-gradient(circle at center, rgba(0, 255, 255, 0.05) 0%, transparent 70%),
-        linear-gradient(45deg, var(--primary-bg) 25%, transparent 25%, transparent 75%, var(--primary-bg) 75%, var(--primary-bg)),
-        linear-gradient(135deg, var(--primary-bg) 25%, transparent 25%, transparent 75%, var(--primary-bg) 75%, var(--primary-bg));
-      background-size: 50px 50px;
-      background-position: 0 0, 10px 10px;
-    }
-
-    h1, h2, h3 {
-      color: var(--accent-color);
-      margin-bottom: var(--spacing-md);
-      text-shadow: 0 0 5px rgba(0, 255, 255, 0.3); /* Subtle text glow */
-    }
-
-    p {
-      line-height: 1.6;
-    }
-
-    a {
-      color: var(--accent-color);
-      text-decoration: none;
-      transition: color var(--transition-fast), text-shadow var(--transition-fast);
-    }
-
-    a:hover {
-      color: var(--accent-hover);
-      text-decoration: underline;
-      text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
-    }
-
-    /* Header */
-    header {
-      margin-bottom: var(--spacing-xl);
-      padding-top: var(--spacing-md);
-    }
-
-    header h1 {
-      font-size: var(--font-size-heading);
-      margin-top: var(--spacing-md);
-      margin-bottom: var(--spacing-sm);
-      color: var(--text-color); /* Main title stands out */
-      text-shadow: var(--shadow-accent-light);
-    }
-
-    .tagline {
-      font-size: var(--font-size-lg);
-      color: var(--accent-color);
-      margin-bottom: var(--spacing-xl);
-      text-shadow: 0 0 3px rgba(0, 255, 255, 0.3);
-    }
-
-    .top-logo-video {
-      width: 140px; /* Slightly larger */
-      height: 140px;
-      border-radius: 50%;
-      overflow: hidden;
-      margin: 0 auto var(--spacing-md);
-      border: var(--border-accent);
-      box-shadow: var(--shadow-accent-medium);
-      position: relative; /* For animation */
-      animation: pulsate 2s infinite alternate ease-in-out; /* Subtle pulse */
-    }
-
-    .top-logo-video iframe {
-      width: 100%;
-      height: 100%;
-    }
-
-    /* Main Hero Section */
-    .hero-video-section {
-      position: relative;
-      width: 100%;
-      max-width: 1000px; /* Slightly wider */
-      margin: 0 auto var(--spacing-xl);
-      padding-top: 56.25%; /* 16:9 Aspect Ratio */
-      border-radius: 20px; /* More rounded */
-      overflow: hidden;
-      border: var(--border-dark);
-      box-shadow: var(--shadow-accent-heavy); /* Stronger initial glow */
-      transition: box-shadow var(--transition-medium);
-    }
-
-    .hero-video-section:hover {
-        box-shadow: 0 0 60px var(--accent-glow-strong); /* Even stronger on hover */
-    }
-
-    .hero-video-section iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .count-overlay {
-      position: absolute;
-      top: var(--spacing-md); /* More space from top */
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 var(--spacing-lg); /* More padding */
-      z-index: 10;
-    }
-
-    .count-circle {
-      width: 110px; /* Slightly larger */
-      height: 110px;
-      border-radius: 50%;
-      background: rgba(0, 255, 255, 0.08);
-      border: 4px solid var(--accent-color); /* Thicker border */
-      color: var(--accent-color);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      box-shadow: var(--shadow-accent-light);
-      backdrop-filter: blur(8px); /* More blur for glassy effect */
-      font-weight: bold;
-      transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
-    }
-
-    .count-circle:hover {
-      transform: translateY(-8px) scale(1.1); /* More pronounced lift */
-      box-shadow: 0 0 30px var(--accent-glow-strong); /* Stronger glow on hover */
-      border-color: var(--accent-hover);
-    }
-
-    .count-circle .number {
-      font-size: var(--font-size-xl);
-      text-shadow: var(--shadow-accent-light);
-    }
-
-    .count-circle .label {
-      font-size: 0.9rem; /* Slightly larger label */
-      margin-top: 6px;
-      color: var(--text-color);
-    }
-
-    /* Panel Buttons */
-    .panel-btn {
-      position: absolute;
-      top: var(--spacing-md); /* Aligned with count circles */
-      width: 60px; /* Larger buttons */
-      height: 60px;
-      border-radius: 50%;
-      background-color: var(--accent-color);
-      color: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.8rem; /* Larger icon */
-      cursor: pointer;
-      z-index: 1000;
-      transition: opacity var(--transition-medium), background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
-      border: none;
-      box-shadow: var(--shadow-accent-medium);
-    }
-
-    .panel-btn#gameBtn { right: var(--spacing-md); }
-    .panel-btn#softwareBtn { left: var(--spacing-md); }
-
-    .panel-btn:hover {
-      background-color: var(--accent-hover);
-      transform: scale(1.15) rotate(5deg); /* More dynamic hover */
-      box-shadow: 0 0 25px var(--accent-glow-strong);
-    }
-
-    .panel-btn.hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: scale(0.8); /* Shrink when hidden */
-    }
-
-    /* Slide Panels (Games & Software) */
-    .slide-panel {
-      position: fixed;
-      top: 0;
-      width: 85%; /* Slightly wider */
-      max-width: 450px; /* Wider max width */
-      height: 100%;
-      background: var(--glass-bg-light);
-      backdrop-filter: blur(15px); /* More blur for stronger glass */
-      color: var(--text-color);
-      padding: var(--spacing-lg); /* More internal padding */
-      overflow-y: auto;
-      transform: translateX(100%);
-      transition: transform var(--transition-slow);
-      z-index: 999;
-      box-shadow: var(--shadow-accent-heavy);
-      border-left: var(--border-glass); /* Consistent glass border */
-      border-right: var(--border-glass);
-    }
-
-    #gamePanel { right: 0; }
-    #softwarePanel { left: 0; transform: translateX(-100%); }
-
-    .slide-panel.open#gamePanel { transform: translateX(0); }
-    .slide-panel.open#softwarePanel { transform: translateX(0); }
-
-    .close-panel {
-      position: sticky; /* Make close button stick to top */
-      top: var(--spacing-md);
-      left: calc(100% - 40px); /* Adjust position based on button size */
-      font-size: 1.8rem; /* Larger close icon */
-      background: var(--accent-color);
-      color: black;
-      border-radius: 50%;
-      width: 35px;
-      height: 35px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      z-index: 101; /* Above panel content */
-      transition: background-color var(--transition-fast), transform var(--transition-fast);
-      border: none;
-      box-shadow: var(--shadow-accent-light);
-    }
-
-    .close-panel:hover {
-      background-color: var(--accent-hover);
-      transform: scale(1.1) rotate(90deg); /* Spin on hover */
-    }
-
-    .panel-content {
-      margin-top: var(--spacing-xl);
-      padding-top: var(--spacing-sm); /* Account for sticky button */
-    }
-
-    .app-card, .game-card {
-      background: var(--glass-bg-dark);
-      padding: var(--spacing-md);
-      margin-bottom: var(--spacing-md);
-      border-radius: 12px;
-      box-shadow: var(--shadow-accent-medium);
-      text-align: left;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
-      border: 1px solid rgba(0, 255, 255, 0.2); /* Subtle card border */
-    }
-
-    .app-card:hover, .game-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 25px var(--accent-glow);
-      background: rgba(0, 255, 255, 0.05); /* Lighter glass on hover */
-    }
-
-    .app-card h3, .game-card h3 {
-      color: var(--accent-color);
-      margin-bottom: 8px;
-      font-size: var(--font-size-lg);
-    }
-
-    .app-card p, .game-card p {
-      font-size: var(--font-size-sm);
-      margin-bottom: 12px;
-    }
-
-    /* Video player container within cards */
-    .card-video-container {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%; /* 16:9 Aspect Ratio */
-      margin-bottom: var(--spacing-md);
-      border-radius: 8px;
-      overflow: hidden;
-      border: 2px solid rgba(0, 255, 255, 0.3);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
-      background-color: #000; /* Ensures black background while loading */
-    }
-
-    .card-video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-
-    .app-card a, .game-card a {
-      background: var(--accent-color);
-      padding: 8px 16px; /* Larger button */
-      border-radius: 8px; /* More rounded */
-      color: black;
-      font-weight: bold;
-      text-decoration: none;
-      display: inline-block;
-      transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); /* Button glow */
-    }
-
-    .app-card a:hover, .game-card a:hover {
-      background-color: var(--accent-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 0 15px var(--accent-glow-strong);
-    }
-
-    /* Info Section */
-    .info-section {
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-md);
-      max-width: 960px;
-      margin: 0 auto var(--spacing-lg);
-    }
-
-    .info-box {
-      background: var(--dark-panel-bg);
-      padding: var(--spacing-md);
-      border-radius: 16px; /* More rounded */
-      box-shadow: var(--shadow-accent-medium);
-      transition: transform var(--transition-medium), box-shadow var(--transition-medium), background var(--transition-medium);
-      border: 1px solid rgba(0, 255, 255, 0.15); /* Subtle border */
-    }
-
-    .info-box:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 0 30px var(--accent-glow);
-      background: #222; /* Slightly lighter on hover */
-    }
-
-    /* Social Buttons - Now inside extra-box */
-    .social-links {
-        padding: var(--spacing-md); /* Add padding to the whole block */
-        border-radius: 16px; /* Match other blocks */
-        background: var(--glass-bg-light); /* Match extra-box style */
-        backdrop-filter: blur(10px);
-        box-shadow: var(--shadow-accent-medium);
-        transition: transform var(--transition-medium), box-shadow var(--transition-medium), background var(--transition-medium);
-        border: var(--border-glass); /* Consistent glass border */
-        color: #ccc;
-    }
-    .social-links:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 0 25px var(--accent-glow);
-        background: rgba(0, 255, 255, 0.08);
-    }
-
-    .social-links h2 {
-        margin-top: 0; /* Adjust margin as it's now in a box */
-        margin-bottom: var(--spacing-md);
-        text-align: center;
-    }
-
-    .social-buttons {
-      display: flex;
-      justify-content: center;
-      gap: var(--spacing-lg); /* More space between buttons */
-      flex-wrap: wrap;
-      margin-bottom: 0; /* No external margin needed here */
-    }
-
-    .social-btn {
-      width: 70px; /* Larger social buttons */
-      height: 70px;
-      border-radius: 50%;
-      background-color: var(--accent-color);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #000;
-      font-size: 1.8rem;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
-      box-shadow: var(--shadow-accent-medium);
-    }
-
-    .social-btn:hover {
-      background-color: var(--accent-hover);
-      transform: scale(1.2) rotate(10deg); /* More dynamic hover */
-      box-shadow: 0 0 30px var(--accent-glow-strong);
-    }
-
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border-width: 0;
-    }
-
-    /* Extra Blocks */
-    .extra-blocks {
-      max-width: 960px;
-      margin: var(--spacing-xl) auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--spacing-md);
-    }
-
-    .extra-box {
-      background: var(--glass-bg-light);
-      padding: var(--spacing-md);
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow-accent-medium);
-      transition: transform var(--transition-medium), box-shadow var(--transition-medium), background var(--transition-medium);
-      border: var(--border-glass); /* Consistent glass border */
-      color: #ccc; /* Slightly dimmer text */
-      text-align: center; /* Default text alignment */
-    }
-
-    .extra-box:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 0 25px var(--accent-glow);
-      background: rgba(0, 255, 255, 0.08); /* Lighter glass on hover */
-    }
-
-    /* --- NEW/UPDATED CSS for Extra Block 1 (Members) --- */
-    .extra-box-members {
-        text-align: left;
-    }
-
-    .extra-box-members h3 {
-        text-align: center;
-        margin-bottom: var(--spacing-md);
-        font-size: var(--font-size-lg);
-        color: var(--text-color);
-        text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-    }
-
-    .member-card {
-        padding: var(--spacing-sm) 0;
-        margin-bottom: var(--spacing-md);
-        border-bottom: 1px solid rgba(0, 255, 255, 0.1);
-    }
-
-    .member-card:last-child {
-        border-bottom: none;
-        margin-bottom: 0;
-    }
-
-    .member-name {
-        font-size: 1.1rem;
-        font-weight: bold;
-        color: gold; /* Golden color */
-        text-shadow: 0 0 8px rgba(255, 215, 0, 0.8), 0 0 3px rgba(0, 0, 0, 0.9); /* Golden texture/shadow */
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    .member-role {
-        font-size: 0.9rem;
-        color: #fff;
-        display: block;
-        padding: 4px 0;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-weight: 500;
-        /* Animation for Role Highlight */
-        animation: role-glow 2s infinite alternate ease-in-out;
-    }
-
-    @keyframes role-glow {
-        0% { color: #fff; text-shadow: 0 0 2px rgba(255, 255, 255, 0.1); }
-        100% { color: var(--accent-color); text-shadow: 0 0 8px var(--accent-glow); }
-    }
-
-    .member-link-btn {
-        background: var(--accent-color);
-        padding: 5px 10px;
-        border-radius: 5px;
-        color: black;
-        font-weight: bold;
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 8px;
-        font-size: 0.8rem;
-        transition: background-color var(--transition-fast), transform var(--transition-fast);
-        box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
-    }
-
-    .member-link-btn:hover {
-        background-color: var(--accent-hover);
-        transform: scale(1.05);
-        text-decoration: none;
-    }
-    /* --- END NEW/UPDATED CSS for Extra Block 1 --- */
-
-
-    /* News & Updates Block */
-    .news-updates-block {
-      background: var(--dark-panel-bg);
-      padding: var(--spacing-md);
-      border-radius: 16px;
-      box-shadow: var(--shadow-accent-medium);
-      border: 1px solid rgba(0, 255, 255, 0.15);
-      text-align: left;
-    }
-
-    .news-updates-block h3 {
-        color: var(--accent-color);
-        margin-bottom: var(--spacing-md);
-        text-align: center;
-    }
-
-    .news-item {
-        margin-bottom: var(--spacing-sm);
-        padding-bottom: var(--spacing-sm);
-        border-bottom: 1px solid rgba(0, 255, 255, 0.1);
-    }
-
-    .news-item:last-child {
-        border-bottom: none;
-        margin-bottom: 0;
-        padding-bottom: 0;
-    }
-
-    .news-item .date {
-        font-size: 0.8em;
-        color: #888;
-        margin-bottom: 5px;
-        display: block;
-    }
-
-    .news-item p {
-        font-size: 0.9em;
-        color: var(--text-color);
-    }
-
-    .news-item a {
-        font-size: 0.9em;
-        color: var(--accent-color);
-        text-decoration: underline;
-    }
-
-    .news-item a:hover {
-        color: var(--accent-hover);
-    }
-    
-    /* --- NEW CSS for Upcoming Trailer Block (Replaces Download Stats Block) --- */
-    .upcoming-trailer-block {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .upcoming-trailer-block h3 {
-        color: var(--accent-color);
-        text-shadow: 0 0 10px rgba(0, 255, 255, 0.4); /* Cyan glow */
-        margin-bottom: var(--spacing-md);
-    }
-
-    /* Video player container inside the extra block */
-    .trailer-video-container {
-      position: relative;
-      width: 100%;
-      /* Adjust padding to control the aspect ratio/size within the grid item */
-      padding-top: 56.25%; /* 16:9 Aspect Ratio */ 
-      margin-bottom: var(--spacing-md);
-      border-radius: 10px;
-      overflow: hidden;
-      border: 3px solid var(--accent-color); /* Strong border */
-      box-shadow: var(--shadow-accent-medium); /* Strong glow */
-      background-color: #000;
-      transition: box-shadow var(--transition-medium);
-    }
-
-    .trailer-video-container:hover {
-        box-shadow: 0 0 30px var(--accent-glow-strong);
-    }
-
-    .trailer-video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .trailer-note {
-        font-size: 0.8rem;
-        color: #bbb;
-        margin-top: var(--spacing-sm);
-        font-style: italic;
-    }
-    /* --- END NEW CSS for Upcoming Trailer Block --- */
-
-    /* FAQ Block */
-    .faq-block {
-        text-align: left;
-    }
-    .faq-item {
-        margin-bottom: var(--spacing-sm);
-        border-bottom: 1px solid rgba(0, 255, 255, 0.1);
-        padding-bottom: var(--spacing-sm);
-    }
-    .faq-item:last-child {
-        border-bottom: none;
-    }
-    .faq-question {
-        font-weight: bold;
-        color: var(--accent-color);
-        cursor: pointer;
-        padding: 5px 0;
-        transition: color var(--transition-fast);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .faq-question:hover {
-        color: var(--accent-hover);
-    }
-    .faq-answer {
-        font-size: var(--font-size-sm);
-        padding-top: 5px;
-        color: #bbb;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
-        opacity: 0;
-    }
-    .faq-answer.open {
-        max-height: 150px; /* Adjust based on expected max content */
-        opacity: 1;
-    }
-    .faq-icon {
-        transition: transform 0.3s ease-out;
-    }
-    .faq-question[aria-expanded="true"] .faq-icon {
-        transform: rotate(45deg);
-    }
-
-    /* Media Mention Block (using an image) */
-    .media-mention-block {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .media-mention-block img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-        margin-bottom: var(--spacing-md);
-        box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-    }
-    .media-mention-block p {
-        font-style: italic;
-        color: #fff;
-    }
-
-    /* Testimonial Block */
-    .testimonial-block {
-        display: flex;
-        flex-direction: column;
+    body { 
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+        margin: 0; 
+        padding: 0; 
+        /* Bright Gradient Background */
+        background: linear-gradient(135deg, #f0f8ff, #ffffff, #e0ffff); 
+        background-attachment: fixed; 
+        color: #333; 
+        display: flex; 
         justify-content: center;
-    }
-    .testimonial-quote {
-        font-size: var(--font-size-lg);
-        font-style: italic;
-        color: #fff;
-        margin-bottom: var(--spacing-md);
-        position: relative;
-        padding: 0 var(--spacing-sm);
-    }
-    .testimonial-quote::before, .testimonial-quote::after {
-        content: '“';
-        font-size: 3rem;
-        line-height: 0;
-        color: gold;
-        position: absolute;
-        opacity: 0.7;
-    }
-    .testimonial-quote::before {
-        content: '“';
-        top: 0.5rem;
-        left: 0;
-    }
-    .testimonial-quote::after {
-        content: '”';
-        bottom: 1.5rem;
-        right: 0;
-    }
-    .testimonial-author {
-        font-weight: bold;
-        color: var(--accent-color);
-        font-size: var(--font-size-base);
-        margin-top: var(--spacing-sm);
-        text-align: right;
+        align-items: flex-start; 
+        min-height: 100vh;
+        position: relative; /* For watermark positioning */
     }
     
-    /* --- END NEW CSS for Extra Blocks 3-7 --- */
-
-
-
-    /* Footer */
-    footer {
-      margin-top: var(--spacing-xl);
-      font-size: var(--font-size-sm);
-      color: #888;
-      padding: var(--spacing-sm);
-    }
-
-    .footer-buttons {
-        margin-top: var(--spacing-md);
-        display: flex;
-        justify-content: center;
-        gap: var(--spacing-md);
-        flex-wrap: wrap;
-        margin-bottom: var(--spacing-md);
-    }
-
-    /* Popup Windows */
-    .popup-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8); /* Darker overlay */
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      padding: var(--spacing-md);
-      animation: fadeIn 0.3s forwards;
-      /* Ensure scrollability of the overlay itself for smaller screens if content is too big */
-      overflow-y: auto;
-    }
-    
-    /* --- ROYAL POPUP STYLES --- */
-    #partnersPopup .popup-content {
-        background: #1e1e1e; /* Darker royal background */
-        border: 4px double var(--royal-gold); /* Double gold border */
-        box-shadow: 0 0 30px var(--royal-glow), inset 0 0 10px rgba(0, 0, 0, 0.5); /* Strong gold glow */
-        padding: var(--spacing-xl);
-        color: var(--text-color);
-        text-align: center;
-    }
-
-    #partnersPopup h2 {
-        color: var(--royal-gold);
-        text-shadow: 0 0 15px var(--royal-glow);
-        font-size: 3rem; /* Larger royal title */
-        margin-bottom: var(--spacing-lg);
-        position: relative;
-        font-family: 'Times New Roman', serif; /* Classic font for royal feel */
-    }
-    
-    #partnersPopup h2::before, #partnersPopup h2::after {
-        content: "⚜"; /* Fleur-de-lis or similar royal icon */
-        color: var(--royal-gold);
-        font-size: 1.5rem;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
-    #partnersPopup h2::before { left: 10px; }
-    #partnersPopup h2::after { right: 10px; }
-
-    .partner-card-royal {
-        background: var(--royal-red); /* Royal red background */
-        border: 3px solid var(--royal-gold);
-        border-radius: 10px;
-        padding: var(--spacing-md);
-        margin-bottom: var(--spacing-md);
-        box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-        transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-        text-align: left;
-    }
-    
-    .partner-card-royal:hover {
-        transform: translateY(-5px) scale(1.02);
-        box-shadow: 0 0 25px var(--royal-glow);
-        background: #9a0000; /* Slightly lighter red on hover */
-    }
-    
-    .partner-card-royal h3 {
-        color: var(--royal-gold);
-        font-size: var(--font-size-lg);
-        margin-bottom: 5px;
-        text-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
-    }
-    
-    .partner-card-royal p {
-        color: #fff;
-        margin-bottom: 10px;
-        font-size: var(--font-size-base);
-    }
-
-    .partner-card-royal a {
-        background: var(--royal-gold);
-        padding: 8px 16px;
-        border-radius: 8px;
-        color: black;
-        font-weight: bold;
-        text-decoration: none;
-        display: inline-block;
-        transition: background-color var(--transition-fast), transform var(--transition-fast);
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-    }
-    
-    .partner-card-royal a:hover {
-        background-color: #e6c200;
-        transform: translateY(-2px);
-        text-decoration: none;
-    }
-    
-    /* --- END ROYAL POPUP STYLES --- */
-
-    .popup-content {
-      background: rgba(255,255,255,0.08); /* Lighter glass for popups */
-      backdrop-filter: blur(20px); /* Stronger blur for popups */
-      padding: var(--spacing-xl); /* More padding */
-      border-radius: 20px; /* More rounded */
-      max-width: 650px; /* Wider popup */
-      width: 90%;
-      color: var(--text-color);
-      text-align: left;
-      box-shadow: 0 0 25px var(--accent-glow-strong);
-      position: relative;
-      border: 2px solid var(--accent-color); /* Stronger border for popups */
-      animation: slideInFromTop 0.4s ease-out forwards;
-
-      /* --- NEW/UPDATED: Make popup content scrollable and height-constrained --- */
-      max-height: 90vh; /* Max height of the popup relative to viewport height */
-      overflow-y: auto; /* Enable vertical scrolling if content exceeds max-height */
-      -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
-    }
-
-    /* Optional: Style scrollbar for Webkit browsers */
-    .popup-content::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .popup-content::-webkit-scrollbar-track {
-        background: rgba(0, 255, 255, 0.1);
-        border-radius: 10px;
-    }
-
-    .popup-content::-webkit-scrollbar-thumb {
-        background-color: var(--accent-color);
-        border-radius: 10px;
-        border: 2px solid rgba(0, 255, 255, 0.2);
-    }
-
-    .popup-content h2 {
-      color: var(--accent-color);
-      margin-bottom: var(--spacing-lg); /* More space */
-      text-align: center;
-      font-size: var(--font-size-xl);
-      text-shadow: var(--shadow-accent-light);
-    }
-
-    .popup-content p {
-      margin: var(--spacing-sm) 0;
-      font-size: var(--font-size-base);
-    }
-
-    .popup-content a {
-      color: var(--accent-color);
-      text-decoration: underline;
-    }
-
-    .popup-content a:hover {
-      color: var(--accent-hover);
-      text-decoration: none;
-      text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
-    }
-
-    .popup-content .contact-section { /* Added class for new contact sections */
-        margin-bottom: var(--spacing-lg);
-    }
-
-    .popup-content .contact-section h3 {
-        color: var(--text-color); /* Slightly different color for subheadings */
-        font-size: var(--font-size-lg);
-        margin-bottom: var(--spacing-sm);
-        text-align: left; /* Align contact info to left */
-    }
-
-    .popup-content .contact-section p {
-        margin-bottom: 5px; /* Smaller margin for list items */
-        text-align: left;
-    }
-    
-    .popup-close-btn {
-        position: absolute;
-        top: 10px;
+    /* MAIN UI WATERMARK */
+    .watermark-ui {
+        position: fixed;
+        bottom: 5px;
         right: 10px;
-        font-size: 2rem;
-        color: var(--text-color);
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        line-height: 1;
-        transition: color 0.2s, transform 0.2s;
+        font-size: 0.8em;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.3);
+        pointer-events: none;
+        z-index: 5;
+        font-family: monospace;
     }
 
-    .popup-close-btn:hover {
-        color: var(--accent-hover);
-        transform: scale(1.1) rotate(5deg);
+    .container { 
+        max-width: 420px; 
+        width: 100%;
+        margin: 0; 
+        background: #fff; 
+        min-height: 100vh; 
+        display: flex; 
+        flex-direction: column; 
+        box-shadow: 0 0 20px rgba(0,0,0,0.1); 
+        overflow: hidden; 
+        transition: max-width 0.3s ease-in-out; /* Smooth transition for view toggle */
+        padding-bottom: 25px; /* Space for watermark */
+    }
+    
+    /* =======================================================
+    ADAPTIVE / DESKTOP MODE STYLES
+    ======================================================= */
+    /* When the 'adaptive' class is added to container */
+    .container.adaptive {
+        max-width: 98vw; /* Expand to full width */
+        border-radius: 8px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        min-height: 95vh;
+        height: 95vh; /* Fix height to viewport for scrolling areas */
+        box-shadow: 0 0 30px rgba(0,0,0,0.15);
     }
 
-    .popup-button {
-      background: var(--accent-color);
-      border: none;
-      padding: 12px 25px; /* Larger buttons */
-      border-radius: 10px; /* More rounded */
-      font-weight: bold;
-      cursor: pointer;
-      color: black;
-      transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    /* Desktop Layout: Grid System (Only applies if screen is wide enough) */
+    @media (min-width: 768px) {
+        .container.adaptive {
+            display: grid;
+            grid-template-columns: 60% 40%; /* Left: Items, Right: Cart */
+            grid-template-rows: auto auto auto 1fr; /* Header | Search | Favorites | Content */
+            grid-template-areas: 
+                "header header"
+                "search search"
+                "favs favs"
+                "items cart";
+        }
+
+        .container.adaptive .header { grid-area: header; }
+        .container.adaptive .search-bar { grid-area: search; }
+        .container.adaptive .favorites-bar { grid-area: favs; }
+        
+        /* Scrollable Areas for Desktop */
+        .container.adaptive .items-list { 
+            grid-area: items; 
+            max-height: 100%; 
+            overflow-y: auto; 
+            border-right: 2px solid #e0f7fa;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Grid of cards for items */
+            grid-auto-rows: min-content;
+            gap: 15px;
+            align-content: start;
+        }
+
+        /* Card styling for items in Desktop Mode */
+        .container.adaptive .items-list .item {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            height: auto;
+            border-left: none;
+            border-top: 4px solid #00bcd4;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .container.adaptive .items-list .item:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .container.adaptive .items-list #searchTip { grid-column: 1 / -1; }
+
+        .container.adaptive .cart { 
+            grid-area: cart; 
+            max-height: 100%; 
+            overflow-y: auto; 
+            background: #fdfdfd;
+            border-top: none;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.03);
+        }
     }
 
-    .popup-button:hover {
-      background-color: var(--accent-hover);
-      transform: translateY(-3px);
-      box-shadow: 0 0 20px var(--accent-glow-strong);
+    /* Transitions */
+    .header-btn, .search-btn, .scan-btn, .item, .qty-controls button, #completeSaleBtn, 
+    .inventory-controls button, .bill-controls button, .add-bill-btn, 
+    .date-filters button, .calc-button, 
+    #inventoryManagementPanel, #historyPanel, #notesPanel, #analysisPanel, #calculatorPanel, 
+    #paymentHistoryModal, #parkedSalesPanel, #shiftHistoryPanel, #productionPanel, #settingsPanel {
+        transition: all 0.3s ease-in-out; 
     }
 
-    .popup-continue-btn, .popup-close-contact-btn {
-        display: block;
-        margin: var(--spacing-lg) auto 0; /* More margin */
+    /* Full Screen Panels */
+    #inventoryManagementPanel, #historyPanel, #notesPanel, #analysisPanel, #calculatorPanel, 
+    #paymentHistoryModal, #parkedSalesPanel, #shiftHistoryPanel, #productionPanel, #settingsPanel {
+        background: #ffffff;
+        position: fixed; 
+        top: 0; left: 0; right: 0; bottom: 0;
+        height: 100vh; 
+        z-index: 1000;
+        display: none; 
+        box-sizing: border-box;
+        padding: 15px; 
+        overflow-y: auto;
+        color: #333; 
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .panel-open { transform: translateX(0) !important; }
+    
+    .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #00bcd4;
+        padding-bottom: 10px;
+        position: sticky; top: 0;
+        background: #fff;
+        z-index: 10;
+    }
+    .panel-header h4 { margin: 0; color: #00bcd4; }
+    .panel-close-btn {
+        background: #ff5722; color: white; border: none; padding: 8px 12px;
+        border-radius: 6px; font-weight: bold; cursor: pointer;
     }
 
-    /* Keyframe Animations */
-    @keyframes pulsate {
-      0% { box-shadow: var(--shadow-accent-medium); }
-      50% { box-shadow: 0 0 25px var(--accent-glow-strong); }
-      100% { box-shadow: var(--shadow-accent-medium); }
+    /* Header & Buttons */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background: #e0f7fa;
+        color: #333;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        border-bottom: 3px solid #00bcd4;
+        position: sticky; top: 0;
+        z-index: 50;
+    }
+    .header-controls { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; }
+    .header-btn {
+        background: #00bcd4; border: none; color: white; font-size: 0.8em; 
+        padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); white-space: nowrap;
+    }
+    .header-btn:hover { background: #00acc1; transform: scale(1.05); }
+    .calculator-header-btn { background: #ff5722; }
+    .notes-btn { background: #4caf50; }
+    
+    /* View Toggle Button Style */
+    .view-toggle-btn { background: #673ab7; }
+
+    /* Search Bar */
+    .search-bar { 
+        display: flex; padding: 10px; background: #f5f5f5; border-bottom: 1px solid #ddd; 
+        position: sticky; top: 48px; z-index: 40;
+    }
+    .search-bar input { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 8px 0 0 8px; background: #fff; color: #333; }
+    .search-bar .search-btn { padding: 12px; border: none; background: #ffc107; color: #333; border-radius: 0 8px 8px 0; cursor: pointer; }
+    .search-bar .scan-btn {
+        padding: 12px; border: none; background: #00bcd4; color: white; 
+        border-radius: 8px; margin-left: 8px; font-weight: bold; cursor: pointer;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideInFromTop {
-      from { transform: translateY(-50px) scale(0.9); opacity: 0; }
-      to { transform: translateY(0) scale(1); opacity: 1; }
-    }
-
-
-    /* --- NEW CSS FOR SEARCH BAR --- */
-    .search-bar-container {
+    /* Favorites Bar */
+    .favorites-bar {
+        background: #fff;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
         display: flex;
         gap: 10px;
-        margin-bottom: var(--spacing-md);
-        background: var(--glass-bg-dark);
-        border-radius: 12px;
-        padding: 8px 12px;
-        border: 1px solid rgba(0, 255, 255, 0.3);
-        box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
-        transition: box-shadow var(--transition-medium);
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: thin;
     }
-
-    .search-bar-container:focus-within {
-        box-shadow: 0 0 20px var(--accent-glow-strong);
-    }
-
-    .search-bar-container input[type="text"] {
-        flex-grow: 1;
-        padding: 10px 15px;
-        border: none;
-        background: transparent;
-        color: var(--text-color);
-        font-size: var(--font-size-base);
-        outline: none;
-        border-radius: 8px;
-        transition: background-color var(--transition-fast);
-    }
-
-    .search-bar-container input[type="text"]::placeholder {
-        color: rgba(224, 224, 224, 0.6);
-    }
-
-    .search-bar-container input[type="text"]:focus {
-        background-color: rgba(0, 255, 255, 0.05);
-    }
-
-    .search-bar-container button {
-        background: var(--accent-color);
-        color: black;
-        border: none;
-        padding: 10px 18px;
-        border-radius: 8px;
-        cursor: pointer;
+    .favorites-bar::-webkit-scrollbar { height: 4px; }
+    .favorites-bar::-webkit-scrollbar-thumb { background: #00bcd4; border-radius: 10px; }
+    
+    .fav-pill {
+        background: #e0f7fa;
+        border: 1px solid #00bcd4;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 0.9em;
         font-weight: bold;
-        font-size: var(--font-size-base);
-        transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
-        box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
-    }
-
-    .search-bar-container button:hover {
-        background-color: var(--accent-hover);
-        transform: translateY(-2px);
-        box-shadow: 0 0 15px var(--accent-glow-strong);
-    }
-
-
-    /* Media Queries for Responsiveness */
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 2.5rem;
-      }
-      .tagline {
-        font-size: 1rem;
-      }
-      .top-logo-video {
-        width: 120px;
-        height: 120px;
-      }
-      .count-circle {
-        width: 90px;
-        height: 90px;
-      }
-      .count-circle .number {
-        font-size: 1.8rem;
-      }
-      .count-circle .label {
-        font-size: 0.7rem;
-      }
-      .info-section {
-        padding: 0 var(--spacing-sm);
-      }
-      .slide-panel {
-        width: 90%;
-      }
-      .popup-content {
-          padding: var(--spacing-md);
-          width: 95%;
-          max-height: 85vh; /* Adjust for smaller screens */
-      }
-      /* Removed stats grid media query */
-    }
-
-    @media (max-width: 480px) {
-      body {
-        padding: var(--spacing-sm);
-        background-size: 40px 40px; /* Smaller pattern */
-      }
-      header h1 {
-        font-size: 2rem;
-      }
-      .tagline {
-          font-size: 0.9rem;
-      }
-      .top-logo-video {
-        width: 100px;
-        height: 100px;
-      }
-      .count-overlay {
-        flex-direction: column;
+        cursor: pointer;
+        display: flex;
         align-items: center;
-        gap: var(--spacing-sm);
-        top: auto;
-        bottom: var(--spacing-sm);
-      }
-      .count-circle {
-        width: 75px;
-        height: 75px;
-      }
-      .count-circle .number {
-        font-size: 1.4rem;
-      }
-      .count-circle .label {
-        font-size: 0.6rem;
-      }
-      .panel-btn {
-        top: auto;
-        bottom: var(--spacing-sm);
-        width: 45px;
-        height: 45px;
-        font-size: 1.2rem;
-      }
-      .slide-panel {
-        width: 100%;
-        border-radius: 0;
-      }
-      .popup-content {
-        border-radius: 0;
-        padding: var(--spacing-md);
-        max-height: 80vh; /* Further adjust for very small screens */
-      }
-      .extra-blocks {
-          grid-template-columns: 1fr;
-      }
-      .footer-buttons {
-          flex-direction: column;
-      }
-      .search-bar-container {
-          flex-direction: column;
-          align-items: stretch;
-      }
-      .search-bar-container button {
-          width: 100%;
-      }
-      /* Adjust testimonial quote for small screens */
-      .testimonial-quote::before {
-          font-size: 2rem;
-          top: 0.2rem;
-      }
-      .testimonial-quote::after {
-          font-size: 2rem;
-          bottom: 0.5rem;
-      }
-      /* Adjust partners popup for small screens */
-      #partnersPopup h2 {
-          font-size: 2.5rem;
-      }
+        gap: 5px;
     }
-  </style>
+    .fav-pill:hover { background: #00bcd4; color: white; }
+    
+    /* Items List */
+    .items-list { max-height: 45vh; overflow-y: auto; padding: 10px; background: #fff; border-bottom: 1px solid #eee; }
+    .item { 
+        display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f9f9f9; 
+        margin-bottom: 8px; border-radius: 8px; cursor: pointer; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        color: #333; border-left: 4px solid #00bcd4;
+    }
+    .item:hover { background: #eee; transform: translateY(-1px); }
+    .item.out-of-stock { background: #ffe0b2; color: #795548; cursor: not-allowed; border-left: 4px solid #ff5722; }
+    .item-stock { font-size: 0.8em; color: #777; }
+    .fav-btn {
+        background: none; border: none; font-size: 1.4em; cursor: pointer; padding: 0 5px; 
+        transition: transform 0.2s ease;
+    }
+    .fav-btn:hover { transform: scale(1.2); }
+
+    /* Cart Section */
+    .cart { padding: 15px; background: #ffffff; border-top: 1px solid #eee; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #ccc; color: #333; }
+    .qty-controls button { background: #00bcd4; color: white; border: none; width: 35px; height: 35px; margin-left: 5px; border-radius: 50%; font-weight: bold; }
+    .qty-controls button:first-child { background: #ff5722; }
+
+    /* Total Summary */
+    .total-summary div { display: flex; justify-content: space-between; margin-bottom: 8px; color: #333; }
+    .total-summary .input-line input, .payment-method-line select {
+        padding: 10px; border-radius: 6px; font-size: 1em; font-weight: bold;
+        border: 1px solid #ccc; background-color: #f9f9f9; color: #333;
+    }
+    .total-summary .input-line input { width: 120px; height: auto; text-align: right; font-size: 1.2em; border: 1px solid #00bcd4; }
+    .change-line { font-size: 1.2em; padding: 10px 0; border-top: 2px solid #ccc; margin-top: 10px; }
+    .balance-due { color: #d32f2f; }
+    .change-due { color: #4caf50; }
+    .exact-payment { color: #333; }
+
+    /* Controls */
+    .print-analysis-controls { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+    .print-analysis-controls button { flex: 1 1 45%; padding: 10px; border-radius: 6px; border: none; color: white; font-size: 0.9em; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    #calcBtnMobile { background: #ff5722; } 
+    #analysisBtn { background: #00bcd4; } 
+    #printBillBtn { background: #ffc107; color: #333;} 
+    #printTokenBtn { background: #4caf50; } 
+    #suspendSaleBtn { background: #3f51b5; flex: 1 1 100%; }
+    #recallSalesBtn { background: #f44336; }
+
+    #completeSaleBtn {
+        padding: 15px; margin-top: 10px; font-size: 1.2em; font-weight: bold; color: white;
+        background: #4caf50; border: none; border-radius: 8px; box-shadow: 0 4px 0 #388e3c; cursor: pointer;
+    }
+    #completeSaleBtn:hover { background: #388e3c; transform: translateY(-1px); }
+    #completeSaleBtn:disabled { background: #b0b0b0; cursor: not-allowed; box-shadow: none; border-bottom: none; }
+
+    /* Calculator */
+    .calculator-keypad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 15px; background: #f9f9f9; flex: 1; border-radius: 0 0 10px 10px; }
+    .calculator-display { 
+        background: #e0f7fa; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; 
+        padding: 25px 20px; color: #333; text-align: right; border-bottom: 1px solid #00bcd4; min-height: 150px; position: relative;
+    }
+    .calc-input { font-size: 3.5em; font-weight: 300; overflow-x: scroll; white-space: nowrap; margin-bottom: 5px; line-height: 1.2; width: 100%; text-align: right; }
+    .calc-input::-webkit-scrollbar { display: none; }
+    .calc-result { font-size: 1.8em; color: #888; line-height: 1; }
+    .calc-button { background-color: #f1f1f1; color: #333; border: none; border-radius: 12px; padding: 20px 0; font-size: 1.8em; font-weight: 500; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+    .btn-red { background-color: #ff5722; color: white; }
+    .btn-green { background-color: #4caf50; color: white; grid-row: span 2; }
+    .btn-cyan { background-color: #00bcd4; color: white; }
+
+    /* Parked & Shift Cards */
+    .parked-sale-card, .shift-card { background: #f9f9f9; border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 15px; margin-bottom: 10px; border-radius: 8px; border-left: 5px solid #3f51b5; }
+    .shift-card { border-left: 5px solid #ff5722; }
+    .parked-sale-header, .shift-header { display: flex; justify-content: space-between; font-weight: bold; padding-bottom: 5px; margin-bottom: 5px; border-bottom: 1px dashed #ccc; }
+    .parked-sale-controls, .shift-controls { display: flex; gap: 8px; margin-top: 10px; }
+    .parked-sale-controls button, .shift-controls button { flex: 1; padding: 10px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; }
+    .recall-btn { background: #4caf50; }
+    .print-shift-btn { background: #ffc107; color: #333;}
+    .parked-summary { font-size: 0.9em; color: #555; }
+
+    /* Inputs within panels */
+    #inventoryManagementPanel input, #notesPanel input, #notesPanel select, #analysisPanel input, #settingsPanel input {
+        background: #f0f0f0 !important; color: #333 !important; border: 1px solid #ccc !important; padding: 8px; border-radius: 4px;
+    }
+    .inventory-item { margin-bottom: 5px; padding: 10px; background: #fff; border: 1px solid #eee; border-left: 4px solid #ff5722; border-radius: 6px; }
+    .inventory-inputs input { width: 60px; text-align: right; }
+    .inventory-controls button { background: #ff5722; color: white; border: none; padding: 8px; border-radius: 4px; margin-top: 5px; cursor: pointer; }
+    
+    /* New Arrivals Input Styling */
+    .new-arrival-form input, .new-arrival-form button {
+        width: 100%; padding: 10px; border-radius: 4px; margin-bottom: 5px;
+        border: 1px solid #ccc; box-sizing: border-box;
+    }
+    .new-arrival-form button {
+        background: #00bcd4; color: white; font-weight: bold; border: none; margin-top: 10px;
+    }
+    .arrival-log-item {
+        padding: 10px; background: #f0f8ff; border-left: 4px solid #3f51b5;
+        margin-bottom: 8px; border-radius: 4px; font-size: 0.9em;
+    }
+
+    /* Software Info Box in Settings */
+    .software-info-box {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 25px;
+        text-align: center;
+    }
+    .software-info-box h6 { margin: 0 0 10px 0; color: #333; font-size: 1.1em; }
+    .software-info-row { display: flex; justify-content: space-between; font-size: 0.85em; color: #666; margin-bottom: 5px; }
+    .software-link { color: #00bcd4; text-decoration: none; font-weight: bold; }
+    .software-link:hover { text-decoration: underline; }
+
+    /* Bills/Notes */
+    .bill-card { background: #f9f9f9; border: 1px solid #eee; padding: 10px; margin-bottom: 10px; border-radius: 6px; border-left: 5px solid #4caf50; }
+    .daily-pay-section { background: #e0f7fa; border: 1px solid #00bcd4; padding: 15px; margin-bottom: 15px; border-radius: 8px; }
+    .daily-pay-inputs input, .daily-pay-inputs select { width: 100%; padding: 10px; border-radius: 4px; margin-bottom: 5px; border: 1px solid #ccc; }
+    .daily-pay-inputs button { width: 100%; padding: 10px; background: #ff5722; color: white; border: none; border-radius: 8px; margin-top: 10px; font-weight: bold; }
+    .daily-pay-record { background: #fff; padding: 8px; border-radius: 4px; margin-bottom: 5px; display: flex; justify-content: space-between; border-left: 3px solid #ffc107; }
+
+    .daily-cash-balance-section { background: #fff3e0; border: 2px solid #ff9800; padding: 15px; margin-top: 20px; border-radius: 8px; }
+    .cash-balance-summary { display: flex; justify-content: space-between; padding: 10px 0; font-size: 1.2em; font-weight: bold; border-top: 1px dashed #ff9800; margin-top: 10px; }
+    .cash-balance-summary .value { color: #4caf50; }
+    .cash-balance-summary.negative .value { color: #d32f2f; }
+
+    /* Analysis */
+    .transaction-card, .stat-card { background: #f9f9f9; border: 1px solid #eee; padding: 10px; margin-bottom: 10px; border-radius: 6px; color: #333; }
+    .transaction-header { font-weight: bold; display: flex; justify-content: space-between; padding-bottom: 5px; margin-bottom: 5px; border-bottom: 1px solid #ccc; }
+    .history-controls button { background: #00bcd4; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; }
+    .analysis-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+    .stat-card { padding: 15px; border-left: 5px solid #4caf50; }
+    .stat-card p { font-size: 1.4em; font-weight: bold; color: #333; margin: 0; }
+
+    /* Production Table */
+    .production-table-container { overflow-x: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .prod-table { width: 100%; border-collapse: collapse; min-width: 600px; font-size: 0.9em; }
+    .prod-table th, .prod-table td { padding: 12px 8px; text-align: left; border-bottom: 1px solid #eee; }
+    .prod-table th { background-color: #00bcd4; color: white; position: sticky; top: 0; }
+    .prod-table tr:nth-child(even) { background-color: #f9f9f9; }
+    .val-cell { font-weight: bold; }
+    .total-prod-row { background-color: #e0f7fa !important; font-weight: bold; border-top: 2px solid #00bcd4; }
+
+    /* =======================================================
+    KEYBOARD HIGHLIGHT STYLE
+    =======================================================
+    */
+    .keyboard-highlight {
+        background-color: #ffeb3b !important;
+        outline: 3px solid #ffc107;
+        transform: scale(1.02);
+    }
+
+    /* =======================================================
+    UPDATED PRINT STYLES (BOLD, DARK, HIGH CONTRAST)
+    =======================================================
+    */
+    @media print {
+        body > *:not(#receiptOutput) { display: none !important; }
+        body { 
+            width: 80mm; margin: 0; padding: 0; background: none; 
+            color: #000000 !important; /* Pure Black */
+            font-family: 'Courier New', monospace; 
+            font-size: 12px; 
+            font-weight: 900 !important; /* Force Extra Bold */
+        }
+        #receiptOutput { 
+            display: block !important; width: 100%; max-width: 80mm; 
+            padding: 2px; box-sizing: border-box; 
+        }
+        
+        /* Force all elements to be black and bold */
+        * {
+            color: #000000 !important;
+            text-shadow: none !important;
+            font-weight: 900 !important;
+            box-shadow: none !important;
+            background: transparent !important;
+        }
+
+        .receipt-header, .receipt-footer { text-align: center; margin-bottom: 5px; padding: 5px 0; line-height: 1.3; }
+        .token-header { text-align: center; font-size: 1.6em; margin-bottom: 10px; }
+        .token-items { font-size: 1.2em; line-height: 1.5; padding: 10px 0; }
+        
+        .receipt-separator { 
+            border-top: 2px dashed #000000 !important; /* Thicker line */
+            margin: 5px 0; 
+            display: block;
+        }
+        
+        .receipt-line { display: flex; justify-content: space-between; white-space: pre; margin-bottom: 2px; }
+        .receipt-line span { display: inline-block; text-align: right; min-width: 70px; }
+        
+        .shift-report-section { padding: 5px 0; margin-bottom: 5px; }
+        .shift-report-section h5 { 
+            text-align: center; font-size: 1.2em; margin: 5px 0; 
+            text-transform: uppercase; border-bottom: 1px solid #000; display: inline-block;
+        }
+        
+        /* Make Total lines even larger */
+        .total-line-print { font-size: 1.2em; border-top: 1px solid #000; padding-top: 2px; }
+
+        /* PRINT WATERMARK */
+        .watermark-print {
+            text-align: center;
+            font-size: 10px;
+            font-weight: bold;
+            margin-top: 20px;
+            padding-top: 5px;
+            border-top: 1px solid #000;
+            font-family: monospace;
+        }
+    }
+</style>
 </head>
-<body>
-  <header>
-    <div class="top-logo-video">
-      <iframe frameborder="0" allowfullscreen scrolling="no" allow="autoplay;fullscreen" src="https://onelineplayer.com/player.html?autoplay=true&autopause=false&muted=true&loop=true&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fgwa0r1p4vch7fn9eimmh2%2Fkm_20250628_1440p_60f_20250628_072335.mp4%3Frlkey%3Do63qbh95xykyijmjsa2znwx33%26st%3Drqena374%26raw%3D1&poster=&time=false&progressBar=false&overlay=true&muteButton=true&fullscreenButton=false&style=light&quality=auto&playButton=false" title="VK Software's Studio Logo Animation"></iframe>
+<body onload="loadData()">
+
+<div class="watermark-ui">VK_INTERACTIVES</div>
+
+<div class="container" id="mainContainer">
+    
+        <div class="header">
+        <div id="mainHeaderTitle" style="font-weight: bold; font-size: 1.1em; color: #00bcd4;">VK POS</div>
+        <div class="header-controls">
+             <button class="header-btn view-toggle-btn" onclick="toggleLayout()">🖥️ View</button>
+             <button class="header-btn" onclick="togglePanel('settingsPanel')" style="background: #607d8b;">Settings ⚙️</button>
+             <button class="header-btn" id="startShiftBtn" onclick="startShift()" style="background: #4caf50;">Start Shift 🚀</button>
+             <button class="header-btn" id="closeShiftBtn" onclick="closeShift()" disabled style="background: #ff5722;">Close Shift 🔒</button>
+             <button class="header-btn calculator-header-btn" onclick="togglePanel('calculatorPanel')">Calc</button>
+             <button class="header-btn" onclick="togglePanel('analysisPanel')">Analysis</button>
+             <button class="header-btn" onclick="togglePanel('productionPanel')" style="background: #3f51b5;">Production 🏭</button>
+             <button class="header-btn notes-btn" onclick="togglePanel('notesPanel')">Notes</button>
+             <button class="header-btn" onclick="togglePanel('historyPanel')">History</button>
+             <button class="header-btn" onclick="togglePanel('inventoryManagementPanel')">Stock</button>
+             <button class="header-btn" onclick="togglePanel('shiftHistoryPanel')" style="background: #3f51b5;">Shifts 📄</button>
+        </div>
     </div>
-    <h1>PLAY AT VK</h1>
-    <p class="tagline">Get everything from VK on this page</p>
-  </header>
 
-  <main>
-    <section class="hero-video-section">
-      <div class="count-overlay">
-        <div class="count-circle"><div class="number" id="gamesCount">0</div><div class="label">GAMES</div></div>
-        <div class="count-circle"><div class="number" id="appsCount">0</div><div class="label">SOFTWARE</div></div>
-      </div>
-      <iframe frameborder="0" allowfullscreen scrolling="no" allow="autoplay;fullscreen" src="https://onelineplayer.com/player.html?autoplay=true&autopause=false&muted=true&loop=true&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fpmdmce0thctd644wq96xk%2Fshorts-vtuber.mp4%3Frlkey%3D57sbw59ndzxeiz2wch2xqevy1%26st%3Db1o80xu4%26raw%3D1&overlay=true&muteButton=true&fullscreenButton=false&style=light&quality=auto&playButton=false" title="Main Promotional Video"></iframe>
 
-      <button class="panel-btn" id="gameBtn" aria-label="Open Games Panel">🎮</button>
-      <button class="panel-btn" id="softwareBtn" aria-label="Open Software Panel">💻</button>
-    </section>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search Items or Barcode..." onkeyup="filterItems()">
+        <button class="search-btn">🔍</button>
+        <button class="scan-btn" onclick="scanBarcode()">SCAN 📸</button>
+    </div>
 
-    <aside class="slide-panel" id="gamePanel">
-      <button class="close-panel" onclick="closePanel('gamePanel')" aria-label="Close Games Panel">></button>
-      <h2>My Games</h2>
-      <div class="search-bar-container">
-        <input type="text" id="gameSearchInput" placeholder="Search games...">
-        <button onclick="searchProjects('gameSearchInput', 'gamePanelContent', gamesData, 'game')">Search</button>
-      </div>
-      <div id="gamePanelContent" class="panel-content">
+    <div class="favorites-bar" id="favoritesBar">
         </div>
-    </aside>
+    
+    <div class="items-list" id="itemsList">
+        <p id="searchTip" style="text-align: center; color: #aaa; margin-top: 20px;">Type a name or barcode above to see product results.</p>
+    </div>
 
-    <aside class="slide-panel" id="softwarePanel">
-      <button class="close-panel" onclick="closePanel('softwarePanel')" aria-label="Close Software Panel"><</button>
-      <h2>My Software</h2>
-      <div class="search-bar-container">
-        <input type="text" id="softwareSearchInput" placeholder="Search software...">
-        <button onclick="searchProjects('softwareSearchInput', 'softwarePanelContent', softwareData, 'app')">Search</button>
-      </div>
-      <div id="softwarePanelContent" class="panel-content">
-        </div>
-    </aside>
-
-    <section class="info-section">
-      <div class="info-box">
-        <h2>About Me</h2>
-        <p>
-          I’m **VK**, i create 2d,3d, game's and software's creative tools and games that bring fun, emotion, and innovation into every click.
-        </p>
-        <p>
-          **PLAYATVK.com– The Official Platform of VK Software’s&game's**
-        </p>
-        <p>
-          PLAYATVK is the official digital platform for discovering original applications and 2D games developed by VK. This site serves as a centralized hub for publishing quality, user-focused mobile solutions designed to enhance everyday digital experiences.
-        </p>
-        <p>
-          With a focus on innovation, performance, and user accessibility, PLAYATVK showcases a growing portfolio of functional tools, creative games, and experimental projects—built from the ground up with a dedication to simplicity and impact.
-        </p>
-      </div>
-      <div class="info-box">
-        <h2>My Projects</h2>
-        <p>Explore titles like **CyberFun2D, FLAMES, Mood Tracker, Motivateme, M&M,** and my dream game: **To the Life**.</p>
-      </div>
-    </section>
-
-    <section class="extra-blocks">
-      <div class="extra-box extra-box-members">
-        <h3>MEMBER'S/SUPPORTERS</h3>
-        <div class="member-card">
-            <span class="member-name">VK VINITH - Founder</span>
-            <span class="member-role">Role: Development, Modeling, Content creation</span>
-            <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=rd2xhz7" target="_blank" rel="noopener noreferrer" class="member-link-btn">Visit Instagram</a>
-        </div>
-        <div class="member-card">
-            <span class="member-name">VISHAL JOSHUA</span>
-            <span class="member-role">Role: Advertising & development</span>
-            <a href="https://www.instagram.com/the_hyper_black__?igsh=MTNhc3J2YjB2YnpjNw==" target="_blank" rel="noopener noreferrer" class="member-link-btn">Visit Instagram</a>
-        </div>
-        <div class="member-card">
-            <span class="member-name">UDHAYAN - Sponsor</span>
-            <span class="member-role">Role: Sponsor, Development & Content creator</span>
-            <a href="https://www.instagram.com/_dxrk._wxrld?igsh=MTViYWpqZmgyYnc5ag==" target="_blank" rel="noopener noreferrer" class="member-link-btn">Visit Instagram</a>
-        </div>
-        <div class="member-card">
-            <span class="member-name">LOGESH - Sponsor</span>
-            <span class="member-role">Role: Sponsor, Content creator, Development</span>
-            <a href="https://www.instagram.com/im_lowgzz_yt_?igsh=dWptenp0bTRvdTNu" target="_blank" rel="noopener noreferrer" class="member-link-btn">Visit Instagram</a>
-        </div>
-        <div class="member-card">
-            <span class="member-name">EKA WAHYUNI</span>
-            <span class="member-role">Role: Content creation & Testing</span>
-            <a href="https://www.instagram.com/itsmeeka66?igsh=dmZjYXNhZHZvbXRu" target="_blank" rel="noopener noreferrer" class="member-link-btn">Visit Instagram</a>
-        </div>
-      </div>
-
-      <div class="extra-box news-updates-block">
-        <h3>News & Updates</h3>
-        <div class="news-item">
-            <span class="date">Oct 28, 2025</span>
-            <p>**Motivateme** released! Get your daily dose of inspiration and fire quotes.</p>
-            <a href="https://www.mediafire.com/file/jwfbux6usyyyzgy/Motivate.me.apk/file" target="_blank" rel="noopener noreferrer">Download Now</a>
-        </div>
-        <div class="news-item">
-            <span class="date">July 28, 2025</span>
-            <p>**Mood Tracker** released! Start monitoring your emotional well-being today.</p>
-            <a href="https://www.mediafire.com/file/nm5bb07w513f2no/MOOD_TRACKER.apk/file" target="_blank" rel="noopener noreferrer">Download Now</a>
-        </div>
-        <div class="news-item">
-            <span class="date">June 28, 2025</span>
-            <p>New update for **To the Life** is now live! Check out the improved crafting system.</p>
-            <a href="#">Read More</a>
-        </div>
-        <div class="news-item">
-            <span class="date">June 15, 2025</span>
-            <p>**M&M v1.0** released with new UI enhancements and performance optimizations.</p>
-            <a href="https://www.mediafire.com/file/22z4yjs90a6915v/M%2526M%2528Mood_and_motivation%2529.apk/file" target="_blank" rel="noopener noreferrer">Download M&M</a>
-        </div>
-      </div>
-
-      <div class="extra-box faq-block">
-        <h3>❓ Frequently Asked Questions</h3>
-        <div class="faq-item">
-            <div class="faq-question" role="button" aria-expanded="false" aria-controls="faq-ans-1" onclick="toggleFaq(this)">
-                What engine do you use for game development? <span class="faq-icon">+</span>
+    <div class="cart" id="cart">
+        <div style="color: #333; padding-bottom: 5px;"><strong>Current Cart:</strong></div>
+        <div id="cartItems"></div>
+        <div class="total-summary">
+            <div class="total">
+                <span style="font-weight: bold;">Total Product Price:</span>
+                <span style="font-weight: bold; color: #ff5722;">₹<span id="subTotal">0.00</span></span>
             </div>
-            <p class="faq-answer" id="faq-ans-1">I primarily use **Unity** for 2D and 3D game development, which allows for versatile cross-platform deployment. My software/app projects often use native Android (Java/Kotlin) or Flutter.</p>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" role="button" aria-expanded="false" aria-controls="faq-ans-2" onclick="toggleFaq(this)">
-                Are your software projects open source? <span class="faq-icon">+</span>
+            <div class="payment-method-line">
+                <span style="font-weight: bold;">Payment Method:</span>
+                <select id="paymentMethod">
+                    <option value="Cash">Cash</option>
+                    <option value="Card">Card</option>
+                    <option value="UPI">UPI</option>
+                    <option value="Credit">Credit (Outstanding)</option>
+                </select>
             </div>
-            <p class="faq-answer" id="faq-ans-2">Currently, most of my projects are closed source. However, I sometimes release small utility tools or experimental features on platforms like GitHub. Keep an eye on my social media for updates!</p>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" role="button" aria-expanded="false" aria-controls="faq-ans-3" onclick="toggleFaq(this)">
-                How can I report a bug? <span class="faq-icon">+</span>
+            <div class="input-line">
+                <span style="font-weight: bold;">Money Received (₹):</span>
+                <input type="number" id="moneyReceived" value="0.00" oninput="calculateChange()" step="0.01" min="0">
             </div>
-            <p class="faq-answer" id="faq-ans-3">The best way to report a bug is by sending a detailed email to my contact address: **contactvkdev@gmail.com**. Please include the app name, your device, and steps to reproduce the issue.</p>
+            <div class="total change-line" id="changeLine">
+                <span id="changeLabel">Remaining to Customer:</span>
+                <span style="font-weight: bold;">₹<span id="remainingChange">0.00</span></span>
+            </div>
+            <button id="suspendSaleBtn" onclick="suspendSale()" disabled>Park/Suspend Sale ⏸️</button>
+            <button id="completeSaleBtn" onclick="completeSale()" disabled>Complete Sale</button>
+            <div class="print-analysis-controls">
+                <button id="calcBtnMobile" onclick="togglePanel('calculatorPanel')">Calc 🧮</button>
+                <button id="recallSalesBtn" onclick="togglePanel('parkedSalesPanel')">Recall Parked Sales (<span id="parkedSalesCount">0</span>) 📁</button>
+                <button id="printBillBtn" onclick="printLastTransaction('bill')">Print Bill 🖨️</button>
+                <button id="printTokenBtn" onclick="printLastTransaction('token')">Print Token 🎫</button>
+            </div>
         </div>
-      </div>
+    </div>
+</div>
 
-      <div class="extra-box media-mention-block">
-        <h3>✨ Fan Appreciation</h3>
-        <img src="1000053471.png" alt="Fan-made artwork for VK Games" title="Fan-made artwork for VK Games">
-        <p>Huge thanks to our community for the awesome fan art and support! Your creativity fuels the next project.</p>
-      </div>
+<div id="settingsPanel">
+    <div class="panel-header">
+        <h4>System Settings ⚙️</h4>
+        <button onclick="togglePanel('settingsPanel')" class="panel-close-btn">Close ✕</button>
+    </div>
+    <div style="padding: 10px;">
+        <h5 style="color: #607d8b;">🏢 Business Profile (Receipt Data)</h5>
+        <p style="font-size: 0.8em; color: #666; margin-bottom: 10px;">Enter details below to display on printed receipts.</p>
+        
+        <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">Business Name:</label>
+        <input type="text" id="settingsCompanyName" placeholder="e.g. My Awesome Shop" style="width: 100%; margin-bottom: 10px;">
+        
+        <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">Phone Number:</label>
+        <input type="text" id="settingsPhone" placeholder="e.g. +91 9876543210" style="width: 100%; margin-bottom: 10px;">
+        
+        <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">Email Address:</label>
+        <input type="email" id="settingsEmail" placeholder="e.g. contact@shop.com" style="width: 100%; margin-bottom: 10px;">
+        
+        <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">Physical Address:</label>
+        <input type="text" id="settingsAddress" placeholder="e.g. 123 Street, City" style="width: 100%; margin-bottom: 10px;">
+        
+        <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">License / Tax ID:</label>
+        <input type="text" id="settingsLicense" placeholder="e.g. GSTIN 123456789" style="width: 100%; margin-bottom: 10px;">
+        
+        <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">Custom Tagline (Footer):</label>
+        <input type="text" id="settingsTagline" placeholder="Where Every Journey Holds a Secret" style="width: 100%; margin-bottom: 15px;">
 
-      <div class="extra-box testimonial-block">
-        <h3>⭐ Mission Statement</h3>
-        <p class="testimonial-quote">
-            Every journey holds a secret. My goal is to build the software that helps you find it, and the games that let you explore it.
-        </p>
-        <div class="testimonial-author">— VK, Founder of VK Software's Studio</div>
-      </div>
-
-      <div class="extra-box upcoming-trailer-block">
-        <h3>🚀 Upcoming Trailer</h3>
-        <div class="trailer-video-container">
-            <iframe frameborder="0" allowfullscreen scrolling="no" allow="autoplay;fullscreen" 
-                    src="https://onelineplayer.com/player.html?autoplay=false&autopause=true&muted=true&loop=false&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fpmdmce0thctd644wq96xk%2Fshorts-vtuber.mp4%3Frlkey%3D57sbw59ndzxeiz2wch2xqevy1%26st%3Db1o80xu4%26raw%3D1&overlay=true&muteButton=true&fullscreenButton=true&style=light&quality=auto&playButton=true" 
-                    title="Upcoming Project Trailer">
-            </iframe>
+        <button onclick="saveSettings()" style="width: 100%; padding: 12px; background: #4caf50; color: white; border: none; border-radius: 6px; font-weight: bold;">Save Settings 💾</button>
+        
+        <div class="software-info-box">
+            <h6>Software Information</h6>
+            <div class="software-info-row">
+                <span>Version</span>
+                <span style="font-weight:bold;">v10.1.0-Favorites</span>
+            </div>
+            <div class="software-info-row">
+                <span>Developer</span>
+                <span><a href="https://vkinteractives.com" target="_blank" class="software-link">Vkinteractives.com</a></span>
+            </div>
+            <div class="software-info-row">
+                <span>Tagline</span>
+                <span style="font-style: italic; color: #888;">"Where Every Journey Holds a Secret"</span>
+            </div>
+            <div class="software-info-row">
+                <span>System Status</span>
+                <span style="color: #4caf50;">● Connected</span>
+            </div>
+            <div style="margin-top: 15px; font-size: 0.75em; color: #bbb;">
+                © 2026 VK_INTERACTIVES. All Rights Reserved.
+            </div>
         </div>
-        <p class="trailer-note">Check back soon for the official launch date and full trailer release!</p>
-      </div>
-      <div class="social-links extra-box">
-        <h2>Connect With Me</h2>
-        <div class="social-buttons">
-          <a href="https://youtube.com/@playwithvk2025?si=aUioHf5_MI4VejDP" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="YouTube"><span class="sr-only">YouTube</span>YT</a>
-          <a href="https://www.instagram.com/vk_games_softwares" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Instagram"><span class="sr-only">Instagram</span>IG</a>
-          <a href="#" class="social-btn" aria-label="X (Twitter)"><span class="sr-only">X</span>X</a>
-          <a href="#" class="social-btn" aria-label="Discord"><span class="sr-only">Discord</span>DS</a>
+    </div>
+</div>
+
+<div id="calculatorPanel">
+     <div class="panel-header">
+         <h4>Full Screen Calculator 🧮</h4>
+         <button onclick="togglePanel('calculatorPanel')" class="panel-close-btn">Close ✕</button>
+     </div>
+     <div class="calculator-display">
+        <div class="calc-input" id="calcInput">0</div>
+        <div class="calc-result" id="calcResult"></div>
+    </div>
+    <div class="calculator-keypad">
+        <button class="calc-button btn-red" onclick="clearDisplay()">C</button>
+        <button class="calc-button btn-cyan" onclick="appendToDisplay('(')">(</button>
+        <button class="calc-button btn-cyan" onclick="appendToDisplay(')')">)</button>
+        <button class="calc-button btn-cyan" onclick="deleteLast()">⌫</button>
+        <button class="calc-button" onclick="appendToDisplay('7')">7</button>
+        <button class="calc-button" onclick="appendToDisplay('8')">8</button>
+        <button class="calc-button" onclick="appendToDisplay('9')">9</button>
+        <button class="calc-button btn-cyan" onclick="appendToDisplay('/')">÷</button>
+        <button class="calc-button" onclick="appendToDisplay('4')">4</button>
+        <button class="calc-button" onclick="appendToDisplay('5')">5</button>
+        <button class="calc-button" onclick="appendToDisplay('6')">6</button>
+        <button class="calc-button btn-cyan" onclick="appendToDisplay('*')">×</button>
+        <button class="calc-button" onclick="appendToDisplay('1')">1</button>
+        <button class="calc-button" onclick="appendToDisplay('2')">2</button>
+        <button class="calc-button" onclick="appendToDisplay('3')">3</button>
+        <button class="calc-button btn-cyan" onclick="appendToDisplay('-')">−</button>
+        <button class="calc-button" onclick="appendToDisplay('0')">0</button>
+        <button class="calc-button" onclick="appendToDisplay('.')">.</button>
+        <button class="calc-button btn-cyan" onclick="appendToDisplay('+')">+</button>
+        <button class="calc-button btn-green" onclick="calculateResult()">=</button>
+    </div>
+</div>
+
+<div id="paymentHistoryModal">
+    <div class="panel-header">
+        <h4 id="paymentHistoryTitle">Payment History</h4>
+        <button onclick="closePaymentHistory()" class="panel-close-btn">Close ✕</button>
+    </div>
+    <div id="paymentHistoryList"></div>
+</div>
+
+<div id="parkedSalesPanel">
+    <div class="panel-header">
+        <h4>Parked/Suspended Sales 📁</h4>
+        <button onclick="togglePanel('parkedSalesPanel')" class="panel-close-btn">Close ✕</button>
+    </div>
+    <div id="parkedSalesList"></div>
+</div>
+
+<div id="shiftHistoryPanel">
+    <div class="panel-header">
+        <h4>Shift History 📄</h4>
+        <button onclick="togglePanel('shiftHistoryPanel')" class="panel-close-btn">Close ✕</button>
+    </div>
+    <div id="shiftsList"></div>
+</div>
+
+<div id="productionPanel">
+    <div class="panel-header">
+        <h4>Daily Production Report 🏭</h4>
+        <button onclick="togglePanel('productionPanel')" class="panel-close-btn">Close ✕</button>
+    </div>
+    <div style="padding-bottom: 10px; color: #000; font-weight: bold; font-size: 0.9em; text-align: center;">
+        *Calculated based on TODAY'S SALES + Remaining Stock.
+    </div>
+    <div id="productionContent" class="production-table-container"></div>
+</div>
+
+<div id="analysisPanel">
+    <div class="panel-header">
+        <h4>Sales Analysis & Insights 📈</h4>
+        <button onclick="togglePanel('analysisPanel')" class="panel-close-btn">Close ✕</button>
+    </div>
+    <div class="date-filters" style="padding: 10px; background: #e0f7fa; border-radius: 8px; margin-bottom: 15px;">
+        <p id="analysisDateRangeLabel" style="text-align: center; font-weight: bold; margin: 0; color: #00bcd4;"></p>
+        <div class="date-filters-row" style="display: flex; gap: 5px; margin-bottom: 5px;">
+            <input type="date" id="startDateInput" value="" style="flex: 1;">
+            <input type="date" id="endDateInput" value="" style="flex: 1;">
         </div>
-      </div>
-
-      </section>
-  </main>
-
-  <footer>© VKSoftware&Game's 2024–2025</footer>
-
-  <div class="footer-buttons">
-    <button id="showPartnersBtn" class="popup-button">Top Publishers & Partners</button>
-    <button id="showPrivacyBtn" class="popup-button">View Privacy Policy</button>
-    <button id="showContactBtn" class="popup-button">Contact Me</button>
-  </div>
-
-
-  <div id="privacyPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="privacyPopupHeading">
-    <div class="popup-content">
-      <button class="popup-close-btn" onclick="closePopup('privacyPopup')" aria-label="Close Privacy Policy">×</button>
-      <h2 id="privacyPopupHeading">Privacy Policy</h2>
-      <p>
-        **Effective Date: July 1, 2025**<br>
-        **Website: PLAY AT VK**<br>
-        **Owner: VK Software’s**
-      </p>
-      <p>
-        At PLAY AT VK, operated by VK Software’s, we are committed to respecting and protecting your privacy. This Privacy Policy describes how we collect, use, share, and protect information obtained through your interaction with our website and associated services, including access to downloadable content, game updates, and advertisements.
-      </p>
-      <p>
-        By accessing or using this website, you consent to the collection and use of information in accordance with this policy.
-      </p>
-
-      <h3>Information Collection</h3>
-      <p>
-        We collect both personal and non-personal information to ensure the proper functioning of the website and to enhance user experience. Information may be collected in the following ways:
-      </p>
-      <p>
-        **Voluntarily Provided Information:** This includes data you submit directly, such as your name, email address, or any other details provided through contact forms, support requests, or subscriptions.
-      </p>
-      <p>
-        **Automatically Collected Information:** We may collect data such as your IP address, device type, operating system, browser type, referral sources, pages visited, and general usage patterns through analytics tools and server logs.
-      </p>
-
-      <h3>Use of Information</h3>
-      <p>
-        The information collected is used for purposes including, but not limited to:
-      </p>
-      <ul>
-        <li>Delivering website content and services</li>
-        <li>Providing access to game files and updates</li>
-        <li>Responding to inquiries or support requests</li>
-        <li>Improving website performance, design, and security</li>
-        <li>Sending newsletters, product updates, or promotional communications, where consent has been given</li>
-        <li>Serving advertisements through third-party networks</li>
-      </ul>
-
-      <h3>Third-Party Advertising and Data Sharing</h3>
-      <p>
-        This website integrates advertisements from third-party advertising partners, including but not limited to Google AdMob, Start.io, and Unity Ads. These partners may collect and process personal and non-personal information about users, such as device identifiers, IP addresses, location data, and interactions with ads, to serve interest-based advertising and to monitor campaign performance.
-      </p>
-      <p>
-        Please be aware that by using this website or downloading games linked here, you acknowledge that certain data may be shared with these third-party advertising networks. VK Software’s does not control the data collection practices of these third parties and disclaims any responsibility for their handling of user information. We strongly encourage users to review the privacy policies of these advertising platforms before interacting with ads or providing consent.
-      </p>
-
-      <h3>External Links and Downloads</h3>
-      <p>
-        PLAY AT VK may include links to external platforms such as Google Drive, Mediafire, itch.io, the Google Play Store, or other file hosting services. These third-party sites operate independently and maintain their own privacy policies. VK Software’s is not responsible for the content, security, or data handling practices of any external sites.
-      </p>
-
-      <h3>Cookies and Tracking Technologies</h3>
-      <p>
-        We may use cookies and similar technologies to enhance website functionality, remember user preferences, and perform usage analysis. You have the option to control the use of cookies through your browser settings. Disabling cookies may impact certain features and functionality of the site.
-      </p>
-
-      <h3>Data Security</h3>
-      <p>
-        We implement commercially reasonable security measures to protect your data against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or method of electronic storage is completely secure. As such, we cannot guarantee absolute security.
-      </p>
-
-      <h3>Children’s Privacy</h3>
-      <p>
-        This website and the services provided are not intended for children under the age of 13. We do not knowingly collect personal data from children. If we become aware that personal information from a minor has been collected, we will take immediate steps to delete such information.
-      </p>
-
-      <h3>Policy Updates</h3>
-      <p>
-        We reserve the right to amend this Privacy Policy at any time. Updates will be posted on this page and will take effect upon publication. Continued use of the site after any changes are made constitutes your acceptance of the revised policy.
-      </p>
-
-      <h3>Contact</h3>
-      <p>
-        For any questions, concerns, or data-related requests, please contact:<br>
-        VK Software’s<br>
-        📧 Email: <a href="mailto:vksoftwares.help@gmail.com">vksoftwares.help@gmail.com</a>
-      </p>
-      <button onclick="closePopup('privacyPopup')" class="popup-button popup-continue-btn">Continue</button>
+        <button onclick="renderAnalysisPanel()" style="width: 100%; padding: 10px; background: #ff5722; color: white; border: none; border-radius: 6px;">Filter by Date</button>
     </div>
-  </div>
-
-  <div id="contactPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="contactPopupHeading">
-    <div class="popup-content">
-      <button class="popup-close-btn" onclick="closePopup('contactPopup')" aria-label="Close Contact Form">×</button>
-      <h2 id="contactPopupHeading">Contact & Community</h2>
-      <p>
-        We’d love to hear from you. Whether you have a question, feedback, or a collaboration proposal — or just want to stay connected — you can reach us anytime through the options below.
-      </p>
-
-      <div class="contact-section">
-        <h3>📧 Email</h3>
-        <p>For support, feedback, or business inquiries:</p>
-        <p><a href="mailto:contactvkdev@gmail.com">contactvkdev@gmail.com</a></p>
-      </div>
-
-      <div class="contact-section">
-        <h3>📱 WhatsApp Group</h3>
-        <p>Join our official WhatsApp community for direct updates, sneak peeks, and open discussions with other players and the developer:</p>
-        <p>👉 <a href="#">Join WhatsApp Group</a></p>
-      </div>
-
-      <div class="contact-section">
-        <h3>📸 Instagram</h3>
-        <p>Follow us on Instagram to catch behind-the-scenes content, short clips, game teasers, and more:</p>
-        <p>👉 <a href="https://www.instagram.com/vk_games_softwares" target="_blank" rel="noopener noreferrer">Follow on Instagram</a></p>
-      </div>
-
-      <div class="contact-section">
-        <h3>🌐 Website</h3>
-        <p>Explore games, project updates, and download links:</p>
-        <p><a href="https://playatvk.com" target="_blank" rel="noopener noreferrer">https://playatvk.com</a></p>
-      </div>
-
-      <p>> Thank you for supporting PLAY AT VK — where games meet creativity.</p>
-
-      <button onclick="closePopup('contactPopup')" class="popup-button popup-close-contact-btn">Close</button>
+    <div id="analysisContent">
+        <button onclick="resetAllData()" style="width: 100%; padding: 10px; background: #d32f2f; color: white; border: none; border-radius: 6px; margin-top: 20px;">
+            ⚠️ Reset ALL Data (Inventory, Sales, Notes)
+        </button>
     </div>
-  </div>
-  
-  <div id="partnersPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="partnersPopupHeading">
-    <div class="popup-content">
-      <button class="popup-close-btn" onclick="closePopup('partnersPopup')" aria-label="Close Partners List">×</button>
-      <h2 id="partnersPopupHeading">Top Publishers & Royal Allies</h2>
-      <p style="color: #ccc; margin-bottom: 30px;">
-          We extend our deepest gratitude to our strategic partners and top supporters who make our journey possible.
-      </p>
+</div>
 
-      <div class="partner-card-royal">
-          <h3>👑 Solozard Games</h3>
-          <p>
-              **Role:** Key Publishing & Advertising Partner<br>
-              A leading mobile game publishing house providing invaluable support in marketing and platform distribution for select VK titles.
-          </p>
-          <a href="https://www.instagram.com/solozard_games?igsh=MWR5ZmhxOHdjdGYzeQ==" target="_blank" rel="noopener noreferrer">Visit Solozard Games</a>
-      </div>
-
-      <div class="partner-card-royal">
-          <h3>⭐ MediaFire</h3>
-          <p>
-              **Role:** Primary Download Host<br>
-              Reliable file hosting ensures all our APKs and game files are delivered quickly and securely across the globe.
-          </p>
-          <a href="https://www.mediafire.com/" target="_blank" rel="noopener noreferrer">Visit MediaFire</a>
-      </div>
-
-      <div class="partner-card-royal">
-          <h3>🤝 Udhayan & Logesh (Sponsors)</h3>
-          <p>
-              **Role:** Project Sponsorship & Content Support<br>
-              Instrumental in funding new creative ventures and providing early-stage content feedback.
-          </p>
-          <a href="#showContactBtn" onclick="closePopup('partnersPopup'); openPopup('contactPopup');" class="popup-button">Contact for Sponsorship</a>
-      </div>
-      
-      <p style="color: var(--royal-gold); margin-top: 30px; font-style: italic;">
-          Our allegiance to these partners ensures the continued growth and quality of all VK projects.
-      </p>
-
-      <button onclick="closePopup('partnersPopup')" class="popup-button popup-close-contact-btn">Acknowledge</button>
+<div id="notesPanel">
+    <div class="panel-header">
+        <h4>Shop Notes, Bills, & Daily Pay/Expense 📝</h4>
+        <button onclick="togglePanel('notesPanel')" class="panel-close-btn">Close ✕</button>
     </div>
-  </div>
-  <script>
-    // --- Data for dynamic content ---
-    const gamesData = [
-      {
-        title: "To the Life",
-        description: "An immersive open-world life simulator where every choice shapes your destiny. Explore vast landscapes, build relationships, and carve out your unique story.",
-        videoSrc: "https://onelineplayer.com/player.html?autoplay=false&autopause=true&muted=false&loop=false&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fpmdmce0thctd644wq96xk%2Fshorts-vtuber.mp4%3Frlkey%3D57sbw59ndzxeiz2wch2xqevy1%26st%3Db1o80xu4%26raw%3D1&overlay=true&muteButton=true&fullscreenButton=true&style=light&quality=auto", // Example video URL
-        link: "#" // Replace with actual download/info link
-      },
-      {
-        title: "CyberFun2D",
-        description: "A fast-paced 2D platformer set in a neon-drenched cyberpunk city. Jump, dash, and hack your way through challenging levels.",
-        videoSrc: "https://onelineplayer.com/player.html?autoplay=false&autopause=true&muted=false&loop=false&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fpmdmce0thctd644wq96xk%2Fshorts-vtuber.mp4%3Frlkey%3D57sbw59ndzxeiz2wch2xqevy1%26st%3Db1o80xu4%26raw%3D1&overlay=true&muteButton=true&fullscreenButton=true&style=light&quality=auto",
-        link: "#"
-      },
-      {
-        title: "FLAMES",
-        description: "A puzzle game that challenges your logic and spatial reasoning with fiery elements.",
-        videoSrc: "https://onelineplayer.com/player.html?autoplay=false&autopause=true&muted=false&loop=false&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fpmdmce0thctd644wq96xk%2Fshorts-vtuber.mp4%3Frlkey%3D57sbw59ndzxeiz2wch2xqevy1%26st%3Db1o80xu4%26raw%3D1&overlay=true&muteButton=true&fullscreenButton=true&style=light&quality=auto",
-        link: "#"
-      },
-      {
-        title: "Game Title 4",
-        description: "Another exciting game to explore with unique features and engaging gameplay.",
-        videoSrc: "https://onelineplayer.com/player.html?autoplay=false&autopause=true&muted=false&loop=false&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fpmdmce0thctd644wq96xk%2Fshorts-vtuber.mp4%3Frlkey%3D57sbw59ndzxeiz2wch2xqevy1%26st%3Db1o80xu4%26raw%3D1&overlay=true&muteButton=true&fullscreenButton=true&style=light&quality=auto",
-        link: "#"
-      },
-      {
-        title: "Game Title 5",
-        description: "Experience the thrill of a new adventure in this captivating game.",
-        videoSrc: "https://onelineplayer.com/player.html?autoplay=false&autopause=true&muted=false&loop=false&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fpmdmce0thctd644wq96xk%2Fshorts-vtuber.mp4%3Frlkey%3D57sbw59ndzxeiz2wch2xqevy1%26st%3Db1o80xu4%26raw%3D1&overlay=true&muteButton=true&fullscreenButton=true&style=light&quality=auto",
-        link: "#"
-      },
-    ];
+    <div class="daily-pay-section">
+        <h5 style="margin-top: 0; color: #ff5722;">Log Daily Cash In/Out (Pay/Expense)</h5>
+        <input type="text" id="dailyPayDescription" placeholder="Description (e.g., Paid driver, Owner cash-in)" />
+        <div class="daily-pay-inputs" style="display: flex; gap: 5px; align-items: center;">
+            <input type="number" id="dailyPayAmount" placeholder="Amount (₹)" min="0.01" step="0.01" style="flex: 1;" />
+            <select id="dailyPayType" style="flex: 1;">
+                <option value="Expense">Cash Out/Expense (-) </option>
+                <option value="PayIn">Owner Cash In (+)</option>
+            </select>
+        </div>
+        <button onclick="addDailyPayNote()">Log Daily Pay/Expense</button>
+        <h5 style="margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 10px;">Today's Cash Log</h5>
+        <div id="dailyPayLog"></div>
+        
+        <div class="daily-cash-balance-section">
+            <h5 style="margin-top: 0; color: #ff9800;">💰 Calculate Today's Net Cash Balance</h5>
+            <div style="margin-bottom: 10px;">
+                <label style="font-size: 0.8em; font-weight: bold; display: block; margin-bottom: 5px; color: #333;">Total Manual UPI Counted (₹):</label>
+                <input type="number" id="manualUpiInput" placeholder="Enter UPI total from phone..." style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #ff9800; background: #fff !important;" oninput="calculateDailyCashBalance()">
 
-    const softwareData = [
-      {
-        title: "M&M (Mood and Motivation)",
-        description: "M&M is an emotion-responsive app which helps people to get motivational quotes based on their current mood.",
-        videoSrc: "https://onelineplayer.com/player.html?autoplay=false&autopause=true&muted=false&loop=false&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fpmdmce0thctd644wq96xk%2Fshorts-vtuber.mp4%3Frlkey%3D57sbw59ndzxeiz2wch2xqevy1%26st%3Db1o80xu4%26raw%3D1&overlay=true&muteButton=true&fullscreenButton=true&style=light&quality=auto",
-        link: "https://www.mediafire.com/file/22z4yjs90a6915v/M%2526M%2528Mood_and_motivation%2529.apk/file"
-      },
-      {
-        title: "Mood Tracker",
-        description: "Track your mood and mood swings with the help of Mood Tracker, a simple software which stores every mood change and displays the data.",
-        videoSrc: "https://onelineplayer.com/player.html?autoplay=false&autopause=true&muted=false&loop=false&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fpmdmce0thctd644wq96xk%2Fshorts-vtuber.mp4%3Frlkey%3D57sbw59ndzxeiz2wch2xqevy1%26st%3Db1o80xu4%26raw%3D1&overlay=true&muteButton=true&fullscreenButton=true&style=light&quality=auto",
-        link: "https://www.mediafire.com/file/nm5bb07w513f2no/MOOD_TRACKER.apk/file"
-      },
-      // SWAPPED ENTRY: VKEnhancer replaced by Motivateme
-      {
-        title: "Motivateme",
-        description: "Motivateme helps people to gain a boost up for fire and motivation quotes by daily.",
-        videoSrc: "https://onelineplayer.com/player.html?autoplay=false&autopause=true&muted=false&loop=false&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fpmdmce0thctd644wq96xk%2Fshorts-vtuber.mp4%3Frlkey%3D57sbw59ndzxeiz2wch2xqevy1%26st%3Db1o80xu4%26raw%3D1&overlay=true&muteButton=true&fullscreenButton=true&style=light&quality=auto",
-        link: "https://www.mediafire.com/file/jwfbux6usyyyzgy/Motivate.me.apk/file"
-      },
-      {
-        title: "ColorPalettePro",
-        description: "A sleek tool for designers to generate, save, and manage custom color palettes with ease.",
-        videoSrc: "https://onelineplayer.com/player.html?autoplay=false&autopause=true&muted=false&loop=false&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fpmdmce0thctd644wq96xk%2Fshorts-vtuber.mp4%3Frlkey%3D57sbw59ndzxeiz2wch2xqevy1%26st%3Db1o80xu4%26raw%3D1&overlay=true&muteButton=true&fullscreenButton=true&style=light&quality=auto",
-        link: "#"
-      },
-      {
-        title: "TaskFlow",
-        description: "A minimalist task manager designed to keep you focused and productive throughout your day.",
-        videoSrc: "https://onelineplayer.com/player.html?autoplay=false&autopause=true&muted=false&loop=false&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fpmdmce0thctd644wq96xk%2Fshorts-vtuber.mp4%3Frlkey%3D57sbw59ndzxeiz2wch2xqevy1%26st%3Db1o80xu4%26raw%3D1&overlay=true&muteButton=true&fullscreenButton=true&style=light&quality=auto",
-        link: "#"
-      },
-      {
-        title: "CHROMA WAVE",
-        description: "Chroma Wave is a simple, sleek, fast, responsive gradient maker, allowing designers and artists to easily create and visualize stunning color transitions.",
-        videoSrc: "https://onelineplayer.com/player.html?autoplay=false&autopause=true&muted=false&loop=false&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fpmdmce0thctd644wq96xk%2Fshorts-vtuber.mp4%3Frlkey%3D57sbw59ndzxeiz2wch2xqevy1%26st%3Db1o80xu4%26raw%3D1&overlay=true&muteButton=true&fullscreenButton=true&style=light&quality=auto",
-        link: "https://www.mediafire.com/file/i074b64oytt8mst/Chroma+Wave.apk/file"
-      },
-      {
-        title: "TrackMySalary",
-        description: "TrackMySalary is an app designed for people who need to mark their shifts/salary pay day/counting on the month for salary. Track my salary stores data and refines it for clear, classified display of salary details.",
-        videoSrc: "https://onelineplayer.com/player.html?autoplay=false&autopause=true&muted=false&loop=false&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fpmdmce0thctd644wq96xk%2Fshorts-vtuber.mp4%3Frlkey%3D57sbw59ndzxeiz2wch2xqevy1%26st%3Db1o80xu4%26raw%3D1&overlay=true&muteButton=true&fullscreenButton=true&style=light&quality=auto",
-        link: "https://www.mediafire.com/file/wqsrzyw0qiok0a6/TrackMySalary.apk/file"
-      },
-      {
-        title: "VK POS",
-        description: "A point of sale software which can help shop keepers and many business model's, fast and local stored, responsive.",
-        videoSrc: "https://onelineplayer.com/player.html?autoplay=false&autopause=true&muted=false&loop=false&url=https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2Fpmdmce0thctd644wq96xk%2Fshorts-vtuber.mp4%3Frlkey%3D57sbw59ndzxeiz2wch2xqevy1%26st%3Db1o80xu4%26raw%3D1&overlay=true&muteButton=true&fullscreenButton=true&style=light&quality=auto",
-        link: "https://www.mediafire.com/file/s5m2e3gg0rwy2d2/VK+POS+.apk/file"
-      }
-    ];
+                <label style="font-size: 0.8em; font-weight: bold; display: block; margin-bottom: 5px; color: #333;">Select Calculation Formula:</label>
+                <select id="balanceFormula" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ff9800; background: #fff;" onchange="calculateDailyCashBalance()">
+                    <option value="1">Cash Sales + PayIn - Expenses (Standard)</option>
+                    <option value="2">All Sales (Cash+UPI) - Expenses</option>
+                    <option value="3">Starting Cash + Cash Sales - Expenses</option>
+                    <option value="4">Manual UPI + Cash Sales + Starting Cash + Expenses = Total (Formula A)</option>
+                    <option value="5">Manual UPI - Expenses + Cash Sales + Starting Cash = Total (Formula B)</option>
+                </select>
+            </div>
+            <button onclick="calculateDailyCashBalance()" style="width: 100%; padding: 10px; background: #ff9800; color: white; border: none; border-radius: 8px; font-weight: bold;">
+                Recalculate Today's Balance
+            </button>
+            <div id="dailyCashBalanceResult">
+                <div class="cash-balance-summary" style="border-top: none; margin-top: 0;">
+                    <span>Calculated Balance:</span>
+                    <span class="value" style="color: #555;">₹0.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-bottom: 15px; border-bottom: 1px dashed #ccc; padding-bottom: 10px;">
+        <h5 style="margin-top: 0; color: #4caf50;">Log New Bill/Outstanding:</h5>
+        <input type="text" id="billDescription" placeholder="Description (e.g., Gas Bill, Customer Credit)" style="margin-bottom: 5px;" />
+        <div class="bill-input-group" style="display: flex; gap: 5px;">
+            <input type="number" id="billTotal" placeholder="Total (₹)" min="0.01" step="0.01" style="flex: 1;">
+            <input type="number" id="billPaid" placeholder="Paid Now (₹)" value="0.00" min="0.00" step="0.01" style="flex: 1;">
+        </div>
+        <button class="add-bill-btn" onclick="addBill()" style="width: 100%; padding: 10px; background: #4caf50; color: white; border: none; border-radius: 8px; margin-top: 10px; font-weight: bold;">Add Bill/Outstanding</button>
+    </div>
+    <h5 style="margin-top: 0; color: #4caf50;">Outstanding Bills/Credits:</h5>
+    <div id="billsList"></div>
+</div>
 
-    // --- Initialization on DOM Load ---
-    document.addEventListener('DOMContentLoaded', () => {
-      initCounters();
-      setupPanelButtons();
-      setupPopupButtons();
-      renderProjects('gamePanelContent', gamesData, 'game');
-      renderProjects('softwarePanelContent', softwareData, 'app');
-      // initStatsCounter is REMOVED
-      
+<div id="historyPanel">
+    <div class="panel-header">
+        <h4>Transaction History 🧾</h4>
+        <button onclick="togglePanel('historyPanel')" class="panel-close-btn">Close ✕</button>
+    </div>
+    <div id="historyList"></div>
+</div>
 
-      // Add event listeners for instant search on keyup
-      document.getElementById('gameSearchInput').addEventListener('keyup', (event) => {
-        searchProjects('gameSearchInput', 'gamePanelContent', gamesData, 'game');
-      });
-      document.getElementById('softwareSearchInput').addEventListener('keyup', (event) => {
-        searchProjects('softwareSearchInput', 'softwarePanelContent', softwareData, 'app');
-      });
+<div id="inventoryManagementPanel"></div>
+
+<div id="receiptOutput"></div>
+
+<script>
+// GLOBAL DATA STORAGE
+let items = [];
+let cart = [];
+let transactions = []; 
+let shopNotes = []; 
+let dailyPayNotes = []; 
+let parkedSales = []; 
+let expiryNotes = []; 
+let newArrivalsLog = []; 
+let shifts = []; 
+let currentShift = null; 
+let nextNoteId = 1;
+let nextTokenId = 1; 
+let nextParkedId = 1; 
+let nextShiftId = 1;
+let nextArrivalId = 1; 
+
+// BUSINESS PROFILE DEFAULTS
+let businessProfile = {
+    companyName: "VK POS",
+    phone: "",
+    email: "",
+    address: "",
+    license: "",
+    tagline: "Where Every Journey Holds a Secret"
+};
+
+// =======================================================
+// LAYOUT TOGGLE LOGIC
+// =======================================================
+function toggleLayout() {
+    const container = document.getElementById('mainContainer');
+    container.classList.toggle('adaptive');
+    
+    // Save preference
+    if (container.classList.contains('adaptive')) {
+        localStorage.setItem('posLayoutPreference', 'adaptive');
+    } else {
+        localStorage.setItem('posLayoutPreference', 'mobile');
+    }
+}
+
+// Restore layout preference on load
+function loadLayoutPreference() {
+    const pref = localStorage.getItem('posLayoutPreference');
+    if (pref === 'adaptive') {
+        document.getElementById('mainContainer').classList.add('adaptive');
+    }
+}
+
+// =======================================================
+// PANEL MANAGEMENT
+// =======================================================
+
+function togglePanel(panelId) {
+    const panel = document.getElementById(panelId);
+    const allPanels = ['inventoryManagementPanel', 'historyPanel', 'notesPanel', 'analysisPanel', 'calculatorPanel', 'paymentHistoryModal', 'parkedSalesPanel', 'shiftHistoryPanel', 'productionPanel', 'settingsPanel'];
+
+    if (panel.classList.contains('panel-open')) {
+        panel.classList.remove('panel-open');
+        setTimeout(() => { panel.style.display = 'none'; }, 400); 
+    } else {
+        allPanels.forEach(id => {
+            const p = document.getElementById(id);
+            if (p.classList.contains('panel-open')) {
+                 p.classList.remove('panel-open');
+                 p.style.display = 'none';
+            }
+        });
+
+        panel.style.display = 'block';
+        setTimeout(() => { 
+            panel.classList.add('panel-open'); 
+            switch (panelId) {
+                case 'inventoryManagementPanel': renderInventoryPanel('stock'); break;
+                case 'historyPanel': renderHistoryPanel(); break;
+                case 'notesPanel': renderNotesPanel(); calculateDailyCashBalance(); break;
+                case 'analysisPanel': renderAnalysisPanel(); break;
+                case 'calculatorPanel': clearDisplay(); break;
+                case 'parkedSalesPanel': renderParkedSalesPanel(); break;
+                case 'shiftHistoryPanel': renderShiftHistoryPanel(); break;
+                case 'productionPanel': renderProductionPanel(); break; 
+                case 'settingsPanel': renderSettingsPanel(); break;
+            }
+        }, 10); 
+    }
+}
+
+// =======================================================
+// SETTINGS & BRANDING LOGIC (UPDATED WITH FULL BIZ INFO)
+// =======================================================
+function renderSettingsPanel() {
+    document.getElementById('settingsCompanyName').value = businessProfile.companyName;
+    document.getElementById('settingsPhone').value = businessProfile.phone;
+    document.getElementById('settingsEmail').value = businessProfile.email;
+    document.getElementById('settingsAddress').value = businessProfile.address;
+    document.getElementById('settingsLicense').value = businessProfile.license;
+    document.getElementById('settingsTagline').value = businessProfile.tagline;
+}
+
+function saveSettings() {
+    businessProfile.companyName = document.getElementById('settingsCompanyName').value.trim() || "VK POS";
+    businessProfile.phone = document.getElementById('settingsPhone').value.trim();
+    businessProfile.email = document.getElementById('settingsEmail').value.trim();
+    businessProfile.address = document.getElementById('settingsAddress').value.trim();
+    businessProfile.license = document.getElementById('settingsLicense').value.trim();
+    businessProfile.tagline = document.getElementById('settingsTagline').value.trim() || "Where Every Journey Holds a Secret";
+
+    localStorage.setItem('posBusinessProfile', JSON.stringify(businessProfile));
+    updateHeaderTitle();
+    togglePanel('settingsPanel');
+    alert("Business Profile Saved!");
+}
+
+function updateHeaderTitle() {
+    document.getElementById('mainHeaderTitle').innerText = businessProfile.companyName;
+}
+
+// =======================================================
+// PRODUCTION REPORT LOGIC (UPDATED: DAILY ONLY)
+// =======================================================
+
+function renderProductionPanel() {
+    const container = document.getElementById('productionContent');
+    container.innerHTML = '';
+    
+    if (items.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">No inventory items found.</p>';
+        return;
+    }
+
+    // 1. Calculate Sales per Item based on TODAY'S Transaction History
+    const salesCountMap = {};
+    const todayStr = new Date().toDateString(); // Get today's date string
+
+    transactions.forEach(tx => {
+        // FILTER: Only process transactions from Today
+        if (new Date(tx.timestamp).toDateString() !== todayStr) return;
+
+        tx.items.forEach(i => {
+            if(!salesCountMap[i.name]) salesCountMap[i.name] = 0;
+            salesCountMap[i.name] += i.quantity;
+        });
     });
 
-    // --- Functions ---
+    // 2. Build the Table Headers
+    let tableHtml = `
+        <table class="prod-table">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Price</th>
+                    <th>Sold (Today)</th>
+                    <th>Remaining</th>
+                    <th>Produced (Daily)</th>
+                    <th>Sold Value</th>
+                    <th>Rem. Value</th>
+                    <th>Prod. Value</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
 
-    /**
-     * Animates the game and software counters.
-     */
-    function initCounters() {
-      let currentGames = 0;
-      let currentApps = 0;
-      const gamesCountElem = document.getElementById('gamesCount');
-      const appsCountElem = document.getElementById('appsCount');
+    // 3. Variables for Grand Totals
+    let grandTotalSoldVal = 0;
+    let grandTotalRemVal = 0;
+    let grandTotalProdVal = 0;
 
-      const maxGames = gamesData.length;
-      const maxApps = softwareData.length;
+    // 4. Iterate items and calculate rows
+    items.forEach(item => {
+        const price = parseFloat(item.price);
+        const remainingQty = parseInt(item.stock);
+        const soldQty = salesCountMap[item.name] || 0;
+        
+        // Logic: Produced (Today) = Sold (Today) + Remaining (Now)
+        const producedQty = soldQty + remainingQty; 
 
-      // Use Math.max to ensure counters show at least 0 if data is empty
-      gamesCountElem.textContent = maxGames;
-      appsCountElem.textContent = maxApps;
+        const soldVal = soldQty * price;
+        const remainingVal = remainingQty * price;
+        const producedVal = producedQty * price;
 
-      // Only animate if there's actual data to count up to
-      if (maxGames > 0 || maxApps > 0) {
-        gamesCountElem.textContent = 0; // Reset for animation
-        appsCountElem.textContent = 0; // Reset for animation
+        grandTotalSoldVal += soldVal;
+        grandTotalRemVal += remainingVal;
+        grandTotalProdVal += producedVal;
 
-        const interval = setInterval(() => {
-          let countingFinished = true;
-          if (currentGames < maxGames) {
-            gamesCountElem.textContent = ++currentGames;
-            countingFinished = false;
-          }
-          if (currentApps < maxApps) {
-            appsCountElem.textContent = ++currentApps;
-            countingFinished = false;
-          }
-          if (countingFinished) {
-            clearInterval(interval);
-          }
-        }, 150);
-      }
-    }
-
-    // initStatsCounter function REMOVED
-
-    /**
-     * Sets up event listeners for the slide panel open/close buttons.
-     */
-    function setupPanelButtons() {
-      document.getElementById('gameBtn').addEventListener('click', () => openPanel('gamePanel'));
-      document.getElementById('softwareBtn').addEventListener('click', () => openPanel('softwarePanel'));
-    }
-
-    /**
-     * Opens a specified slide panel and hides the main panel buttons.
-     * @param {string} id - The ID of the panel to open.
-     */
-    function openPanel(id) {
-      document.getElementById(id).classList.add('open');
-      document.getElementById('gameBtn').classList.add('hidden');
-      document.getElementById('softwareBtn').classList.add('hidden');
-      document.body.style.overflow = 'hidden'; // Prevent scrolling background when side panel is open
-      // Trigger reflow to ensure smooth transition on elements that might affect layout
-      document.body.offsetWidth;
-    }
-
-    /**
-     * Closes a specified slide panel and shows the main panel buttons.
-     * @param {string} id - The ID of the panel to close.
-     */
-    function closePanel(id) {
-      document.getElementById(id).classList.remove('open');
-      // Adding a slight delay to re-show buttons after panel animation starts to hide
-      setTimeout(() => {
-        document.getElementById('gameBtn').classList.remove('hidden');
-        document.getElementById('softwareBtn').classList.remove('hidden');
-      }, 300); // Matches --transition-slow
-      document.body.style.overflow = ''; // Restore scrolling
-    }
-
-    /**
-     * Sets up event listeners for popup open/close buttons and outside click.
-     */
-    function setupPopupButtons() {
-      document.getElementById('showPrivacyBtn').addEventListener('click', () => {
-        openPopup('privacyPopup');
-      });
-      document.getElementById('showContactBtn').addEventListener('click', () => {
-        openPopup('contactPopup');
-      });
-      // --- NEW: Partners button ---
-      document.getElementById('showPartnersBtn').addEventListener('click', () => {
-        openPopup('partnersPopup');
-      });
-
-      // Close popups when clicking outside the content (on the overlay itself)
-      document.getElementById('privacyPopup').addEventListener('click', (e) => {
-        if (e.target.id === 'privacyPopup') {
-          closePopup('privacyPopup');
-        }
-      });
-      document.getElementById('contactPopup').addEventListener('click', (e) => {
-        if (e.target.id === 'contactPopup') {
-          closePopup('contactPopup');
-        }
-      });
-      // --- NEW: Partners popup outside click ---
-      document.getElementById('partnersPopup').addEventListener('click', (e) => {
-        if (e.target.id === 'partnersPopup') {
-          closePopup('partnersPopup');
-        }
-      });
-    }
-
-    /**
-     * Opens a specified popup.
-     * @param {string} id - The ID of the popup overlay to open.
-     */
-    function openPopup(id) {
-      document.getElementById(id).style.display = 'flex';
-      document.body.style.overflow = 'hidden'; // Lock main scroll
-      // Trigger reflow
-      document.getElementById(id).offsetWidth;
-    }
-
-    /**
-     * Closes a specified popup.
-     * @param {string} id - The ID of the popup overlay to close.
-     */
-    function closePopup(id) {
-      document.getElementById(id).style.display = 'none';
-      document.body.style.overflow = ''; // Restore main scroll
-    }
-
-    /**
-     * Dynamically renders game/app cards into a specified container.
-     * @param {string} containerId - The ID of the HTML element where cards will be rendered.
-     * @param {Array<Object>} dataArray - An array of project objects.
-     * @param {string} type - 'game' or 'app' to determine card class.
-     * @param {string} [searchTerm=''] - Optional search term to filter results.
-     */
-    function renderProjects(containerId, dataArray, type, searchTerm = '') {
-      const container = document.getElementById(containerId);
-      if (!container) {
-        console.error(`Container with ID '${containerId}' not found. Cannot render ${type}s.`);
-        return;
-      }
-      container.innerHTML = ''; // Clear existing content
-
-      const lowerCaseSearchTerm = searchTerm.toLowerCase();
-      const filteredData = dataArray.filter(project =>
-        project.title.toLowerCase().includes(lowerCaseSearchTerm) ||
-        project.description.toLowerCase().includes(lowerCaseSearchTerm)
-      );
-
-      if (filteredData.length === 0) {
-        container.innerHTML = `<p style="text-align: center; color: #aaa; margin-top: 20px;">No matching ${type}s found.</p>`;
-        return;
-      }
-
-      filteredData.forEach(project => {
-        const card = document.createElement('div');
-        card.className = `${type}-card`; // Will be 'game-card' or 'app-card'
-
-        // Check if videoSrc exists before adding video player
-        const videoPlayerHtml = project.videoSrc ? `
-          <div class="card-video-container">
-            <iframe
-              src="${project.videoSrc}"
-              title="${project.title} Video"
-              frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen
-            ></iframe>
-          </div>
-        ` : '';
-
-        card.innerHTML = `
-          <h3>${project.title}</h3>
-          <p>${project.description}</p>
-          ${videoPlayerHtml} <a href="${project.link}" target="_blank" rel="noopener noreferrer">Download / Learn More</a>
+        tableHtml += `
+            <tr>
+                <td>${item.name}</td>
+                <td>₹${price.toFixed(2)}</td>
+                <td style="color: #4caf50;">${soldQty}</td>
+                <td style="color: #ff9800;">${remainingQty}</td>
+                <td style="font-weight: bold;">${producedQty}</td>
+                <td class="val-cell" style="color: #4caf50;">₹${soldVal.toFixed(2)}</td>
+                <td class="val-cell" style="color: #ff9800;">₹${remainingVal.toFixed(2)}</td>
+                <td class="val-cell">₹${producedVal.toFixed(2)}</td>
+            </tr>
         `;
-        container.appendChild(card);
-      });
-    }
+    });
 
-    /**
-     * Initiates a search for projects based on input.
-     * @param {string} inputId - The ID of the search input field.
-     * @param {string} containerId - The ID of the content container to render into.
-     * @param {Array<Object>} dataArray - The full array of project data (gamesData or softwareData).
-     * @param {string} type - 'game' or 'app'.
-     */
-    function searchProjects(inputId, containerId, dataArray, type) {
-      const searchTerm = document.getElementById(inputId).value;
-      renderProjects(containerId, dataArray, type, searchTerm);
+    // 5. Add Grand Total Row
+    tableHtml += `
+            <tr class="total-prod-row">
+                <td colspan="5" style="text-align: right;">GRAND TOTALS:</td>
+                <td style="color: #00695c;">₹${grandTotalSoldVal.toFixed(2)}</td>
+                <td style="color: #e65100;">₹${grandTotalRemVal.toFixed(2)}</td>
+                <td style="color: #00bcd4;">₹${grandTotalProdVal.toFixed(2)}</td>
+            </tr>
+            </tbody>
+        </table>
+    `;
+
+    container.innerHTML = tableHtml;
+}
+
+
+// =======================================================
+// STANDARD FUNCTIONS
+// =======================================================
+
+function formatDateForDisplay(isoString) {
+    if (!isoString) return 'N/A';
+    try { return new Date(isoString).toLocaleString(); } catch (e) { return 'Invalid Date'; }
+}
+function formatDateForReceipt(isoString) {
+    if (!isoString) return 'N/A';
+    try {
+        const date = new Date(isoString);
+        const datePart = date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+        const timePart = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+        return `${datePart}, ${timePart}`;
+    } catch (e) { return 'Invalid Date'; }
+}
+
+function saveData() {
+    try {
+        localStorage.setItem('posItems', JSON.stringify(items));
+        localStorage.setItem('posTransactions', JSON.stringify(transactions));
+        localStorage.setItem('posShopNotes', JSON.stringify(shopNotes));
+        localStorage.setItem('posDailyPayNotes', JSON.stringify(dailyPayNotes)); 
+        localStorage.setItem('posNextNoteId', nextNoteId);
+        localStorage.setItem('posNextTokenId', nextTokenId);
+        localStorage.setItem('posParkedSales', JSON.stringify(parkedSales)); 
+        localStorage.setItem('posNextParkedId', nextParkedId); 
+        localStorage.setItem('posExpiryNotes', JSON.stringify(expiryNotes)); 
+        localStorage.setItem('posNewArrivalsLog', JSON.stringify(newArrivalsLog)); 
+        localStorage.setItem('posNextArrivalId', nextArrivalId); 
+        localStorage.setItem('posShifts', JSON.stringify(shifts));
+        localStorage.setItem('posCurrentShift', JSON.stringify(currentShift));
+        localStorage.setItem('posNextShiftId', nextShiftId);
+        localStorage.setItem('posBusinessProfile', JSON.stringify(businessProfile));
+    } catch (e) { console.error("Error saving data:", e); }
+}
+
+function loadData() {
+    try {
+        loadLayoutPreference();
+
+        // Load Business Profile
+        const storedProfile = localStorage.getItem('posBusinessProfile');
+        if (storedProfile) {
+            businessProfile = JSON.parse(storedProfile);
+        }
+        updateHeaderTitle(); 
+
+        const storedItems = localStorage.getItem('posItems');
+        const storedTransactions = localStorage.getItem('posTransactions');
+        const storedShopNotes = localStorage.getItem('posShopNotes');
+        const storedDailyPayNotes = localStorage.getItem('posDailyPayNotes'); 
+        const storedNextNoteId = localStorage.getItem('posNextNoteId');
+        const storedNextTokenId = localStorage.getItem('posNextTokenId');
+        const storedParkedSales = localStorage.getItem('posParkedSales'); 
+        const storedNextParkedId = localStorage.getItem('posNextParkedId'); 
+        const storedExpiryNotes = localStorage.getItem('posExpiryNotes'); 
+        const storedNewArrivalsLog = localStorage.getItem('posNewArrivalsLog'); 
+        const storedNextArrivalId = localStorage.getItem('posNextArrivalId'); 
+        const storedShifts = localStorage.getItem('posShifts');
+        const storedCurrentShift = localStorage.getItem('posCurrentShift');
+        const storedNextShiftId = localStorage.getItem('posNextShiftId');
+
+        const defaultItemMap = {
+            "Bread": { price: 40.00, stock: 50, barcode: "1234567890123", isFav: false },
+            "Cake": { price: 10.00, stock: 50, barcode: "1112223334445", isFav: false },
+            "Milk": { price: 15.00, stock: 50, barcode: "9876543210987", isFav: false },
+            "Coffee": { price: 25.00, stock: 50, barcode: "4567890123456", isFav: false },
+        };
+        
+        if (storedItems) items = JSON.parse(storedItems).map(item => ({...item, price: parseFloat(item.price)})); 
+        else items = []; 
+        
+        // Initialize simple defaults if empty
+        if (items.length === 0) {
+            const defaultItemNames = Object.keys(defaultItemMap);
+            defaultItemNames.forEach(name => {
+                 items.push({ name: name, ...defaultItemMap[name] });
+            });
+        }
+
+        if (storedTransactions) transactions = JSON.parse(storedTransactions);
+        transactions = transactions.map(tx => ({
+            ...tx, items: tx.items.map(i => ({...i, price: parseFloat(i.price)})),
+            paymentMethod: tx.paymentMethod || 'Cash',
+            timestamp: tx.timestamp.includes('/') ? new Date(tx.timestamp).toISOString() : tx.timestamp,
+            tokenId: tx.tokenId || transactions.indexOf(tx) + 1 
+        }));
+
+        if (storedShopNotes) shopNotes = JSON.parse(storedShopNotes).map(bill => {
+            if (!bill.paymentHistory) {
+                bill.paymentHistory = [];
+                const isoTimestamp = bill.timestamp.includes('/') ? new Date(bill.timestamp).toISOString() : bill.timestamp;
+                bill.timestamp = isoTimestamp;
+                if (bill.paid > 0) bill.paymentHistory.push({ amount: bill.paid, timestamp: isoTimestamp, method: 'Cash' });
+            }
+            bill.paymentHistory = bill.paymentHistory.map(p => ({...p, method: p.method || 'Cash', amount: parseFloat(p.amount)}));
+            return bill;
+        });
+        
+        if (storedDailyPayNotes) dailyPayNotes = JSON.parse(storedDailyPayNotes);
+        if (storedParkedSales) parkedSales = JSON.parse(storedParkedSales);
+        if (storedExpiryNotes) expiryNotes = JSON.parse(storedExpiryNotes); 
+        if (storedNewArrivalsLog) newArrivalsLog = JSON.parse(storedNewArrivalsLog); 
+        if (storedNextArrivalId) nextArrivalId = parseInt(storedNextArrivalId); 
+        if (storedShifts) shifts = JSON.parse(storedShifts);
+        if (storedCurrentShift && storedCurrentShift !== 'null') currentShift = JSON.parse(storedCurrentShift);
+        if (storedNextNoteId) nextNoteId = parseInt(storedNextNoteId); 
+        if (storedNextTokenId) nextTokenId = parseInt(storedNextTokenId); 
+        if (storedNextParkedId) nextParkedId = parseInt(storedNextParkedId); 
+        if (storedNextArrivalId) nextArrivalId = parseInt(storedNextArrivalId); 
+        if (storedNextShiftId) nextShiftId = parseInt(storedNextShiftId);
+
+        document.getElementById('itemsList').innerHTML = '<p id="searchTip" style="text-align: center; color: #aaa; margin-top: 20px;">Type a name or barcode above to see product results.</p>';
+
+        updateCart();
+        updateParkedSalesCount(); 
+        updateShiftButtons(); 
+        renderFavorites(); // Load favorites bar
+    } catch (e) { console.error("Error loading data.", e); }
+}
+
+// =======================================================
+// FAVORITES SYSTEM LOGIC
+// =======================================================
+function toggleFavorite(e, itemName) {
+    e.stopPropagation(); // Prevent adding to cart when clicking heart
+    const item = items.find(i => i.name === itemName);
+    if (item) {
+        item.isFav = !item.isFav;
+        saveData();
+        renderFavorites();
+        filterItems(); // Refresh search list to update heart color
+    }
+}
+
+function renderFavorites() {
+    const favBar = document.getElementById('favoritesBar');
+    const favItems = items.filter(i => i.isFav);
+    
+    if (favItems.length === 0) {
+        favBar.style.display = 'none';
+        return;
     }
     
-    /**
-     * Toggles the visibility of an FAQ answer.
-     * @param {HTMLElement} questionElement - The FAQ question div element.
-     */
-    function toggleFaq(questionElement) {
-        const expanded = questionElement.getAttribute('aria-expanded') === 'true' || false;
-        questionElement.setAttribute('aria-expanded', !expanded);
+    favBar.style.display = 'flex';
+    favBar.innerHTML = favItems.map(item => `
+        <div class="fav-pill" onclick="addToCart('${item.name}')">
+            ❤️ ${item.name}
+        </div>
+    `).join('');
+}
 
-        const answerElement = questionElement.nextElementSibling;
-        answerElement.classList.toggle('open');
+// Calculator Logic
+let currentInput = '0';
+let result = '';
+let isCalculated = false;
+function getCalcElements() { return { input: document.getElementById('calcInput'), result: document.getElementById('calcResult') }; }
+function updateCalculatorDisplay() {
+    const { input, result: resultEl } = getCalcElements();
+    input.innerText = currentInput; resultEl.innerText = result;
+    if (input) input.scrollLeft = input.scrollWidth; 
+}
+function clearDisplay() { currentInput = '0'; result = ''; isCalculated = false; updateCalculatorDisplay(); }
+function deleteLast() {
+    if (currentInput === '0' || isCalculated) { clearDisplay(); return; }
+    currentInput = currentInput.slice(0, -1);
+    if (currentInput.length === 0 || currentInput === '-') currentInput = '0';
+    calculateIntermediateResult();
+}
+function calculateIntermediateResult() {
+    if (isCalculated) return;
+    try {
+        let expression = currentInput.replace(/×/g, '*').replace(/÷/g, '/');
+        const safeExpression = expression.replace(/([+\-*/]\.?|[^0-9.])$/, '');
+        if (safeExpression.trim().length > 0 && !/[+\-*/]$/.test(currentInput)) {
+            const tempResult = eval(safeExpression);
+            result = isFinite(tempResult) ? tempResult.toFixed(2).replace(/\.00$|0$/, '') : '';
+        } else { result = ''; }
+    } catch (e) { result = ''; }
+    updateCalculatorDisplay();
+}
+function appendToDisplay(value) {
+    if (isCalculated) {
+        if (/[+\-*/]/.test(value)) currentInput = result + value;
+        else currentInput = value;
+        result = ''; isCalculated = false;
+    } else {
+        if (currentInput === '0' && value !== '.' && value !== '(' && value !== ')') currentInput = value;
+        else currentInput += value;
     }
-  </script>
+    calculateIntermediateResult();
+}
+function calculateResult() {
+    try {
+        let expression = currentInput.replace(/×/g, '*').replace(/÷/g, '/');
+        const finalResult = eval(expression.replace(/([+\-*/%]\.?|[^0-9.])$/, ''));
+        if (isFinite(finalResult)) {
+            result = finalResult.toFixed(2).replace(/\.00$|0$/, ''); 
+            currentInput = finalResult.toFixed(2).replace(/\.00$|0$/, ''); 
+            isCalculated = true;
+        } else { result = 'Error'; currentInput = '0'; }
+    } catch (e) { result = 'Error'; currentInput = '0'; }
+    updateCalculatorDisplay();
+}
+
+// Shift Logic
+function updateShiftButtons() {
+    const startBtn = document.getElementById('startShiftBtn');
+    const closeBtn = document.getElementById('closeShiftBtn');
+    if (currentShift) {
+        startBtn.disabled = true; startBtn.innerText = `Shift #${currentShift.id} Active`; closeBtn.disabled = false;
+    } else {
+        startBtn.disabled = false; startBtn.innerText = `Start Shift 🚀`; closeBtn.disabled = true;
+    }
+}
+function startShift() {
+    if (currentShift) return;
+    const startingCashInput = prompt("Enter starting cash (₹):", "500.00");
+    
+    // If user clicks Cancel, stop the function
+    if (startingCashInput === null) return; 
+    
+    const startingCash = parseFloat(startingCashInput) || 0.00;
+    
+    currentShift = {
+        id: nextShiftId++,
+        startTime: new Date().toISOString(),
+        startingCash: startingCash,
+        startTransactionCount: transactions.length,
+        startDailyPayNoteCount: dailyPayNotes.length,
+        startArrivalLogCount: newArrivalsLog.length, 
+        startInventorySnapshot: items.map(item => ({ name: item.name, stock: item.stock })),
+    };
+    
+    saveData(); 
+    updateShiftButtons();
+    alert("Shift Started!");
+}
+
+function closeShift() {
+    if (!currentShift) { alert("No active shift."); return; }
+    if (!confirm(`Close Shift #${currentShift.id}?`)) return;
+    const endingCashInput = prompt("Enter final counted cash:", currentShift.startingCash.toFixed(2));
+    const endingCash = parseFloat(endingCashInput) || 0.00;
+    if (isNaN(endingCash)) { alert("Invalid amount."); return; }
+    
+    const shiftEnd = {
+        id: currentShift.id,
+        startTime: currentShift.startTime,
+        endTime: new Date().toISOString(),
+        startingCash: currentShift.startingCash,
+        endingCash: endingCash,
+        endTransactionCount: transactions.length,
+        endDailyPayNoteCount: dailyPayNotes.length,
+        endArrivalLogCount: newArrivalsLog.length, 
+        // Capture inventory at this exact moment for printing later
+        endInventorySnapshot: items.map(item => ({ name: item.name, stock: item.stock })),
+        startTransactionCount: currentShift.startTransactionCount,
+        startDailyPayNoteCount: currentShift.startDailyPayNoteCount,
+        startArrivalLogCount: currentShift.startArrivalLogCount, 
+        startInventorySnapshot: currentShift.startInventorySnapshot,
+    };
+    
+    const newTransactions = transactions.slice(shiftEnd.startTransactionCount);
+    let totalSales = newTransactions.reduce((sum, tx) => sum + tx.total, 0);
+    let totalCashReceived = newTransactions.reduce((sum, tx) => sum + tx.paid, 0);
+    const newDailyPayNotes = dailyPayNotes.slice(shiftEnd.startDailyPayNoteCount);
+    const totalExpenses = newDailyPayNotes.filter(n => n.type === 'Expense').reduce((sum, n) => sum + n.amount, 0);
+    const totalPayIn = newDailyPayNotes.filter(n => n.type === 'PayIn').reduce((sum, n) => sum + n.amount, 0);
+    const expectedCash = currentShift.startingCash + totalCashReceived + totalPayIn - totalExpenses;
+    const cashVariance = endingCash - expectedCash;
+    
+    // NEW: Get arrivals for this shift
+    const newArrivals = newArrivalsLog.slice(shiftEnd.startArrivalLogCount);
+    
+    shiftEnd.summary = { newTransactionCount: newTransactions.length, totalSales, totalCashReceived, totalExpenses, totalPayIn, expectedCash, cashVariance, newDailyPayNotes, newArrivals }; 
+    
+    shifts.push(shiftEnd);
+    // Reset daily logs after shift close
+    dailyPayNotes = []; 
+    newArrivalsLog = []; 
+    currentShift = null;
+    saveData(); updateShiftButtons(); printShiftReport(shiftEnd);
+    if (document.getElementById('notesPanel').classList.contains('panel-open')) renderNotesPanel();
+    alert(`Shift #${shiftEnd.id} closed.`);
+}
+function renderShiftHistoryPanel() {
+    const list = document.getElementById('shiftsList');
+    list.innerHTML = '';
+    if (shifts.length === 0) { list.innerHTML = '<p style="text-align: center; color: #888;">No closed shifts.</p>'; return; }
+    [...shifts].reverse().forEach(shift => {
+        const isVariance = Math.abs(shift.summary.cashVariance) > 0.005;
+        const card = document.createElement('div');
+        card.className = 'shift-card';
+        card.innerHTML = `
+            <div class="shift-header"><span style="color: #ff5722;">Shift ID: ${shift.id}</span><span style="font-size: 1.1em; color: #3f51b5;">Sales: ₹${shift.summary.totalSales.toFixed(2)}</span></div>
+            <div class="parked-summary">
+                 <small>Start: ${formatDateForDisplay(shift.startTime)}</small><br>
+                 <small>End: ${formatDateForDisplay(shift.endTime)}</small><br>
+                 <small style="font-weight: bold; color: ${isVariance ? '#d32f2f' : '#4caf50'};">Variance: ₹${shift.summary.cashVariance.toFixed(2)}</small>
+            </div>
+            <div class="shift-controls"><button class="print-shift-btn" onclick="printShiftReportById(${shift.id})">Reprint Report 🖨️</button></div>
+        `;
+        list.appendChild(card);
+    });
+}
+function printShiftReportById(shiftId) { const shift = shifts.find(s => s.id === shiftId); if (shift) printShiftReport(shift); }
+
+// =======================================================
+// UPDATED: PRINT SHIFT REPORT (WITH BUSINESS PROFILE)
+// =======================================================
+function printShiftReport(shift) {
+    const formatAmount = (a) => parseFloat(a).toFixed(2);
+    
+    // 1. Calculate Product Breakdown for this specific shift
+    const allTxs = JSON.parse(localStorage.getItem('posTransactions') || '[]');
+    const shiftTransactions = allTxs.slice(shift.startTransactionCount, shift.endTransactionCount || undefined);
+
+    const soldItemsMap = {};
+    let totalCashFromSales = 0;
+
+    shiftTransactions.forEach(tx => {
+        // Aggregate Item Sales
+        tx.items.forEach(item => {
+            if (!soldItemsMap[item.name]) soldItemsMap[item.name] = 0;
+            soldItemsMap[item.name] += item.quantity;
+        });
+
+        // Only calculate Cash from sales here
+        if (tx.paymentMethod === 'Cash') {
+            totalCashFromSales += tx.total;
+        }
+    });
+
+    // 2. THE FIX: Bypass existing POS UPI data with Manual Entry from the UI
+    const manualUpiValue = parseFloat(document.getElementById('manualUpiInput').value) || 0;
+
+    let soldItemsHtml = '';
+    for (const [name, qty] of Object.entries(soldItemsMap)) {
+        soldItemsHtml += `<div class="receipt-line">${name} <span>${qty}</span></div>`;
+    }
+
+    // 3. Daily Pay / Expenses
+    let dailyPayHtml = '';
+    shift.summary.newDailyPayNotes.forEach(note => {
+        dailyPayHtml += `<div class="receipt-line" style="font-size: 0.9em;"><span>${note.description.substring(0, 20)}</span><span>${note.type === 'PayIn' ? '+' : '-'} ₹${formatAmount(note.amount)}</span></div>`;
+    });
+    
+    // 4. NEW ARRIVALS for the shift
+    let newArrivalsHtml = '';
+    let totalArrivalQty = 0;
+    if (shift.summary.newArrivals && shift.summary.newArrivals.length > 0) {
+        shift.summary.newArrivals.forEach(arrival => {
+            newArrivalsHtml += `<div class="receipt-line">${arrival.name} <span>${arrival.quantity}</span></div>`;
+            totalArrivalQty += arrival.quantity;
+        });
+        newArrivalsHtml = `
+            <div class="receipt-separator"></div>
+            <div class="shift-report-section">
+                <h5>NEW ARRIVALS (IN STOCK)</h5>
+                ${newArrivalsHtml}
+                <div class="receipt-line" style="font-weight: bold;">TOTAL ADDED: <span>${totalArrivalQty}</span></div>
+            </div>
+        `;
+    }
+
+    // 5. Generate Inventory List (Stock Remaining)
+    let inventoryHtml = '';
+    if (shift.endInventorySnapshot && shift.endInventorySnapshot.length > 0) {
+        inventoryHtml += `<div class="receipt-separator"></div><div class="shift-report-section"><h5>CLOSING STOCK</h5>`;
+        shift.endInventorySnapshot.forEach(item => {
+            inventoryHtml += `<div class="receipt-line">${item.name} <span>${item.stock}</span></div>`;
+        });
+        inventoryHtml += `</div>`;
+    }
+
+    // 6. Absolute Total Logic (Bypassed with Manual UPI)
+    // Starting Cash + Cash Sales + Manual UPI + Expenses
+    const absoluteTotal = shift.startingCash + totalCashFromSales + manualUpiValue + shift.summary.totalExpenses;
+
+    const reportHtml = `
+        <div id="shiftReportContent" style="width: 100%; max-width: 80mm;">
+            <div class="receipt-header">
+                <strong>${businessProfile.companyName}</strong><br>
+                ${businessProfile.phone ? 'Tel: '+businessProfile.phone+'<br>' : ''}
+                SHIFT REPORT #${shift.id}<br>
+                Start: ${formatDateForReceipt(shift.startTime)}<br>
+                End: ${formatDateForReceipt(shift.endTime)}
+            </div>
+            
+            <div class="receipt-separator"></div>
+            
+            <div class="shift-report-section">
+                <h5>SALES SUMMARY</h5>
+                ${soldItemsHtml}
+                <div class="receipt-separator"></div>
+                <div class="receipt-line total-line-print"><strong>TOTAL SALES:</strong> <span><strong>₹${formatAmount(shift.summary.totalSales)}</strong></span></div>
+            </div>
+
+            <div class="receipt-separator"></div>
+
+            <div class="shift-report-section">
+                <h5>EXPENSES DETAILED</h5>
+                ${dailyPayHtml}
+            </div>
+
+            <div class="receipt-separator"></div>
+
+            <div class="shift-report-section">
+                <h5>CASH CALCULATION</h5>
+                <div class="receipt-line">Start Cash: <span>₹${formatAmount(shift.startingCash)}</span></div>
+                <div class="receipt-line">Manual UPI: <span>₹${formatAmount(manualUpiValue)}</span></div>
+                <div class="receipt-line">Cash Sales: <span>₹${formatAmount(totalCashFromSales)}</span></div>
+                <div class="receipt-line">Total Expenses: <span>₹${formatAmount(shift.summary.totalExpenses)}</span></div>
+                <div class="receipt-separator"></div>
+                <div class="receipt-line total-line-print"><strong>ABS. TOTAL:</strong> <span><strong>₹${formatAmount(absoluteTotal)}</strong></span></div>
+                <small style="display:block; text-align:center;">(Start+CashSales+ManualUPI+Exp)</small>
+            </div>
+
+            ${newArrivalsHtml}
+
+            ${inventoryHtml}
+            
+            <div class="receipt-footer">End of Report</div>
+            <div class="watermark-print">VK INTERACTIVRS</div>
+        </div>
+    `;
+    document.getElementById('receiptOutput').innerHTML = reportHtml; window.print();
+}
+
+// Cart & POS Logic
+function scanBarcode() {
+    const code = document.getElementById('searchInput').value.trim();
+    if (!code) { alert("Enter barcode first."); return; }
+    const item = items.find(i => i.barcode === code);
+    if (item) { addToCart(item.name); document.getElementById('searchInput').value = ''; filterItems(); } 
+    else { alert("Barcode not found."); }
+}
+function displayItems(list) {
+    const itemsList = document.getElementById('itemsList'); itemsList.innerHTML = '';
+    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    if (query === '') { itemsList.innerHTML = '<p id="searchTip" style="text-align: center; color: #aaa; margin-top: 20px;">Type a name or barcode above to see product results.</p>'; return; }
+    if (list.length === 0) { itemsList.innerHTML = `<p style="text-align: center; color: #ff5722; margin-top: 20px;">No products found.</p>`; return; }
+    list.forEach((item) => {
+        const div = document.createElement('div'); div.className = 'item';
+        if (item.stock <= 0) div.classList.add('out-of-stock'); else div.onclick = () => addToCart(item.name);
+        
+        // Heart icon logic
+        const favIcon = item.isFav ? '❤️' : '🤍';
+        
+        div.innerHTML = `
+            <div>
+                <button class="fav-btn" onclick="toggleFavorite(event, '${item.name}')">${favIcon}</button>
+                ${item.name} - ₹${parseFloat(item.price).toFixed(2)}
+            </div>
+            <div class="item-stock">Stock: ${item.stock}</div>`;
+        itemsList.appendChild(div);
+    });
+}
+function filterItems() {
+    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    if (query === '') { displayItems([]); return; }
+    const filtered = items.filter(item => item.name.toLowerCase().includes(query) || (item.barcode && item.barcode.includes(query)));
+    displayItems(filtered);
+}
+function addToCart(itemName) {
+    const cartIndex = cart.findIndex(item => item.name === itemName);
+    const itemDetails = items.find(item => item.name === itemName);
+    if (!itemDetails) return;
+    if (itemDetails.stock === 0) { alert("Out of stock."); return; }
+    if (getCartQuantity(itemName) >= itemDetails.stock) { alert(`Only ${itemDetails.stock} in stock.`); return; }
+    if (cartIndex > -1) cart[cartIndex].quantity += 1;
+    else cart.push({...itemDetails, price: parseFloat(itemDetails.price), quantity: 1});
+    updateCart();
+}
+function getCartQuantity(itemName) { const cartItem = cart.find(item => item.name === itemName); return cartItem ? cartItem.quantity : 0; }
+function updateQuantity(cartIndex, change) {
+    if (cartIndex > -1) {
+        const itemInCart = cart[cartIndex];
+        const itemDetails = items.find(item => item.name === itemInCart.name);
+        if (change > 0 && itemDetails && itemInCart.quantity >= itemDetails.stock) { alert(`Limit reached.`); return; }
+        itemInCart.quantity += change;
+        if (itemInCart.quantity <= 0) cart.splice(cartIndex, 1);
+    }
+    updateCart();
+}
+function completeSale() {
+    if (cart.length === 0) return;
+    const grandTotal = cart.reduce((total, item) => total + (parseFloat(item.price) * item.quantity), 0);
+    const moneyReceived = parseFloat(document.getElementById('moneyReceived').value) || 0;
+    const paymentMethod = document.getElementById('paymentMethod').value; 
+    if (moneyReceived < grandTotal && paymentMethod !== 'Credit') { alert("Payment incomplete."); return; }
+    
+    cart.forEach(cartItem => {
+        const inventoryItem = items.find(i => i.name === cartItem.name);
+        if (inventoryItem) { inventoryItem.stock -= cartItem.quantity; if (inventoryItem.stock < 0) inventoryItem.stock = 0; }
+    });
+    
+    const changeAmount = moneyReceived - grandTotal;
+    if (paymentMethod === 'Credit' && changeAmount < 0) {
+        shopNotes.push({ id: nextNoteId++, description: `Credit: ${cart.map(i => `${i.name}x${i.quantity}`).join(', ')}`, total: grandTotal, paid: moneyReceived, timestamp: new Date().toISOString(), paymentHistory: (moneyReceived > 0) ? [{ amount: moneyReceived, timestamp: new Date().toISOString(), method: 'Down Payment' }] : [] });
+    }
+
+    const transaction = { timestamp: new Date().toISOString(), total: grandTotal, paid: moneyReceived, change: changeAmount, items: cart.map(item => ({...item})), paymentMethod: paymentMethod, tokenId: nextTokenId++ };
+    transactions.push(transaction);
+    alert(`Sale Completed! Change: ₹${changeAmount.toFixed(2)}.`);
+    cart = []; saveData(); document.getElementById('moneyReceived').value = grandTotal.toFixed(2); updateCart(); 
+}
+function updateCart() {
+    const cartItems = document.getElementById('cartItems'); cartItems.innerHTML = ''; let grandTotal = 0;
+    cart.forEach((item, index) => {
+        const subTotal = parseFloat(item.price) * item.quantity; grandTotal += subTotal;
+        const div = document.createElement('div'); div.className = 'cart-item';
+        div.innerHTML = `<div class="item-details">${item.name} (₹${item.price.toFixed(2)}) x ${item.quantity} = ₹${subTotal.toFixed(2)}</div><div class="qty-controls"><button onclick="updateQuantity(${index}, -1)">–</button><button onclick="updateQuantity(${index}, 1)">+</button></div>`;
+        cartItems.appendChild(div);
+    });
+    document.getElementById('subTotal').innerText = grandTotal.toFixed(2);
+    if (cart.length > 0 && parseFloat(document.getElementById('moneyReceived').value) < grandTotal && document.getElementById('paymentMethod').value !== 'Credit') { document.getElementById('moneyReceived').value = grandTotal.toFixed(2); }
+    if (cart.length === 0) document.getElementById('moneyReceived').value = "0.00";
+    document.getElementById('completeSaleBtn').disabled = cart.length === 0;
+    document.getElementById('suspendSaleBtn').disabled = cart.length === 0;
+    filterItems(); calculateChange();
+}
+function calculateChange() {
+    let grandTotal = cart.reduce((total, item) => total + (parseFloat(item.price) * item.quantity), 0);
+    const moneyReceived = parseFloat(document.getElementById('moneyReceived').value) || 0;
+    let remainingChange = moneyReceived - grandTotal;
+    const changeLabel = document.getElementById('changeLabel');
+    const changeAmount = document.getElementById('remainingChange');
+    const changeLine = document.getElementById('changeLine');
+    if (remainingChange < -0.005) { changeLabel.innerText = "Balance Due:"; changeAmount.innerText = (remainingChange * -1).toFixed(2); changeLine.className = 'total change-line balance-due'; }
+    else if (remainingChange > 0.005) { changeLabel.innerText = "Change:"; changeAmount.innerText = remainingChange.toFixed(2); changeLine.className = 'total change-line change-due'; }
+    else { changeLabel.innerText = "Change:"; changeAmount.innerText = "0.00"; changeLine.className = 'total change-line exact-payment'; }
+}
+
+// Printing (UPDATED WITH BUSINESS DETAILS)
+function printLastTransaction(type = 'bill') {
+    if (transactions.length === 0) { alert("No history."); return; }
+    printTransactionById(transactions.length - 1, type);
+}
+function printBill(tx, txId) {
+    let itemsHtml = tx.items.map(item => `<div class="receipt-line">${item.name} x ${item.quantity}<span>₹${(item.price * item.quantity).toFixed(2)}</span></div>`).join('');
+    
+    // BUILD HEADER FROM BUSINESS PROFILE
+    let bizHeader = `<strong>${businessProfile.companyName}</strong><br>`;
+    if (businessProfile.address) bizHeader += `${businessProfile.address}<br>`;
+    if (businessProfile.phone) bizHeader += `Tel: ${businessProfile.phone}<br>`;
+    if (businessProfile.email) bizHeader += `${businessProfile.email}<br>`;
+    if (businessProfile.license) bizHeader += `ID: ${businessProfile.license}<br>`;
+
+    return `
+        <div id="receiptContent" style="width: 100%;">
+            <div class="receipt-header">
+                ${bizHeader}
+                Receipt #${txId} | Mode: ${tx.paymentMethod}<br>
+                ${formatDateForReceipt(tx.timestamp)}
+            </div>
+            <div class="receipt-separator"></div>
+            ${itemsHtml}
+            <div class="receipt-separator"></div>
+            <div class="receipt-line total-line-print"><strong>TOTAL:</strong> <span><strong>₹${tx.total.toFixed(2)}</strong></span></div>
+            <div class="receipt-footer">
+                ${businessProfile.tagline}<br>
+                Thank You!
+            </div>
+            <div class="watermark-print">VK_INTERACTIVES</div>
+        </div>`;
+}
+function printToken(tx) {
+    let tokenItems = tx.items.map((item, i) => `<div class="token-header">${businessProfile.companyName}<br>TOKEN #${tx.tokenId}</div><div style="display:flex;justify-content:space-between;font-weight:bold;"><span>${item.name}</span><span>QTY: ${item.quantity}</span></div>${i < tx.items.length-1 ? '<div style="text-align:center;margin:10px 0;">✂︎----------------</div>' : ''}`).join('');
+    return `<div id="tokenContent" style="width: 100%;">${tokenItems}<div class="watermark-print">VK INTERACTIVES</div></div>`;
+}
+function printTransactionById(index, type = 'bill') {
+    if (index >= 0 && index < transactions.length) {
+        const tx = transactions[index];
+        document.getElementById('receiptOutput').innerHTML = (type === 'token') ? printToken(tx) : printBill(tx, index + 1);
+        window.print();
+    }
+}
+
+// Misc Logic (Parked Sales, History, Notes, Inventory)
+function updateParkedSalesCount() { document.getElementById('parkedSalesCount').innerText = parkedSales.length; }
+function suspendSale() {
+    if (cart.length === 0) return;
+    let name = prompt("Name for parked sale:", `Sale #${nextParkedId}`);
+    if (name === null) name = `Sale #${nextParkedId}`;
+    parkedSales.push({ id: nextParkedId++, name: name, timestamp: new Date().toISOString(), items: cart.map(i=>({...i})), total: cart.reduce((t,i)=>t+(i.price*i.quantity),0), moneyReceived: parseFloat(document.getElementById('moneyReceived').value)||0, paymentMethod: document.getElementById('paymentMethod').value });
+    cart = []; document.getElementById('moneyReceived').value='0.00'; alert("Sale Suspended."); saveData(); updateCart(); updateParkedSalesCount();
+}
+function recallParkedSale(id) {
+    if (cart.length > 0 && !confirm("Overwrite current cart?")) return;
+    const index = parkedSales.findIndex(s => s.id === id); if (index === -1) return;
+    const sale = parkedSales[index]; cart = sale.items.map(i=>({...i}));
+    document.getElementById('moneyReceived').value = sale.moneyReceived.toFixed(2); document.getElementById('paymentMethod').value = sale.paymentMethod;
+    parkedSales.splice(index, 1); saveData(); updateCart(); updateParkedSalesCount(); togglePanel('parkedSalesPanel');
+}
+function renderHistoryPanel() {
+    const list = document.getElementById('historyList'); list.innerHTML = '';
+    [...transactions].reverse().forEach((tx, i) => {
+        const originalIndex = transactions.length - 1 - i;
+        const div = document.createElement('div'); div.className = 'transaction-card';
+        div.innerHTML = `
+            <div class="transaction-header">
+                <span>Receipt #${transactions.length-i}</span>
+                <span>₹${tx.total.toFixed(2)}</span>
+            </div>
+            <div style="font-size:0.8em;color:#666;">
+                ${tx.items.map(i=>`${i.name} x ${i.quantity}`).join(', ')}
+            </div>
+            <div style="font-size:0.8em;color:#aaa;margin-top:4px;">
+                ${formatDateForDisplay(tx.timestamp)}
+            </div>
+            <div class="history-controls" style="margin-top:10px; display:flex; gap:10px;">
+                <button class="reprint-btn" onclick="printTransactionById(${originalIndex})" style="flex:1;">Reprint 🖨️</button>
+                <button class="edit-btn" onclick="editTransaction(${originalIndex})" style="flex:1; background:#ff9800;">Re-Edit ✏️</button>
+            </div>`;
+        list.appendChild(div);
+    });
+}
+
+function editTransaction(index) {
+    if (cart.length > 0) {
+        if (!confirm("Your current cart is not empty. Re-editing this bill will overwrite current cart. Continue?")) return;
+    }
+    if (!confirm("Are you sure you want to Edit this bill? \n\n⚠️ This will DELETE the bill from history, RETURN items to stock, and move them to the cart for modification.")) return;
+    const tx = transactions[index];
+    tx.items.forEach(txItem => {
+        const inventoryItem = items.find(i => i.name === txItem.name);
+        if (inventoryItem) inventoryItem.stock += txItem.quantity;
+    });
+    cart = tx.items.map(i => ({...i}));
+    document.getElementById('moneyReceived').value = tx.paid.toFixed(2);
+    document.getElementById('paymentMethod').value = tx.paymentMethod;
+    transactions.splice(index, 1);
+    saveData();
+    updateCart();
+    togglePanel('historyPanel');
+    alert("Bill moved to cart! Stock has been restored temporarily.");
+}
+
+function renderInventoryPanel(view='stock') {
+    const panel = document.getElementById('inventoryManagementPanel');
+    const header = `<div class="panel-header"><h4>Inventory 📦</h4><button onclick="togglePanel('inventoryManagementPanel')" class="panel-close-btn">Close ✕</button></div>`;
+    const tabs = `
+        <div style="display:flex;margin-bottom:15px;">
+            <button onclick="renderInventoryPanel('stock')" style="flex:1;padding:10px;background:${view==='stock'?'#00bcd4':'#e0f7fa'};color:${view==='stock'?'white':'#333'};border:none;">Stock Edit</button>
+            <button onclick="renderInventoryPanel('arrivals')" style="flex:1;padding:10px;background:${view==='arrivals'?'#4caf50':'#e0f7fa'};color:${view==='arrivals'?'white':'#333'};border:none;">New Arrivals</button>
+            <button onclick="renderInventoryPanel('expiry')" style="flex:1;padding:10px;background:${view==='expiry'?'#ff5722':'#e0f7fa'};color:${view==='expiry'?'white':'#333'};border:none;">Expiry</button>
+        </div>`;
+    let content = '';
+
+    if (view === 'stock') {
+        const addForm = `
+        <div style="margin-bottom:15px; padding:15px; background:#e8f5e9; border: 2px dashed #4caf50; border-radius: 8px;">
+            <h5 style="margin-top:0; color:#2e7d32;">➕ Add New Item to Database</h5>
+            <input id="newPName" placeholder="Item Name (e.g. Burger)" style="width:100%; margin-bottom:5px;">
+            <div style="display:flex; gap:5px;">
+                <input id="newPPrice" type="number" placeholder="Price (₹)" style="flex:1;">
+                <input id="newPStock" type="number" placeholder="Initial Stock" style="flex:1;">
+            </div>
+            <button onclick="addNewProduct()" style="width:100%; margin-top:10px; background:#4caf50; color:white; padding:10px; border:none; border-radius:4px; font-weight:bold;">Add Item</button>
+        </div>`;
+
+        const searchBar = `<div style="position:sticky; top:0; z-index:5; background:#fff; padding-bottom:10px;"><input type="text" id="inventorySearchInput" placeholder="🔍 Search Stock items to edit..." onkeyup="filterInventoryList()" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;"></div>`;
+
+        const itemsList = items.map(item => `
+            <div class="inventory-item inventory-item-edit">
+                <div style="font-weight:bold; font-size:1.1em; color:#00bcd4;">${item.name}</div>
+                <div class="inventory-inputs" style="display:flex; gap:5px; margin-top:5px; align-items:center;">
+                    <span style="font-size:0.9em;">Price: ₹</span><input type="number" value="${item.price}" onchange="updateInventory('${item.name}','price',this.value)" style="flex:1;">
+                    <span style="font-size:0.9em;">Stock:</span><input type="number" value="${item.stock}" onchange="updateInventory('${item.name}','stock',this.value)" style="flex:1; font-weight:bold;">
+                </div>
+                <input type="text" value="${item.barcode||''}" onchange="updateInventory('${item.name}','barcode',this.value)" placeholder="Barcode" style="width:100%; margin-top:5px; font-size:0.9em; color:#777;">
+            </div>`).join('');
+
+        content = addForm + searchBar + '<div id="inventoryListContainer">' + itemsList + '</div>';
+
+    } else if (view === 'arrivals') {
+        content = `
+            <div class="new-arrival-form" style="padding:15px;background:#e8f5e9;border-radius:8px;margin-bottom:15px;">
+                <h5 style="margin-top:0;color:#388e3c;">Log New Stock Arrival 📦+</h5>
+                <input type="text" id="arrivalItemName" placeholder="Item Name (e.g., Bread)" />
+                <input type="number" id="arrivalItemPrice" placeholder="Price (₹)" min="0.01" step="0.01" />
+                <input type="number" id="arrivalItemQuantity" placeholder="Quantity/Stock" min="1" step="1" />
+                <input type="number" id="arrivalShelfLife" placeholder="Shelf Life (Days)" min="1" step="1" />
+                <button onclick="addNewProductArrival()">Log Arrival & Update Stock</button>
+            </div>
+            <h5 style="margin-top:0;color:#3f51b5;">Today's Arrivals Log:</h5>
+            <div id="arrivalsLogList">
+                ${newArrivalsLog.map(n => `<div class="arrival-log-item"><b>${n.name}</b> x ${n.quantity} @ ₹${n.price} | Shelf: ${n.shelfLifeDays} days</div>`).join('')}
+                ${newArrivalsLog.length === 0 ? '<p style="text-align:center;color:#888;">No arrivals logged for this shift.</p>' : ''}
+            </div>`;
+    } else { 
+        content = `<div style="padding:10px;background:#e0f7fa;"><select id="expiryItemName"><option value="">Select</option>${items.map(i=>`<option>${i.name}</option>`).join('')}</select><input type="date" id="arrivalDate"><input type="number" id="shelfLifeDays" value="2"><button onclick="addExpiryNote()">Log Expiry</button></div>` + expiryNotes.map(n => `<div class="inventory-item"><b>${n.itemName}</b><br>Expires: ${n.expiryDate}</div>`).join('');
+    }
+    panel.innerHTML = header + tabs + content;
+}
+
+function filterInventoryList() {
+    const input = document.getElementById('inventorySearchInput');
+    const filter = input.value.toLowerCase();
+    const nodes = document.getElementsByClassName('inventory-item-edit');
+    for (let i = 0; i < nodes.length; i++) {
+        const txtValue = nodes[i].textContent || nodes[i].innerText;
+        const inputs = nodes[i].getElementsByTagName('input');
+        let barcodeVal = inputs.length > 2 ? inputs[2].value : "";
+        if (txtValue.toLowerCase().indexOf(filter) > -1 || barcodeVal.toLowerCase().indexOf(filter) > -1) nodes[i].style.display = "";
+        else nodes[i].style.display = "none";
+    }
+}
+
+function updateInventory(name, field, val) {
+    const i = items.findIndex(x => x.name === name);
+    if (i > -1) { items[i][field] = (field==='price')?parseFloat(val).toFixed(2):(field==='stock'?parseInt(val):val); saveData(); }
+}
+function addNewProduct() {
+    const n=document.getElementById('newPName').value, p=parseFloat(document.getElementById('newPPrice').value), s=parseInt(document.getElementById('newPStock').value);
+    if(n&&p&&!isNaN(s)){items.push({name:n,price:p.toFixed(2),stock:s,barcode:'', isFav: false}); saveData(); renderInventoryPanel('stock');}
+}
+function addNewProductArrival() {
+    const name = document.getElementById('arrivalItemName').value.trim();
+    const price = parseFloat(document.getElementById('arrivalItemPrice').value);
+    const quantity = parseInt(document.getElementById('arrivalItemQuantity').value);
+    const shelfLifeDays = parseInt(document.getElementById('arrivalShelfLife').value);
+    if (!name || isNaN(price) || isNaN(quantity) || isNaN(shelfLifeDays) || quantity <= 0 || price <= 0) { alert("Invalid inputs."); return; }
+    const itemIndex = items.findIndex(item => item.name.toLowerCase() === name.toLowerCase());
+    if (itemIndex > -1) { items[itemIndex].stock += quantity; items[itemIndex].price = price.toFixed(2); }
+    else { items.push({ name: name, price: price.toFixed(2), stock: quantity, barcode: '', isFav: false }); }
+    newArrivalsLog.push({ id: nextArrivalId++, name: name, price: price.toFixed(2), quantity: quantity, shelfLifeDays: shelfLifeDays, timestamp: new Date().toISOString() });
+    document.getElementById('arrivalItemName').value = ''; document.getElementById('arrivalItemPrice').value = ''; document.getElementById('arrivalItemQuantity').value = ''; document.getElementById('arrivalShelfLife').value = '';
+    saveData(); renderInventoryPanel('arrivals'); 
+}
+
+function addExpiryNote(){
+    const n=document.getElementById('expiryItemName').value, d=document.getElementById('arrivalDate').value, l=parseInt(document.getElementById('shelfLifeDays').value);
+    if(n&&d&&l){ const ex=new Date(d); ex.setDate(ex.getDate()+l); expiryNotes.push({id:Date.now(),itemName:n,expiryDate:ex.toISOString().split('T')[0],arrivalDate:d,shelfLifeDays:l}); saveData(); renderInventoryPanel('expiry'); }
+}
+function addBill(){
+    const d=document.getElementById('billDescription').value, t=parseFloat(document.getElementById('billTotal').value), p=parseFloat(document.getElementById('billPaid').value);
+    if(d&&t){shopNotes.push({id:nextNoteId++,description:d,total:t,paid:p||0,timestamp:new Date().toISOString(),paymentHistory:p>0?[{amount:p,timestamp:new Date().toISOString(),method:'Initial'}]:[]}); saveData(); renderNotesPanel();}
+}
+function addDailyPayNote(){
+    const d=document.getElementById('dailyPayDescription').value, a=parseFloat(document.getElementById('dailyPayAmount').value), t=document.getElementById('dailyPayType').value;
+    if(d&&a){dailyPayNotes.push({id:nextNoteId++,description:d,amount:a,type:t,timestamp:new Date().toISOString()}); saveData(); renderNotesPanel(); calculateDailyCashBalance();}
+}
+
+function calculateDailyCashBalance() {
+    const today = new Date().toDateString();
+    const formula = document.getElementById('balanceFormula').value;
+    const manualUpiValue = parseFloat(document.getElementById('manualUpiInput').value) || 0;
+    const todayTransactions = transactions.filter(t => new Date(t.timestamp).toDateString() === today);
+    const cashSales = todayTransactions.filter(t => t.paymentMethod === 'Cash').reduce((s, t) => s + t.paid, 0);
+    const autoUpiSales = todayTransactions.filter(t => t.paymentMethod === 'UPI').reduce((s, t) => s + t.total, 0);
+    const payIn = dailyPayNotes.filter(n => new Date(n.timestamp).toDateString() === today && n.type === 'PayIn').reduce((s, n) => s + n.amount, 0);
+    const expenses = dailyPayNotes.filter(n => new Date(n.timestamp).toDateString() === today && n.type === 'Expense').reduce((s, n) => s + n.amount, 0);
+    const startingCash = currentShift ? currentShift.startingCash : 0;
+    let net = 0;
+    switch(formula) {
+        case "1": net = cashSales + payIn - expenses; break;
+        case "2": net = (cashSales + autoUpiSales) - expenses; break;
+        case "3": net = startingCash + cashSales - expenses; break;
+        case "4": net = manualUpiValue + cashSales + startingCash + expenses; break;
+        case "5": net = manualUpiValue - expenses + cashSales + startingCash; break;
+        default: net = cashSales + payIn - expenses;
+    }
+    const resultDiv = document.getElementById('dailyCashBalanceResult');
+    resultDiv.innerHTML = `<div class="cash-balance-summary ${net < 0 ? 'negative' : ''}"><span>Calculated Balance:</span><span class="value">₹${Math.abs(net).toFixed(2)}</span></div>`;
+}
+
+function renderNotesPanel() {
+    document.getElementById('billsList').innerHTML = shopNotes.map(b => `<div class="bill-card"><div><b>${b.description}</b> <span>₹${b.total}</span></div><div>Paid: ₹${b.paid}</div></div>`).join('');
+    document.getElementById('dailyPayLog').innerHTML = dailyPayNotes.filter(n=>new Date(n.timestamp).toDateString()===new Date().toDateString()).map(n=>`<div class="daily-pay-record" style="border-left-color:${n.type==='PayIn'?'#4caf50':'#d32f2f'}"><span>${n.description}</span><span>${n.type==='PayIn'?'+':'-'} ${n.amount}</span></div>`).join('');
+}
+function renderAnalysisPanel() {
+    let total = transactions.reduce((s,t)=>s+t.total,0);
+    document.getElementById('analysisContent').innerHTML = `<div class="analysis-stats-grid"><div class="stat-card"><h5>Total Sales</h5><p>₹${total.toFixed(2)}</p></div><div class="stat-card"><h5>Tx Count</h5><p>${transactions.length}</p></div></div><button onclick="resetAllData()" style="width:100%;padding:10px;background:#d32f2f;color:white;border:none;">Reset Data</button>`;
+}
+function resetAllData() {
+    if(confirm("Reset ALL data?")){ localStorage.clear(); location.reload(); }
+}
+</script>
+
+<script>
+(function() {
+    let highlightedIndex = -1;
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const searchInput = document.getElementById('searchInput');
+            const items = document.querySelectorAll('#itemsList .item:not(.out-of-stock)');
+            if (highlightedIndex >= 0 && items[highlightedIndex]) {
+                e.preventDefault(); items[highlightedIndex].click();
+                highlightedIndex = -1; if (searchInput) searchInput.focus(); return;
+            }
+            if (document.activeElement !== searchInput) if (searchInput) searchInput.focus();
+        }
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+            const items = document.querySelectorAll('#itemsList .item:not(.out-of-stock)');
+            if (items.length === 0) return;
+            e.preventDefault();
+            if (highlightedIndex >= 0 && items[highlightedIndex]) items[highlightedIndex].classList.remove('keyboard-highlight');
+            if (e.key === 'ArrowDown') highlightedIndex = (highlightedIndex + 1) % items.length;
+            else highlightedIndex = (highlightedIndex - 1 + items.length) % items.length;
+            if (items[highlightedIndex]) {
+                items[highlightedIndex].classList.add('keyboard-highlight');
+                items[highlightedIndex].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }
+        }
+        if (e.key >= '1' && e.key <= '9') {
+            if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                const qtyButtons = document.querySelectorAll('#cartItems .qty-controls button:last-child');
+                if (qtyButtons.length > 0) {
+                    const lastPlusBtn = qtyButtons[qtyButtons.length - 1];
+                    const count = parseInt(e.key) - 1;
+                    for (let i = 0; i < count; i++) lastPlusBtn.click();
+                }
+            }
+        }
+        if (e.target.id === 'searchInput') {
+            const items = document.querySelectorAll('#itemsList .item');
+            items.forEach(i => i.classList.remove('keyboard-highlight'));
+            highlightedIndex = -1;
+        }
+    });
+})();
+</script>
+
 </body>
 </html>
