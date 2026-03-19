@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VK POS (v11.13)</title>
+<title>VK POS (Adaptive UI)</title>
 <style>
     /* =======================================================
     REVISED BRIGHT, SMOOTH & CLEAN STYLES
@@ -128,13 +127,13 @@
     .inventory-controls button, .bill-controls button, .add-bill-btn, 
     .date-filters button, .calc-button, 
     #inventoryManagementPanel, #historyPanel, #notesPanel, #analysisPanel, #calculatorPanel, 
-    #paymentHistoryModal, #parkedSalesPanel, #shiftHistoryPanel, #productionPanel, #settingsPanel {
+    #paymentHistoryModal, #parkedSalesPanel, #shiftHistoryPanel, #productionPanel, #settingsPanel, #workersPanel {
         transition: all 0.3s ease-in-out; 
     }
 
     /* Full Screen Panels */
     #inventoryManagementPanel, #historyPanel, #notesPanel, #analysisPanel, #calculatorPanel, 
-    #paymentHistoryModal, #parkedSalesPanel, #shiftHistoryPanel, #productionPanel, #settingsPanel {
+    #paymentHistoryModal, #parkedSalesPanel, #shiftHistoryPanel, #productionPanel, #settingsPanel, #workersPanel {
         background: #ffffff;
         position: fixed; 
         top: 0; left: 0; right: 0; bottom: 0;
@@ -408,6 +407,12 @@
             box-shadow: none !important;
             background: transparent !important;
         }
+        
+        /* Enable Background Colors for Pie Charts in Print Mode */
+        .pie-chart, .pie-color-box {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
 
         .receipt-header, .receipt-footer { text-align: center; margin-bottom: 5px; padding: 5px 0; line-height: 1.3; }
         .token-header { text-align: center; font-size: 1.6em; margin-bottom: 10px; }
@@ -461,6 +466,7 @@
              <button class="header-btn" onclick="togglePanel('analysisPanel')">Analysis</button>
              <button class="header-btn" onclick="togglePanel('productionPanel')" style="background: #3f51b5;">Production 🏭</button>
              <button class="header-btn notes-btn" onclick="togglePanel('notesPanel')">Notes</button>
+             <button class="header-btn" onclick="togglePanel('workersPanel')" style="background: #9c27b0;">Workers 👷</button>
              <button class="header-btn" onclick="togglePanel('historyPanel')">History</button>
              <button class="header-btn" onclick="togglePanel('inventoryManagementPanel')">Stock</button>
              <button class="header-btn" onclick="togglePanel('shiftHistoryPanel')" style="background: #3f51b5;">Shifts 📄</button>
@@ -569,6 +575,24 @@
                 © 2026 VK_INTERACTIVES. All Rights Reserved.
             </div>
         </div>
+    </div>
+</div>
+
+<div id="workersPanel">
+    <div class="panel-header">
+        <h4>Worker Attendance 👷</h4>
+        <button onclick="togglePanel('workersPanel')" class="panel-close-btn">Close ✕</button>
+    </div>
+    <div style="padding: 10px;">
+        <div style="background: #f0f8ff; padding: 15px; border-radius: 8px; border: 1px solid #00bcd4; margin-bottom: 15px;">
+            <h5 style="margin-top: 0; color: #00bcd4;">Log Shift Hours</h5>
+            <input type="text" id="workerName" placeholder="Worker Name" style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            <input type="number" id="workerAge" placeholder="Worker Age" style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            <input type="number" id="workerHours" placeholder="Hours Worked (e.g., 8)" style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            <button onclick="logWorkerHours()" style="width: 100%; padding: 10px; background: #00bcd4; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Log Hours</button>
+        </div>
+        <h5 style="margin-top: 0; padding-bottom: 5px; border-bottom: 1px solid #ccc;">Today's Logged Hours</h5>
+        <div id="todayWorkersList"></div>
     </div>
 </div>
 
@@ -742,6 +766,7 @@ let expiryNotes = [];
 let newArrivalsLog = []; 
 let shifts = []; 
 let currentShift = null; 
+let attendanceLog = []; // NEW ARRAY FOR WORKER LOGS
 let nextNoteId = 1;
 let nextTokenId = 1; 
 let nextParkedId = 1; 
@@ -787,7 +812,8 @@ function loadLayoutPreference() {
 
 function togglePanel(panelId) {
     const panel = document.getElementById(panelId);
-    const allPanels = ['inventoryManagementPanel', 'historyPanel', 'notesPanel', 'analysisPanel', 'calculatorPanel', 'paymentHistoryModal', 'parkedSalesPanel', 'shiftHistoryPanel', 'productionPanel', 'settingsPanel'];
+    // UPDATED PANELS ARRAY to include workersPanel
+    const allPanels = ['inventoryManagementPanel', 'historyPanel', 'notesPanel', 'analysisPanel', 'calculatorPanel', 'paymentHistoryModal', 'parkedSalesPanel', 'shiftHistoryPanel', 'productionPanel', 'settingsPanel', 'workersPanel'];
 
     if (panel.classList.contains('panel-open')) {
         panel.classList.remove('panel-open');
@@ -814,6 +840,7 @@ function togglePanel(panelId) {
                 case 'shiftHistoryPanel': renderShiftHistoryPanel(); break;
                 case 'productionPanel': renderProductionPanel(); break; 
                 case 'settingsPanel': renderSettingsPanel(); break;
+                case 'workersPanel': renderWorkersPanel(); break; // NEW CASE
             }
         }, 10); 
     }
@@ -850,7 +877,56 @@ function updateHeaderTitle() {
 }
 
 // =======================================================
-// PRODUCTION REPORT LOGIC (UPDATED: DAILY ONLY)
+// WORKER ATTENDANCE LOGIC
+// =======================================================
+function logWorkerHours() {
+    const name = document.getElementById('workerName').value.trim();
+    const age = parseInt(document.getElementById('workerAge').value);
+    const hours = parseFloat(document.getElementById('workerHours').value);
+
+    if(!name || isNaN(age) || isNaN(hours)) {
+        alert("Please fill all worker fields correctly.");
+        return;
+    }
+
+    attendanceLog.push({
+        id: Date.now(),
+        name: name,
+        age: age,
+        hours: hours,
+        timestamp: new Date().toISOString()
+    });
+
+    saveData();
+    renderWorkersPanel();
+    
+    document.getElementById('workerName').value = '';
+    document.getElementById('workerAge').value = '';
+    document.getElementById('workerHours').value = '';
+    alert("Worker hours logged successfully!");
+}
+
+function renderWorkersPanel() {
+    const todayStr = new Date().toDateString();
+    const todayLogs = attendanceLog.filter(a => new Date(a.timestamp).toDateString() === todayStr);
+    
+    const listDiv = document.getElementById('todayWorkersList');
+    if(todayLogs.length === 0) {
+        listDiv.innerHTML = '<p style="color:#888; text-align:center;">No workers logged today.</p>';
+        return;
+    }
+
+    listDiv.innerHTML = todayLogs.map(a => `
+        <div style="background: #f9f9f9; padding: 10px; border-left: 4px solid #00bcd4; margin-bottom: 8px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <span><b>${a.name}</b> (${a.age}y)</span>
+            <span style="color: #00bcd4; font-weight: bold; font-size: 1.1em;">${a.hours} Hrs</span>
+        </div>
+    `).join('');
+}
+
+
+// =======================================================
+// PRODUCTION REPORT LOGIC
 // =======================================================
 
 function renderProductionPanel() {
@@ -981,6 +1057,7 @@ function saveData() {
         localStorage.setItem('posCurrentShift', JSON.stringify(currentShift));
         localStorage.setItem('posNextShiftId', nextShiftId);
         localStorage.setItem('posBusinessProfile', JSON.stringify(businessProfile));
+        localStorage.setItem('posAttendanceLog', JSON.stringify(attendanceLog)); // SAVE ATTENDANCE
     } catch (e) { console.error("Error saving data:", e); }
 }
 
@@ -1009,6 +1086,7 @@ function loadData() {
         const storedShifts = localStorage.getItem('posShifts');
         const storedCurrentShift = localStorage.getItem('posCurrentShift');
         const storedNextShiftId = localStorage.getItem('posNextShiftId');
+        const storedAttendanceLog = localStorage.getItem('posAttendanceLog'); // LOAD ATTENDANCE
 
         const defaultItemMap = {
             "Bread": { price: 40.00, stock: 50, barcode: "1234567890123", isFav: false },
@@ -1054,6 +1132,8 @@ function loadData() {
         if (storedNextArrivalId) nextArrivalId = parseInt(storedNextArrivalId); 
         if (storedShifts) shifts = JSON.parse(storedShifts);
         if (storedCurrentShift && storedCurrentShift !== 'null') currentShift = JSON.parse(storedCurrentShift);
+        if (storedAttendanceLog) attendanceLog = JSON.parse(storedAttendanceLog); // PARSE ATTENDANCE
+        
         if (storedNextNoteId) nextNoteId = parseInt(storedNextNoteId); 
         if (storedNextTokenId) nextTokenId = parseInt(storedNextTokenId); 
         if (storedNextParkedId) nextParkedId = parseInt(storedNextParkedId); 
@@ -1257,7 +1337,7 @@ function renderShiftHistoryPanel() {
 function printShiftReportById(shiftId) { const shift = shifts.find(s => s.id === shiftId); if (shift) printShiftReport(shift); }
 
 // =======================================================
-// UPDATED: PRINT SHIFT REPORT (WITH BUSINESS PROFILE)
+// UPDATED: PRINT SHIFT REPORT (WITH NEW SECTIONS)
 // =======================================================
 function printShiftReport(shift) {
     const formatAmount = (a) => parseFloat(a).toFixed(2);
@@ -1270,19 +1350,16 @@ function printShiftReport(shift) {
     let totalCashFromSales = 0;
 
     shiftTransactions.forEach(tx => {
-        // Aggregate Item Sales
         tx.items.forEach(item => {
             if (!soldItemsMap[item.name]) soldItemsMap[item.name] = 0;
             soldItemsMap[item.name] += item.quantity;
         });
-
-        // Only calculate Cash from sales here
         if (tx.paymentMethod === 'Cash') {
             totalCashFromSales += tx.total;
         }
     });
 
-    // 2. THE FIX: Bypass existing POS UPI data with Manual Entry from the UI
+    // Manual Entry from the UI
     const manualUpiValue = parseFloat(document.getElementById('manualUpiInput').value) || 0;
 
     let soldItemsHtml = '';
@@ -1290,13 +1367,13 @@ function printShiftReport(shift) {
         soldItemsHtml += `<div class="receipt-line">${name} <span>${qty}</span></div>`;
     }
 
-    // 3. Daily Pay / Expenses
+    // Daily Pay / Expenses
     let dailyPayHtml = '';
     shift.summary.newDailyPayNotes.forEach(note => {
         dailyPayHtml += `<div class="receipt-line" style="font-size: 0.9em;"><span>${note.description.substring(0, 20)}</span><span>${note.type === 'PayIn' ? '+' : '-'} ₹${formatAmount(note.amount)}</span></div>`;
     });
     
-    // 4. NEW ARRIVALS for the shift
+    // NEW ARRIVALS for the shift
     let newArrivalsHtml = '';
     let totalArrivalQty = 0;
     if (shift.summary.newArrivals && shift.summary.newArrivals.length > 0) {
@@ -1314,7 +1391,7 @@ function printShiftReport(shift) {
         `;
     }
 
-    // 5. Generate Inventory List (Stock Remaining)
+    // Generate Inventory List (Stock Remaining)
     let inventoryHtml = '';
     if (shift.endInventorySnapshot && shift.endInventorySnapshot.length > 0) {
         inventoryHtml += `<div class="receipt-separator"></div><div class="shift-report-section"><h5>CLOSING STOCK</h5>`;
@@ -1324,8 +1401,48 @@ function printShiftReport(shift) {
         inventoryHtml += `</div>`;
     }
 
-    // 6. Absolute Total Logic (Bypassed with Manual UPI)
-    // Starting Cash + Cash Sales + Manual UPI + Expenses
+    // --- NEW SECTION 1: DAILY PIE CHART (TODAY VS YESTERDAY) ---
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    
+    const todayStr = today.toDateString();
+    const yesterdayStr = yesterday.toDateString();
+    
+    const todaySalesTotal = allTxs.filter(tx => new Date(tx.timestamp).toDateString() === todayStr).reduce((s,tx)=>s+tx.total,0);
+    const yesterdaySalesTotal = allTxs.filter(tx => new Date(tx.timestamp).toDateString() === yesterdayStr).reduce((s,tx)=>s+tx.total,0);
+    
+    let dailyPieHtml = '';
+    if(todaySalesTotal > 0 || yesterdaySalesTotal > 0) {
+        const totalSales2Days = todaySalesTotal + yesterdaySalesTotal;
+        const todayPct = (todaySalesTotal / totalSales2Days) * 100;
+        dailyPieHtml = `
+            <div class="receipt-separator"></div>
+            <div class="shift-report-section">
+                <h5>DAILY SUMMARY CHART</h5>
+                <div style="display:flex; align-items:center; justify-content:center; gap: 15px; margin-top: 5px;">
+                    <div class="pie-chart" style="width:70px; height:70px; border-radius:50%; background: conic-gradient(#4caf50 0% ${todayPct}%, #ff9800 ${todayPct}% 100%);"></div>
+                    <div style="font-size: 0.9em; text-align: left;">
+                        <div><span class="pie-color-box" style="background:#4caf50;width:10px;height:10px;display:inline-block;margin-right:4px;"></span> Today: ₹${todaySalesTotal.toFixed(0)}</div>
+                        <div><span class="pie-color-box" style="background:#ff9800;width:10px;height:10px;display:inline-block;margin-right:4px;"></span> Yest: ₹${yesterdaySalesTotal.toFixed(0)}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // --- NEW SECTION 3: WORKER ATTENDANCE LOG ---
+    const shiftAtt = attendanceLog.filter(a => new Date(a.timestamp).toDateString() === todayStr);
+    let attendanceHtml = '';
+    if(shiftAtt.length > 0) {
+        attendanceHtml += `<div class="receipt-separator"></div><div class="shift-report-section"><h5>WORKER ATTENDANCE</h5>`;
+        shiftAtt.forEach(a => {
+            attendanceHtml += `<div class="receipt-line">${a.name} (${a.age}y) <span>${a.hours} Hrs</span></div>`;
+        });
+        attendanceHtml += `</div>`;
+    }
+    // --- END NEW SECTIONS ---
+
     const absoluteTotal = shift.startingCash + totalCashFromSales + manualUpiValue + shift.summary.totalExpenses;
 
     const reportHtml = `
@@ -1367,12 +1484,16 @@ function printShiftReport(shift) {
                 <small style="display:block; text-align:center;">(Start+CashSales+ManualUPI+Exp)</small>
             </div>
 
+            ${dailyPieHtml}
+
+            ${attendanceHtml}
+
             ${newArrivalsHtml}
 
             ${inventoryHtml}
             
             <div class="receipt-footer">End of Report</div>
-            <div class="watermark-print">VK INTERACTIVRS</div>
+            <div class="watermark-print">VK_INTERACTIVES</div>
         </div>
     `;
     document.getElementById('receiptOutput').innerHTML = reportHtml; window.print();
@@ -1721,10 +1842,86 @@ function renderNotesPanel() {
     document.getElementById('billsList').innerHTML = shopNotes.map(b => `<div class="bill-card"><div><b>${b.description}</b> <span>₹${b.total}</span></div><div>Paid: ₹${b.paid}</div></div>`).join('');
     document.getElementById('dailyPayLog').innerHTML = dailyPayNotes.filter(n=>new Date(n.timestamp).toDateString()===new Date().toDateString()).map(n=>`<div class="daily-pay-record" style="border-left-color:${n.type==='PayIn'?'#4caf50':'#d32f2f'}"><span>${n.description}</span><span>${n.type==='PayIn'?'+':'-'} ${n.amount}</span></div>`).join('');
 }
+
+// =======================================================
+// UPDATED: ANALYSIS PANEL WITH MONTHLY PIE & WORKERS
+// =======================================================
 function renderAnalysisPanel() {
     let total = transactions.reduce((s,t)=>s+t.total,0);
-    document.getElementById('analysisContent').innerHTML = `<div class="analysis-stats-grid"><div class="stat-card"><h5>Total Sales</h5><p>₹${total.toFixed(2)}</p></div><div class="stat-card"><h5>Tx Count</h5><p>${transactions.length}</p></div></div><button onclick="resetAllData()" style="width:100%;padding:10px;background:#d32f2f;color:white;border:none;">Reset Data</button>`;
+    
+    // Calculate Monthly Data
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+    const pastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+    const pastYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+
+    let currentMonthSales = 0;
+    let pastMonthSales = 0;
+    
+    transactions.forEach(tx => {
+        const d = new Date(tx.timestamp);
+        if(d.getMonth() === currentMonth && d.getFullYear() === currentYear) currentMonthSales += tx.total;
+        if(d.getMonth() === pastMonth && d.getFullYear() === pastYear) pastMonthSales += tx.total;
+    });
+
+    let monthlyWorkerHours = {};
+    attendanceLog.forEach(a => {
+        const d = new Date(a.timestamp);
+        if(d.getMonth() === currentMonth && d.getFullYear() === currentYear) {
+            if(!monthlyWorkerHours[a.name]) monthlyWorkerHours[a.name] = { age: a.age, hours: 0 };
+            monthlyWorkerHours[a.name].hours += a.hours;
+        }
+    });
+
+    // Build Monthly Pie Chart HTML
+    let monthlyPieHtml = '';
+    const totalMonth = currentMonthSales + pastMonthSales;
+    if(totalMonth > 0) {
+        const curPct = (currentMonthSales / totalMonth) * 100;
+        monthlyPieHtml = `
+            <div style="display:flex; align-items:center; gap: 15px; margin-top: 15px; padding: 15px; background: #e0f7fa; border-radius: 8px; border: 1px solid #00bcd4;">
+                <div style="width:80px; height:80px; min-width:80px; border-radius:50%; background: conic-gradient(#00bcd4 0% ${curPct}%, #ff5722 ${curPct}% 100%);"></div>
+                <div>
+                    <h5 style="margin:0 0 5px 0; color:#00bcd4;">Monthly Comparison</h5>
+                    <div style="font-size: 0.9em;"><span style="background:#00bcd4;width:12px;height:12px;display:inline-block;margin-right:5px;"></span> This Month: ₹${currentMonthSales.toFixed(2)}</div>
+                    <div style="font-size: 0.9em;"><span style="background:#ff5722;width:12px;height:12px;display:inline-block;margin-right:5px;"></span> Last Month: ₹${pastMonthSales.toFixed(2)}</div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Build Monthly Workers List HTML
+    let workerListHtml = `<div style="background:#fff; border:1px solid #ccc; padding:15px; border-radius:8px; margin-top:15px;">
+        <h5 style="margin-top:0; border-bottom: 2px solid #eee; padding-bottom: 5px;">Total Worker Hours (This Month)</h5>
+        <table style="width:100%; text-align:left; border-collapse:collapse;">
+        <tr><th style="padding: 8px 0; color:#555;">Name (Age)</th><th style="padding: 8px 0; text-align:right; color:#555;">Total Hrs</th></tr>`;
+    
+    const workerKeys = Object.keys(monthlyWorkerHours);
+    if(workerKeys.length > 0) {
+        workerKeys.forEach(name => {
+            workerListHtml += `<tr style="border-top: 1px solid #eee;">
+                <td style="padding: 10px 0; color:#333;">${name} (${monthlyWorkerHours[name].age})</td>
+                <td style="padding: 10px 0; text-align:right; font-weight: bold; color: #00bcd4;">${monthlyWorkerHours[name].hours} Hrs</td>
+            </tr>`;
+        });
+    } else {
+        workerListHtml += `<tr><td colspan="2" style="padding: 10px 0; text-align:center; color:#888;">No worker hours logged this month.</td></tr>`;
+    }
+    workerListHtml += `</table></div>`;
+
+    document.getElementById('analysisContent').innerHTML = `
+        <div class="analysis-stats-grid">
+            <div class="stat-card"><h5>Total Sales Lifetime</h5><p>₹${total.toFixed(2)}</p></div>
+            <div class="stat-card"><h5>Tx Count Lifetime</h5><p>${transactions.length}</p></div>
+        </div>
+        ${monthlyPieHtml}
+        ${workerListHtml}
+        <button onclick="resetAllData()" style="width:100%;padding:10px;background:#d32f2f;color:white;border:none;border-radius:6px;margin-top:20px; font-weight:bold;">
+            ⚠️ Reset ALL Data (Inventory, Sales, Notes)
+        </button>`;
 }
+
 function resetAllData() {
     if(confirm("Reset ALL data?")){ localStorage.clear(); location.reload(); }
 }
