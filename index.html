@@ -158,14 +158,21 @@
     #completeSaleBtn:hover { background: #388e3c; transform: translateY(-1px); }
     #completeSaleBtn:disabled { background: #b0b0b0; cursor: not-allowed; box-shadow: none; border-bottom: none; }
 
-    .calculator-keypad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 15px; background: #f9f9f9; flex: 1; border-radius: 0 0 10px 10px; }
-    .calculator-display { background: #e0f7fa; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; padding: 25px 20px; color: #333; text-align: right; border-bottom: 1px solid #00bcd4; min-height: 150px; position: relative; }
-    .calc-input { font-size: 3.5em; font-weight: 300; overflow-x: scroll; white-space: nowrap; margin-bottom: 5px; line-height: 1.2; width: 100%; text-align: right; }
+    /* Calculator Styles Update - FIXED TO PREVENT OVERFLOW */
+    .calc-container { display: flex; flex-direction: column; height: 80vh; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 10px; background: #fff; transition: max-width 0.3s ease; }
+    .calc-size-mobile { max-width: 360px; width: 100%; }
+    .calc-size-tablet { max-width: 600px; width: 100%; }
+    .calc-size-pc { max-width: 90vw; width: 100%; height: 85vh; }
+    
+    .calculator-keypad { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 1fr; gap: 10px; padding: 15px; background: #f9f9f9; flex: 1; border-radius: 0 0 10px 10px; overflow-y: auto; }
+    .calculator-display { background: #e0f7fa; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; padding: 20px; color: #333; text-align: right; border-bottom: 1px solid #00bcd4; min-height: 100px; }
+    .calc-input { font-size: 3em; font-weight: 300; overflow-x: auto; white-space: nowrap; margin-bottom: 5px; line-height: 1.2; width: 100%; text-align: right; scrollbar-width: none; }
     .calc-input::-webkit-scrollbar { display: none; }
-    .calc-result { font-size: 1.8em; color: #888; line-height: 1; }
-    .calc-button { background-color: #f1f1f1; color: #333; border: none; border-radius: 12px; padding: 20px 0; font-size: 1.8em; font-weight: 500; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+    .calc-result { font-size: 1.5em; color: #888; line-height: 1; }
+    
+    .calc-button { background-color: #f1f1f1; color: #333; border: none; border-radius: 12px; font-size: 1.5em; font-weight: 500; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); cursor: pointer; display: flex; align-items: center; justify-content: center; min-height: 50px; }
     .btn-red { background-color: #ff5722; color: white; }
-    .btn-green { background-color: #4caf50; color: white; grid-row: span 2; }
+    .btn-green { background-color: #4caf50; color: white; } /* Removed grid-row: span 2 to fix overlap bug */
     .btn-cyan { background-color: #00bcd4; color: white; }
 
     .parked-sale-card, .shift-card { background: #f9f9f9; border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 15px; margin-bottom: 10px; border-radius: 8px; border-left: 5px solid #3f51b5; }
@@ -237,7 +244,6 @@
         .total-line-print { font-size: 1.2em; border-top: 1px solid #000; padding-top: 2px; }
         .watermark-print { text-align: center; font-size: 10px; font-weight: bold; margin-top: 20px; padding-top: 5px; border-top: 1px solid #000; font-family: monospace; }
         
-        /* Ensure the printed logo acts predictably */
         .print-logo { max-width: 100px; max-height: 100px; margin: 0 auto 5px auto; display: block; }
     }
 </style>
@@ -435,6 +441,10 @@
         <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">License / Tax ID:</label>
         <input type="text" id="settingsLicense" placeholder="e.g. GSTIN 123456789" style="width: 100%; margin-bottom: 10px;">
         
+        <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em; margin-top: 15px; color: #e91e63;">Social Media Handles:</label>
+        <input type="text" id="settingsInsta" placeholder="Instagram (e.g. @my_shop)" style="width: 100%; margin-bottom: 10px;">
+        <input type="text" id="settingsFB" placeholder="Facebook (e.g. fb.com/myshop)" style="width: 100%; margin-bottom: 15px;">
+
         <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">Custom Tagline (Footer):</label>
         <input type="text" id="settingsTagline" placeholder="Where Every Journey Holds a Secret" style="width: 100%; margin-bottom: 15px;">
 
@@ -444,7 +454,7 @@
             <h6>Software Information</h6>
             <div class="software-info-row">
                 <span>Version</span>
-                <span style="font-weight:bold;">v10.7.0-Branding</span>
+                <span style="font-weight:bold;">v11.0.0-Stabilized</span>
             </div>
             <div class="software-info-row">
                 <span>Developer</span>
@@ -477,41 +487,49 @@
             <input type="number" id="newWorkerAge" placeholder="Worker Age" style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
             <button onclick="addNewWorker()" style="width: 100%; padding: 10px; background: #00bcd4; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Add Worker</button>
         </div>
-        <h5 style="margin-top: 0; padding-bottom: 5px; border-bottom: 1px solid #ccc;">Today's Attendance</h5>
+        <h5 style="margin-top: 0; padding-bottom: 5px; border-bottom: 1px solid #ccc;">Current Shift Attendance</h5>
         <div id="todayWorkersList"></div>
     </div>
 </div>
 
 <div id="calculatorPanel">
-     <div class="panel-header">
-         <h4>Full Screen Calculator 🧮</h4>
-         <button onclick="togglePanel('calculatorPanel')" class="panel-close-btn">Close ✕</button>
-     </div>
-     <div class="calculator-display">
-        <div class="calc-input" id="calcInput">0</div>
-        <div class="calc-result" id="calcResult"></div>
+    <div class="panel-header" style="flex-wrap: wrap; gap: 10px;">
+        <h4 style="margin: 0; min-width: 120px;">Calculator 🧮</h4>
+        <div style="display:flex; gap:5px; flex: 1; justify-content: center;">
+            <button onclick="setCalcSize('mobile')" style="padding:6px 10px; background:#00bcd4; color:#fff; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">📱 Mobile</button>
+            <button onclick="setCalcSize('tablet')" style="padding:6px 10px; background:#3f51b5; color:#fff; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">💊 Tablet</button>
+            <button onclick="setCalcSize('pc')" style="padding:6px 10px; background:#673ab7; color:#fff; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">💻 PC</button>
+        </div>
+        <button onclick="togglePanel('calculatorPanel')" class="panel-close-btn">Close ✕</button>
     </div>
-    <div class="calculator-keypad">
-        <button class="calc-button btn-red" onclick="clearDisplay()">C</button>
-        <button class="calc-button btn-cyan" onclick="appendToDisplay('(')">(</button>
-        <button class="calc-button btn-cyan" onclick="appendToDisplay(')')">)</button>
-        <button class="calc-button btn-cyan" onclick="deleteLast()">⌫</button>
-        <button class="calc-button" onclick="appendToDisplay('7')">7</button>
-        <button class="calc-button" onclick="appendToDisplay('8')">8</button>
-        <button class="calc-button" onclick="appendToDisplay('9')">9</button>
-        <button class="calc-button btn-cyan" onclick="appendToDisplay('/')">÷</button>
-        <button class="calc-button" onclick="appendToDisplay('4')">4</button>
-        <button class="calc-button" onclick="appendToDisplay('5')">5</button>
-        <button class="calc-button" onclick="appendToDisplay('6')">6</button>
-        <button class="calc-button btn-cyan" onclick="appendToDisplay('*')">×</button>
-        <button class="calc-button" onclick="appendToDisplay('1')">1</button>
-        <button class="calc-button" onclick="appendToDisplay('2')">2</button>
-        <button class="calc-button" onclick="appendToDisplay('3')">3</button>
-        <button class="calc-button btn-cyan" onclick="appendToDisplay('-')">−</button>
-        <button class="calc-button" onclick="appendToDisplay('0')">0</button>
-        <button class="calc-button" onclick="appendToDisplay('.')">.</button>
-        <button class="calc-button btn-cyan" onclick="appendToDisplay('+')">+</button>
-        <button class="calc-button btn-green" onclick="calculateResult()">=</button>
+    
+    <div class="calc-container calc-size-tablet" id="calcContainer">
+        <div class="calculator-display">
+            <div class="calc-input" id="calcInput">0</div>
+            <div class="calc-result" id="calcResult"></div>
+        </div>
+        <div class="calculator-keypad">
+            <button class="calc-button btn-red" onclick="clearDisplay()">C</button>
+            <button class="calc-button btn-cyan" onclick="appendToDisplay('(')">(</button>
+            <button class="calc-button btn-cyan" onclick="appendToDisplay(')')">)</button>
+            <button class="calc-button btn-cyan" onclick="deleteLast()">⌫</button>
+            <button class="calc-button" onclick="appendToDisplay('7')">7</button>
+            <button class="calc-button" onclick="appendToDisplay('8')">8</button>
+            <button class="calc-button" onclick="appendToDisplay('9')">9</button>
+            <button class="calc-button btn-cyan" onclick="appendToDisplay('/')">÷</button>
+            <button class="calc-button" onclick="appendToDisplay('4')">4</button>
+            <button class="calc-button" onclick="appendToDisplay('5')">5</button>
+            <button class="calc-button" onclick="appendToDisplay('6')">6</button>
+            <button class="calc-button btn-cyan" onclick="appendToDisplay('*')">×</button>
+            <button class="calc-button" onclick="appendToDisplay('1')">1</button>
+            <button class="calc-button" onclick="appendToDisplay('2')">2</button>
+            <button class="calc-button" onclick="appendToDisplay('3')">3</button>
+            <button class="calc-button btn-cyan" onclick="appendToDisplay('-')">−</button>
+            <button class="calc-button" onclick="appendToDisplay('0')">0</button>
+            <button class="calc-button" onclick="appendToDisplay('.')">.</button>
+            <button class="calc-button btn-cyan" onclick="appendToDisplay('+')">+</button>
+            <button class="calc-button btn-green" onclick="calculateResult()">=</button>
+        </div>
     </div>
 </div>
 
@@ -592,16 +610,24 @@
         <div class="daily-cash-balance-section">
             <h5 style="margin-top: 0; color: #ff9800;">💰 Calculate Today's Net Cash Balance</h5>
             <div style="margin-bottom: 10px;">
-                <label style="font-size: 0.8em; font-weight: bold; display: block; margin-bottom: 5px; color: #333;">Total Manual UPI Counted (₹):</label>
+                
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px;">
+                    <label style="font-size: 0.8em; font-weight: bold; color: #333; margin:0;">Total Manual UPI Counted (₹):</label>
+                    <div style="display: flex; align-items: center; gap: 5px; background: #ffe0b2; padding: 2px 8px; border-radius: 4px;">
+                        <input type="checkbox" id="overrideUpiCheckbox" onchange="calculateDailyCashBalance()" style="width: 16px; height: 16px; margin: 0; cursor: pointer;">
+                        <label for="overrideUpiCheckbox" style="font-size: 0.8em; color: #d32f2f; font-weight: bold; cursor: pointer;">Override Auto-UPI</label>
+                    </div>
+                </div>
+                
                 <input type="number" id="manualUpiInput" placeholder="Enter UPI total from phone..." style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #ff9800; background: #fff !important;" oninput="calculateDailyCashBalance()">
 
                 <label style="font-size: 0.8em; font-weight: bold; display: block; margin-bottom: 5px; color: #333;">Select Calculation Formula:</label>
                 <select id="balanceFormula" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ff9800; background: #fff;" onchange="calculateDailyCashBalance()">
                     <option value="1">Cash Sales + PayIn - Expenses (Standard)</option>
-                    <option value="2">All Sales (Cash+UPI) - Expenses</option>
+                    <option value="2">All Sales (Cash + UPI) - Expenses</option>
                     <option value="3">Starting Cash + Cash Sales - Expenses</option>
-                    <option value="4">Manual UPI + Cash Sales + Starting Cash + Expenses = Total (Formula A)</option>
-                    <option value="5">Manual UPI - Expenses + Cash Sales + Starting Cash = Total (Formula B)</option>
+                    <option value="4">UPI + Cash Sales + Starting Cash + Expenses = Total</option>
+                    <option value="5">UPI - Expenses + Cash Sales + Starting Cash = Total</option>
                 </select>
             </div>
             <button onclick="calculateDailyCashBalance()" style="width: 100%; padding: 10px; background: #ff9800; color: white; border: none; border-radius: 8px; font-weight: bold;">
@@ -675,7 +701,9 @@ let businessProfile = {
     address: "",
     license: "",
     tagline: "Where Every Journey Holds a Secret",
-    logo: "" // NEW: Added Logo storage
+    logo: "",
+    instagram: "", 
+    facebook: "" 
 };
 
 // =======================================================
@@ -696,6 +724,16 @@ function loadLayoutPreference() {
     if (pref === 'adaptive') {
         document.getElementById('mainContainer').classList.add('adaptive');
     }
+    
+    // Load Calculator Size Preference
+    const savedCalcSize = localStorage.getItem('posCalcSize');
+    if(savedCalcSize) setCalcSize(savedCalcSize);
+}
+
+function setCalcSize(size) {
+    const container = document.getElementById('calcContainer');
+    container.className = 'calc-container calc-size-' + size;
+    localStorage.setItem('posCalcSize', size);
 }
 
 function togglePanel(panelId) {
@@ -735,7 +773,7 @@ function togglePanel(panelId) {
 }
 
 // =======================================================
-// SETTINGS WITH LOGO UPLOAD
+// SETTINGS WITH LOGO & SOCIAL UPLOAD
 // =======================================================
 function previewLogo(event) {
     const file = event.target.files[0];
@@ -765,6 +803,10 @@ function renderSettingsPanel() {
     document.getElementById('settingsLicense').value = businessProfile.license || "";
     document.getElementById('settingsTagline').value = businessProfile.tagline || "";
     
+    // Socials
+    document.getElementById('settingsInsta').value = businessProfile.instagram || "";
+    document.getElementById('settingsFB').value = businessProfile.facebook || "";
+    
     if (businessProfile.logo) {
         document.getElementById('settingsLogoPreview').src = businessProfile.logo;
         document.getElementById('settingsLogoPreview').style.display = 'inline-block';
@@ -781,7 +823,10 @@ function saveSettings() {
     businessProfile.license = document.getElementById('settingsLicense').value.trim();
     businessProfile.tagline = document.getElementById('settingsTagline').value.trim() || "Where Every Journey Holds a Secret";
     
-    // Logo is saved instantly when previewed, but this ensures the object is pushed to storage
+    // Save Socials
+    businessProfile.instagram = document.getElementById('settingsInsta').value.trim();
+    businessProfile.facebook = document.getElementById('settingsFB').value.trim();
+    
     localStorage.setItem('posBusinessProfile', JSON.stringify(businessProfile));
     updateHeaderTitle();
     togglePanel('settingsPanel');
@@ -793,7 +838,7 @@ function updateHeaderTitle() {
 }
 
 // =======================================================
-// WORKER ATTENDANCE
+// WORKER ATTENDANCE (NOW PER-SHIFT)
 // =======================================================
 function addNewWorker() {
     const name = document.getElementById('newWorkerName').value.trim();
@@ -812,11 +857,13 @@ function addNewWorker() {
 }
 
 function clockInWorker(workerId) {
+    if(!currentShift) { alert("Please Start a Shift first before clocking in workers."); return; }
     const worker = workers.find(w => w.id === workerId);
     if (!worker) return;
 
     attendanceLog.push({
         id: Date.now(),
+        shiftId: currentShift.id, // TIED TO CURRENT SHIFT
         workerId: worker.id,
         name: worker.name,
         age: worker.age,
@@ -829,11 +876,13 @@ function clockInWorker(workerId) {
 }
 
 function markAbsent(workerId) {
+    if(!currentShift) { alert("Please Start a Shift first before marking absent."); return; }
     const worker = workers.find(w => w.id === workerId);
     if (!worker) return;
 
     attendanceLog.push({
         id: Date.now(),
+        shiftId: currentShift.id, // TIED TO CURRENT SHIFT
         workerId: worker.id,
         name: worker.name,
         age: worker.age,
@@ -863,16 +912,22 @@ function clockOutWorker(logId) {
 
 function renderWorkersPanel() {
     const listDiv = document.getElementById('todayWorkersList');
+    
     if (workers.length === 0) {
         listDiv.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">No workers added yet. Add a worker above.</p>';
         return;
     }
+    
+    if (!currentShift) {
+        listDiv.innerHTML = '<p style="text-align: center; font-weight: bold; color: #ff5722; padding: 20px;">⚠️ Please Start a Shift to manage attendance.</p>';
+        return;
+    }
 
-    const todayStr = new Date().toDateString();
     let html = '';
 
     workers.forEach(w => {
-        const log = attendanceLog.find(a => a.workerId === w.id && new Date(a.timestamp).toDateString() === todayStr);
+        // FINDS ATTENDANCE FOR THIS SPECIFIC SHIFT
+        const log = attendanceLog.find(a => a.workerId === w.id && a.shiftId === currentShift.id);
 
         html += `<div style="background: #f9f9f9; padding: 10px; border-left: 4px solid #00bcd4; margin-bottom: 8px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
             <span style="flex:1; min-width: 120px;"><b>${w.name}</b> (${w.age}y)</span>`;
@@ -892,8 +947,6 @@ function renderWorkersPanel() {
             html += `<span style="color: #00bcd4; font-weight: bold; font-size: 1.1em;">${log.hours.toFixed(2)} Hrs</span>`;
         } else if (log.status === 'Absent') {
             html += `<span style="color: #f44336; font-weight: bold; font-size: 1.1em;">Absent</span>`;
-        } else {
-            html += `<span style="color: #00bcd4; font-weight: bold; font-size: 1.1em;">${log.hours} Hrs</span>`;
         }
         html += `</div>`;
     });
@@ -999,7 +1052,6 @@ function saveData() {
         localStorage.setItem('posWorkers', JSON.stringify(workers)); 
         localStorage.setItem('posAttendanceLog', JSON.stringify(attendanceLog)); 
         
-        // Save Raw Materials & History
         localStorage.setItem('posRawMaterials', JSON.stringify(rawMaterials));
         localStorage.setItem('posRawMatHistory', JSON.stringify(rawMatHistory));
     } catch (e) { console.error("Error saving data:", e); }
@@ -1025,7 +1077,6 @@ function loadData() {
         const storedWorkers = localStorage.getItem('posWorkers'); 
         const storedAttendanceLog = localStorage.getItem('posAttendanceLog');
         
-        // Load Raw Materials & History
         const storedRawMaterials = localStorage.getItem('posRawMaterials');
         const storedRawMatHist = localStorage.getItem('posRawMatHistory');
 
@@ -1034,9 +1085,7 @@ function loadData() {
         } else {
             items = [
                 { name: "Bread", price: 40.00, stock: 50, barcode: "1234567890123", isFav: false },
-                { name: "Cake", price: 10.00, stock: 50, barcode: "1112223334445", isFav: false },
-                { name: "Milk", price: 15.00, stock: 50, barcode: "9876543210987", isFav: false },
-                { name: "Coffee", price: 25.00, stock: 50, barcode: "4567890123456", isFav: false }
+                { name: "Cake", price: 10.00, stock: 50, barcode: "1112223334445", isFav: false }
             ];
         }
         
@@ -1191,7 +1240,15 @@ function startShift() {
         startArrivalLogCount: newArrivalsLog.length, 
         startInventorySnapshot: items.map(item => ({ name: item.name, stock: item.stock })),
     };
-    saveData(); updateShiftButtons(); alert("Shift Started!");
+    saveData(); 
+    updateShiftButtons(); 
+    
+    // Refresh Workers panel if it's open to show fresh Present/Absent buttons
+    if (document.getElementById('workersPanel').classList.contains('panel-open')) {
+        renderWorkersPanel();
+    }
+    
+    alert("Shift Started!");
 }
 
 function closeShift() {
@@ -1200,6 +1257,24 @@ function closeShift() {
     const endingCashInput = prompt("Enter final counted cash:", currentShift.startingCash.toFixed(2));
     const endingCash = parseFloat(endingCashInput) || 0.00;
     if (isNaN(endingCash)) return;
+    
+    // CALC AUTO UPI AND CHECK OVERRIDE FLAG
+    const shiftTransactions = transactions.slice(currentShift.startTransactionCount);
+    const autoUpiSales = shiftTransactions.filter(t => t.paymentMethod === 'UPI').reduce((s, t) => s + t.total, 0);
+    const useManualUpi = document.getElementById('overrideUpiCheckbox').checked;
+    const finalUpiValue = useManualUpi ? (parseFloat(document.getElementById('manualUpiInput').value) || 0) : autoUpiSales;
+    
+    // AUTO CLOCK-OUT ACTIVE WORKERS
+    const now = new Date();
+    attendanceLog.forEach(log => {
+        if (log.status === 'Active') {
+            const startTime = new Date(log.timestamp);
+            const diffMs = now - startTime;
+            log.clockOutTime = now.toISOString();
+            log.status = 'Completed';
+            log.hours = parseFloat((diffMs / (1000 * 60 * 60)).toFixed(2));
+        }
+    });
     
     const shiftEnd = {
         ...currentShift,
@@ -1211,18 +1286,19 @@ function closeShift() {
         endInventorySnapshot: items.map(item => ({ name: item.name, stock: item.stock })),
     };
     
-    const newTransactions = transactions.slice(shiftEnd.startTransactionCount);
     const newDailyPayNotes = dailyPayNotes.slice(shiftEnd.startDailyPayNoteCount);
     const newArrivals = newArrivalsLog.slice(shiftEnd.startArrivalLogCount);
 
-    let totalSales = newTransactions.reduce((sum, tx) => sum + tx.total, 0);
-    let totalCashReceived = newTransactions.reduce((sum, tx) => sum + tx.paid, 0);
+    let totalSales = shiftTransactions.reduce((sum, tx) => sum + tx.total, 0);
+    let totalCashReceived = shiftTransactions.reduce((sum, tx) => sum + tx.paid, 0);
     const totalExpenses = newDailyPayNotes.filter(n => n.type === 'Expense').reduce((sum, n) => sum + n.amount, 0);
     const totalPayIn = newDailyPayNotes.filter(n => n.type === 'PayIn').reduce((sum, n) => sum + n.amount, 0);
     
     shiftEnd.summary = { 
-        newTransactionCount: newTransactions.length, 
+        newTransactionCount: shiftTransactions.length, 
         totalSales, totalCashReceived, totalExpenses, totalPayIn, 
+        upiValue: finalUpiValue,
+        isManualUpi: useManualUpi,
         expectedCash: currentShift.startingCash + totalCashReceived + totalPayIn - totalExpenses, 
         cashVariance: endingCash - (currentShift.startingCash + totalCashReceived + totalPayIn - totalExpenses), 
         newDailyPayNotes, newArrivals 
@@ -1230,7 +1306,13 @@ function closeShift() {
     
     shifts.push(shiftEnd);
     dailyPayNotes = []; newArrivalsLog = []; currentShift = null;
-    saveData(); updateShiftButtons(); printShiftReport(shiftEnd);
+    saveData(); updateShiftButtons();
+    
+    // Reset UPI Checkbox & Input for next shift
+    document.getElementById('overrideUpiCheckbox').checked = false;
+    document.getElementById('manualUpiInput').value = '';
+    
+    printShiftReport(shiftEnd);
     if (document.getElementById('notesPanel').classList.contains('panel-open')) renderNotesPanel();
     alert(`Shift #${shiftEnd.id} closed.`);
 }
@@ -1269,7 +1351,8 @@ function printShiftReport(shift) {
         if (tx.paymentMethod === 'Cash') totalCashFromSales += tx.total;
     });
 
-    const manualUpiValue = parseFloat(document.getElementById('manualUpiInput').value) || 0;
+    const upiValue = shift.summary.upiValue || 0;
+    const upiLabel = shift.summary.isManualUpi ? "Manual UPI" : "Auto UPI (POS)";
 
     let soldItemsHtml = Object.entries(soldItemsMap).map(([name, qty]) => `<div class="receipt-line">${name} <span>${qty}</span></div>`).join('');
     let dailyPayHtml = shift.summary.newDailyPayNotes.map(note => `<div class="receipt-line" style="font-size: 0.9em;"><span>${note.description.substring(0, 20)}</span><span>${note.type === 'PayIn' ? '+' : '-'} ₹${formatAmount(note.amount)}</span></div>`).join('');
@@ -1313,8 +1396,8 @@ function printShiftReport(shift) {
             </div>`;
     }
 
-    const shiftDateStr = new Date(shift.startTime).toDateString();
-    const shiftAtt = attendanceLog.filter(a => new Date(a.timestamp).toDateString() === shiftDateStr);
+    // Pull attendance for specifically this shift using the new logic
+    const shiftAtt = attendanceLog.filter(a => a.shiftId === shift.id);
     let attendanceHtml = '';
     if(shiftAtt.length > 0) {
         attendanceHtml += `<div class="receipt-separator"></div><div class="shift-report-section"><h5>WORKER ATTENDANCE</h5>`;
@@ -1327,9 +1410,8 @@ function printShiftReport(shift) {
         attendanceHtml += `</div>`;
     }
 
-    const absoluteTotal = shift.startingCash + totalCashFromSales + manualUpiValue + shift.summary.totalExpenses;
+    const absoluteTotal = shift.startingCash + totalCashFromSales + upiValue + shift.summary.totalExpenses;
     
-    // NEW: Inject Logo
     let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo">` : '';
 
     document.getElementById('receiptOutput').innerHTML = `
@@ -1343,12 +1425,12 @@ function printShiftReport(shift) {
             <div class="shift-report-section">
                 <h5>CASH CALCULATION</h5>
                 <div class="receipt-line">Start Cash: <span>₹${formatAmount(shift.startingCash)}</span></div>
-                <div class="receipt-line">Manual UPI: <span>₹${formatAmount(manualUpiValue)}</span></div>
+                <div class="receipt-line">${upiLabel}: <span>₹${formatAmount(upiValue)}</span></div>
                 <div class="receipt-line">Cash Sales: <span>₹${formatAmount(totalCashFromSales)}</span></div>
                 <div class="receipt-line">Total Expenses: <span>₹${formatAmount(shift.summary.totalExpenses)}</span></div>
                 <div class="receipt-separator"></div>
                 <div class="receipt-line total-line-print"><strong>ABS. TOTAL:</strong> <span><strong>₹${formatAmount(absoluteTotal)}</strong></span></div>
-                <small style="display:block; text-align:center;">(Start+CashSales+ManualUPI+Exp)</small>
+                <small style="display:block; text-align:center;">(Start+CashSales+UPI+Exp)</small>
             </div>
             ${dailyPieHtml}${attendanceHtml}${newArrivalsHtml}${inventoryHtml}
             <div class="receipt-footer">End of Report</div>
@@ -1465,7 +1547,12 @@ function printBill(tx, txId) {
     if (businessProfile.phone) bizHeader += `Tel: ${businessProfile.phone}<br>`;
     if (businessProfile.email) bizHeader += `${businessProfile.email}<br>`;
     if (businessProfile.license) bizHeader += `ID: ${businessProfile.license}<br>`;
-    return `<div id="receiptContent" style="width: 100%;"><div class="receipt-header">${bizHeader}Receipt #${txId} | Mode: ${tx.paymentMethod}<br>${formatDateForReceipt(tx.timestamp)}</div><div class="receipt-separator"></div>${itemsHtml}<div class="receipt-separator"></div><div class="receipt-line total-line-print"><strong>TOTAL:</strong> <span><strong>₹${tx.total.toFixed(2)}</strong></span></div><div class="receipt-footer">${businessProfile.tagline}<br>Thank You!</div><div class="watermark-print">VK_INTERACTIVES</div></div>`;
+    
+    let socialHtml = '';
+    if (businessProfile.instagram) socialHtml += `Instagram: ${businessProfile.instagram}<br>`;
+    if (businessProfile.facebook) socialHtml += `Facebook: ${businessProfile.facebook}<br>`;
+    
+    return `<div id="receiptContent" style="width: 100%;"><div class="receipt-header">${bizHeader}Receipt #${txId} | Mode: ${tx.paymentMethod}<br>${formatDateForReceipt(tx.timestamp)}</div><div class="receipt-separator"></div>${itemsHtml}<div class="receipt-separator"></div><div class="receipt-line total-line-print"><strong>TOTAL:</strong> <span><strong>₹${tx.total.toFixed(2)}</strong></span></div><div class="receipt-footer"><br>${socialHtml}${businessProfile.tagline}<br>Thank You!</div><div class="watermark-print">VK_INTERACTIVES</div></div>`;
 }
 function printToken(tx) {
     let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo">` : '';
@@ -1644,20 +1731,28 @@ function addExpiryNote(){ const n=document.getElementById('expiryItemName').valu
 function addBill(){ const d=document.getElementById('billDescription').value, t=parseFloat(document.getElementById('billTotal').value), p=parseFloat(document.getElementById('billPaid').value); if(d&&t){shopNotes.push({id:nextNoteId++,description:d,total:t,paid:p||0,timestamp:new Date().toISOString(),paymentHistory:p>0?[{amount:p,timestamp:new Date().toISOString(),method:'Initial'}]:[]}); saveData(); renderNotesPanel();} }
 function addDailyPayNote(){ const d=document.getElementById('dailyPayDescription').value, a=parseFloat(document.getElementById('dailyPayAmount').value), t=document.getElementById('dailyPayType').value; if(d&&a){dailyPayNotes.push({id:nextNoteId++,description:d,amount:a,type:t,timestamp:new Date().toISOString()}); saveData(); renderNotesPanel(); calculateDailyCashBalance();} }
 function calculateDailyCashBalance() {
-    const today = new Date().toDateString(), formula = document.getElementById('balanceFormula').value, manualUpiValue = parseFloat(document.getElementById('manualUpiInput').value) || 0;
+    const today = new Date().toDateString();
+    const formula = document.getElementById('balanceFormula').value;
+    
     const todayTransactions = transactions.filter(t => new Date(t.timestamp).toDateString() === today);
     const cashSales = todayTransactions.filter(t => t.paymentMethod === 'Cash').reduce((s, t) => s + t.paid, 0);
     const autoUpiSales = todayTransactions.filter(t => t.paymentMethod === 'UPI').reduce((s, t) => s + t.total, 0);
+    
+    // Check override for calculated display
+    const useManualUpi = document.getElementById('overrideUpiCheckbox').checked;
+    const upiValue = useManualUpi ? (parseFloat(document.getElementById('manualUpiInput').value) || 0) : autoUpiSales;
+
     const payIn = dailyPayNotes.filter(n => new Date(n.timestamp).toDateString() === today && n.type === 'PayIn').reduce((s, n) => s + n.amount, 0);
     const expenses = dailyPayNotes.filter(n => new Date(n.timestamp).toDateString() === today && n.type === 'Expense').reduce((s, n) => s + n.amount, 0);
     const startingCash = currentShift ? currentShift.startingCash : 0;
+    
     let net = 0;
     switch(formula) {
         case "1": net = cashSales + payIn - expenses; break;
-        case "2": net = (cashSales + autoUpiSales) - expenses; break;
+        case "2": net = (cashSales + upiValue) - expenses; break;
         case "3": net = startingCash + cashSales - expenses; break;
-        case "4": net = manualUpiValue + cashSales + startingCash + expenses; break;
-        case "5": net = manualUpiValue - expenses + cashSales + startingCash; break;
+        case "4": net = upiValue + cashSales + startingCash + expenses; break;
+        case "5": net = upiValue - expenses + cashSales + startingCash; break;
         default: net = cashSales + payIn - expenses;
     }
     document.getElementById('dailyCashBalanceResult').innerHTML = `<div class="cash-balance-summary ${net < 0 ? 'negative' : ''}"><span>Calculated Balance:</span><span class="value">₹${Math.abs(net).toFixed(2)}</span></div>`;
@@ -1931,10 +2026,15 @@ function printCustomerInvoice() {
         <div class="receipt-line total-line-print"><strong>GRAND TOTAL:</strong> <span><strong>₹${grandTotal.toFixed(2)}</strong></span></div>
     `;
 
+    let socialHtml = '';
+    if (businessProfile.instagram) socialHtml += `<div style="margin-top: 5px;">Instagram: ${businessProfile.instagram}</div>`;
+    if (businessProfile.facebook) socialHtml += `<div>Facebook: ${businessProfile.facebook}</div>`;
+
     let footer = `
         <div style="margin-top: 20px; text-align: center; font-size: 0.8em; color: #555;">
-            <div style="margin-bottom: 10px;">${businessProfile.tagline}</div>
-            <div>Authorized Signatory</div>
+            ${socialHtml}
+            <div style="margin-bottom: 10px; margin-top: 10px;">${businessProfile.tagline}</div>
+            <div style="margin-top: 30px;">Authorized Signatory</div>
             <div style="margin-top: 20px;">_______________________</div>
         </div>
         <div class="watermark-print">VK_INTERACTIVES</div>
