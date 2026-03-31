@@ -151,6 +151,8 @@
     #analysisBtn { background: #00bcd4; } 
     #printBillBtn { background: #ffc107; color: #333;} 
     #printTokenBtn { background: #4caf50; } 
+    #printLang1Btn { background: #e91e63; } /* Pink/Red for Lang 1 */
+    #printLang2Btn { background: #9c27b0; } /* Purple for Lang 2 */
     #suspendSaleBtn { background: #3f51b5; flex: 1 1 100%; }
     #recallSalesBtn { background: #f44336; }
 
@@ -312,7 +314,7 @@
             </div>
             <div class="input-line">
                 <span style="font-weight: bold;">Money Received (₹):</span>
-                <input type="number" id="moneyReceived" value="0.00" oninput="calculateChange()" step="0.01" min="0">
+                <input type="number" id="moneyReceived" value="" placeholder="0.00" oninput="calculateChange()" step="0.01" min="0">
             </div>
             <div class="total change-line" id="changeLine">
                 <span id="changeLabel">Remaining to Customer:</span>
@@ -325,6 +327,9 @@
                 <button id="recallSalesBtn" onclick="togglePanel('parkedSalesPanel')">Recall Parked Sales (<span id="parkedSalesCount">0</span>) 📁</button>
                 <button id="printBillBtn" onclick="printLastTransaction('bill')">Print Bill 🖨️</button>
                 <button id="printTokenBtn" onclick="printLastTransaction('token')">Print Token 🎫</button>
+                
+                <button id="printLang1Btn" onclick="printLastTransaction('billLang1')">Print Bill (Tamil) 🖨️</button>
+                <button id="printLang2Btn" onclick="printLastTransaction('billLang2')">Print Bill (Hindi) 🖨️</button>
             </div>
         </div>
     </div>
@@ -456,13 +461,36 @@
         <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">Custom Tagline (Footer):</label>
         <input type="text" id="settingsTagline" placeholder="Where Every Journey Holds a Secret" style="width: 100%; margin-bottom: 15px;">
 
+        <h5 style="color: #607d8b; border-top: 1px solid #ccc; padding-top: 10px; margin-top: 20px;">🌍 Multi-Language Print Settings</h5>
+        <p style="font-size: 0.8em; color: #666; margin-bottom: 10px;">Choose which languages appear on the bottom two print buttons.</p>
+
+        <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">Print Button 1 Language:</label>
+        <select id="settingsLang1" style="width: 100%; margin-bottom: 10px; padding: 8px;">
+            <option value="ta">Tamil (தமிழ்)</option>
+            <option value="hi">Hindi (हिंदी)</option>
+            <option value="en">English</option>
+            <option value="es">Spanish (Español)</option>
+            <option value="ar">Arabic (عربي)</option>
+            <option value="fr">French (Français)</option>
+        </select>
+
+        <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">Print Button 2 Language:</label>
+        <select id="settingsLang2" style="width: 100%; margin-bottom: 15px; padding: 8px;">
+            <option value="hi">Hindi (हिंदी)</option>
+            <option value="ta">Tamil (தமிழ்)</option>
+            <option value="en">English</option>
+            <option value="es">Spanish (Español)</option>
+            <option value="ar">Arabic (عربي)</option>
+            <option value="fr">French (Français)</option>
+        </select>
+
         <button onclick="saveSettings()" style="width: 100%; padding: 12px; background: #4caf50; color: white; border: none; border-radius: 6px; font-weight: bold;">Save Settings 💾</button>
         
         <div class="software-info-box">
             <h6>Software Information</h6>
             <div class="software-info-row">
                 <span>Version</span>
-                <span style="font-weight:bold;">v11.0.0-Stabilized</span>
+                <span style="font-weight:bold;">v11.1.0-Global</span>
             </div>
             <div class="software-info-row">
                 <span>Developer</span>
@@ -711,7 +739,26 @@ let businessProfile = {
     tagline: "Where Every Journey Holds a Secret",
     logo: "",
     instagram: "", 
-    facebook: "" 
+    facebook: "",
+    lang1: "ta",
+    lang2: "hi"
+};
+
+// =======================================================
+// LANGUAGE TRANSLATION MAPPINGS
+// =======================================================
+const langNames = {
+    'en': 'English', 'ta': 'Tamil', 'hi': 'Hindi', 
+    'es': 'Spanish', 'ar': 'Arabic', 'fr': 'French'
+};
+
+const posTranslations = {
+    'en': { receipt: "Receipt", mode: "Mode", total: "TOTAL", thankYou: "Thank You!" },
+    'ta': { receipt: "ரசீது", mode: "முறை", total: "மொத்தம்", thankYou: "நன்றி!" },
+    'hi': { receipt: "रसीद", mode: "मोड", total: "कुल", thankYou: "धन्यवाद!" },
+    'es': { receipt: "Recibo", mode: "Modo", total: "TOTAL", thankYou: "¡Gracias!" },
+    'ar': { receipt: "إيصال", mode: "طريقة", total: "الإجمالي", thankYou: "شكرا لك!" },
+    'fr': { receipt: "Reçu", mode: "Mode", total: "TOTAL", thankYou: "Merci !" }
 };
 
 // =======================================================
@@ -733,7 +780,6 @@ function loadLayoutPreference() {
         document.getElementById('mainContainer').classList.add('adaptive');
     }
     
-    // Load Calculator Size Preference
     const savedCalcSize = localStorage.getItem('posCalcSize');
     if(savedCalcSize) setCalcSize(savedCalcSize);
 }
@@ -811,9 +857,11 @@ function renderSettingsPanel() {
     document.getElementById('settingsLicense').value = businessProfile.license || "";
     document.getElementById('settingsTagline').value = businessProfile.tagline || "";
     
-    // Socials
     document.getElementById('settingsInsta').value = businessProfile.instagram || "";
     document.getElementById('settingsFB').value = businessProfile.facebook || "";
+    
+    document.getElementById('settingsLang1').value = businessProfile.lang1 || "ta";
+    document.getElementById('settingsLang2').value = businessProfile.lang2 || "hi";
     
     if (businessProfile.logo) {
         document.getElementById('settingsLogoPreview').src = businessProfile.logo;
@@ -831,9 +879,11 @@ function saveSettings() {
     businessProfile.license = document.getElementById('settingsLicense').value.trim();
     businessProfile.tagline = document.getElementById('settingsTagline').value.trim() || "Where Every Journey Holds a Secret";
     
-    // Save Socials
     businessProfile.instagram = document.getElementById('settingsInsta').value.trim();
     businessProfile.facebook = document.getElementById('settingsFB').value.trim();
+    
+    businessProfile.lang1 = document.getElementById('settingsLang1').value;
+    businessProfile.lang2 = document.getElementById('settingsLang2').value;
     
     localStorage.setItem('posBusinessProfile', JSON.stringify(businessProfile));
     updateHeaderTitle();
@@ -843,6 +893,8 @@ function saveSettings() {
 
 function updateHeaderTitle() {
     document.getElementById('mainHeaderTitle').innerText = businessProfile.companyName;
+    document.getElementById('printLang1Btn').innerText = `Print Bill (${langNames[businessProfile.lang1] || 'Tamil'}) 🖨️`;
+    document.getElementById('printLang2Btn').innerText = `Print Bill (${langNames[businessProfile.lang2] || 'Hindi'}) 🖨️`;
 }
 
 // =======================================================
@@ -871,7 +923,7 @@ function clockInWorker(workerId) {
 
     attendanceLog.push({
         id: Date.now(),
-        shiftId: currentShift.id, // TIED TO CURRENT SHIFT
+        shiftId: currentShift.id, 
         workerId: worker.id,
         name: worker.name,
         age: worker.age,
@@ -890,7 +942,7 @@ function markAbsent(workerId) {
 
     attendanceLog.push({
         id: Date.now(),
-        shiftId: currentShift.id, // TIED TO CURRENT SHIFT
+        shiftId: currentShift.id, 
         workerId: worker.id,
         name: worker.name,
         age: worker.age,
@@ -934,7 +986,6 @@ function renderWorkersPanel() {
     let html = '';
 
     workers.forEach(w => {
-        // FINDS ATTENDANCE FOR THIS SPECIFIC SHIFT
         const log = attendanceLog.find(a => a.workerId === w.id && a.shiftId === currentShift.id);
 
         html += `<div style="background: #f9f9f9; padding: 10px; border-left: 4px solid #00bcd4; margin-bottom: 8px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
@@ -1071,6 +1122,11 @@ function loadData() {
 
         const storedProfile = localStorage.getItem('posBusinessProfile');
         if (storedProfile) businessProfile = JSON.parse(storedProfile);
+        
+        // Ensure defaults if old save doesn't have them
+        if (!businessProfile.lang1) businessProfile.lang1 = "ta";
+        if (!businessProfile.lang2) businessProfile.lang2 = "hi";
+        
         updateHeaderTitle(); 
 
         const storedItems = localStorage.getItem('posItems');
@@ -1251,7 +1307,6 @@ function startShift() {
     saveData(); 
     updateShiftButtons(); 
     
-    // Refresh Workers panel if it's open to show fresh Present/Absent buttons
     if (document.getElementById('workersPanel').classList.contains('panel-open')) {
         renderWorkersPanel();
     }
@@ -1266,13 +1321,11 @@ function closeShift() {
     const endingCash = parseFloat(endingCashInput) || 0.00;
     if (isNaN(endingCash)) return;
     
-    // CALC AUTO UPI AND CHECK OVERRIDE FLAG
     const shiftTransactions = transactions.slice(currentShift.startTransactionCount);
     const autoUpiSales = shiftTransactions.filter(t => t.paymentMethod === 'UPI').reduce((s, t) => s + t.total, 0);
     const useManualUpi = document.getElementById('overrideUpiCheckbox').checked;
     const finalUpiValue = useManualUpi ? (parseFloat(document.getElementById('manualUpiInput').value) || 0) : autoUpiSales;
     
-    // AUTO CLOCK-OUT ACTIVE WORKERS
     const now = new Date();
     attendanceLog.forEach(log => {
         if (log.status === 'Active') {
@@ -1316,7 +1369,6 @@ function closeShift() {
     dailyPayNotes = []; newArrivalsLog = []; currentShift = null;
     saveData(); updateShiftButtons();
     
-    // Reset UPI Checkbox & Input for next shift
     document.getElementById('overrideUpiCheckbox').checked = false;
     document.getElementById('manualUpiInput').value = '';
     
@@ -1404,7 +1456,6 @@ function printShiftReport(shift) {
             </div>`;
     }
 
-    // Pull attendance for specifically this shift using the new logic
     const shiftAtt = attendanceLog.filter(a => a.shiftId === shift.id);
     let attendanceHtml = '';
     if(shiftAtt.length > 0) {
@@ -1513,7 +1564,11 @@ function completeSale() {
 
     transactions.push({ timestamp: new Date().toISOString(), total: grandTotal, paid: moneyReceived, change: changeAmount, items: cart.map(item => ({...item})), paymentMethod: paymentMethod, tokenId: nextTokenId++ });
     alert(`Sale Completed! Change: ₹${changeAmount.toFixed(2)}.`);
-    cart = []; saveData(); document.getElementById('moneyReceived').value = grandTotal.toFixed(2); updateCart(); 
+    
+    cart = []; 
+    saveData(); 
+    document.getElementById('moneyReceived').value = ''; 
+    updateCart(); 
 }
 function updateCart() {
     const cartItems = document.getElementById('cartItems'); cartItems.innerHTML = ''; let grandTotal = 0;
@@ -1524,8 +1579,10 @@ function updateCart() {
         cartItems.appendChild(div);
     });
     document.getElementById('subTotal').innerText = grandTotal.toFixed(2);
-    if (cart.length > 0 && parseFloat(document.getElementById('moneyReceived').value) < grandTotal && document.getElementById('paymentMethod').value !== 'Credit') { document.getElementById('moneyReceived').value = grandTotal.toFixed(2); }
-    if (cart.length === 0) document.getElementById('moneyReceived').value = "0.00";
+    
+    // Ensure box stays blank when cart is cleared
+    if (cart.length === 0) document.getElementById('moneyReceived').value = "";
+    
     document.getElementById('completeSaleBtn').disabled = cart.length === 0;
     document.getElementById('suspendSaleBtn').disabled = cart.length === 0;
     filterItems(); calculateChange();
@@ -1545,9 +1602,19 @@ function calculateChange() {
 // =======================================================
 function printLastTransaction(type = 'bill') {
     if (transactions.length === 0) { alert("No history."); return; }
-    printTransactionById(transactions.length - 1, type);
+    
+    if (type === 'billLang1') {
+        printTransactionById(transactions.length - 1, 'bill', businessProfile.lang1 || 'ta');
+    } else if (type === 'billLang2') {
+        printTransactionById(transactions.length - 1, 'bill', businessProfile.lang2 || 'hi');
+    } else {
+        printTransactionById(transactions.length - 1, type, 'en');
+    }
 }
-function printBill(tx, txId) {
+
+function printBill(tx, txId, langCode = 'en') {
+    const t = posTranslations[langCode] || posTranslations['en'];
+    
     let itemsHtml = tx.items.map(item => `<div class="receipt-line">${item.name} x ${item.quantity}<span>₹${(item.price * item.quantity).toFixed(2)}</span></div>`).join('');
     let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo">` : '';
     let bizHeader = `${logoHtml}<strong>${businessProfile.companyName}</strong><br>`;
@@ -1560,22 +1627,30 @@ function printBill(tx, txId) {
     if (businessProfile.instagram) socialHtml += `Instagram: ${businessProfile.instagram}<br>`;
     if (businessProfile.facebook) socialHtml += `Facebook: ${businessProfile.facebook}<br>`;
     
-    return `<div id="receiptContent" style="width: 100%;"><div class="receipt-header">${bizHeader}Receipt #${txId} | Mode: ${tx.paymentMethod}<br>${formatDateForReceipt(tx.timestamp)}</div><div class="receipt-separator"></div>${itemsHtml}<div class="receipt-separator"></div><div class="receipt-line total-line-print"><strong>TOTAL:</strong> <span><strong>₹${tx.total.toFixed(2)}</strong></span></div><div class="receipt-footer"><br>${socialHtml}${businessProfile.tagline}<br>Thank You!</div><div class="watermark-print">VK_INTERACTIVES</div></div>`;
+    return `<div id="receiptContent" style="width: 100%;">
+                <div class="receipt-header">${bizHeader}${t.receipt} #${txId} | ${t.mode}: ${tx.paymentMethod}<br>${formatDateForReceipt(tx.timestamp)}</div>
+                <div class="receipt-separator"></div>${itemsHtml}<div class="receipt-separator"></div>
+                <div class="receipt-line total-line-print"><strong>${t.total}:</strong> <span><strong>₹${tx.total.toFixed(2)}</strong></span></div>
+                <div class="receipt-footer"><br>${socialHtml}${businessProfile.tagline}<br>${t.thankYou}</div>
+                <div class="watermark-print">VK_INTERACTIVES</div>
+            </div>`;
 }
+
 function printToken(tx) {
     let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo">` : '';
     let tokenItems = tx.items.map((item, i) => `<div class="token-header">${logoHtml}${businessProfile.companyName}<br>TOKEN #${tx.tokenId}</div><div style="display:flex;justify-content:space-between;font-weight:bold;"><span>${item.name}</span><span>QTY: ${item.quantity}</span></div>${i < tx.items.length-1 ? '<div style="text-align:center;margin:10px 0;">✂︎----------------</div>' : ''}`).join('');
     return `<div id="tokenContent" style="width: 100%;">${tokenItems}<div class="watermark-print">VK INTERACTIVES</div></div>`;
 }
-function printTransactionById(index, type = 'bill') {
+
+function printTransactionById(index, type = 'bill', langCode = 'en') {
     if (index >= 0 && index < transactions.length) {
-        document.getElementById('receiptOutput').innerHTML = (type === 'token') ? printToken(transactions[index]) : printBill(transactions[index], index + 1);
+        document.getElementById('receiptOutput').innerHTML = (type === 'token') ? printToken(transactions[index]) : printBill(transactions[index], index + 1, langCode);
         window.print();
     }
 }
 
 // =======================================================
-// PARKED SALES (ROBUST FALLBACKS ADDED)
+// PARKED SALES
 // =======================================================
 function updateParkedSalesCount() { document.getElementById('parkedSalesCount').innerText = parkedSales.length; }
 
@@ -1592,7 +1667,7 @@ function suspendSale() {
         moneyReceived: parseFloat(document.getElementById('moneyReceived').value)||0, 
         paymentMethod: document.getElementById('paymentMethod').value 
     });
-    cart = []; document.getElementById('moneyReceived').value='0.00'; alert("Sale Suspended."); saveData(); updateCart(); updateParkedSalesCount();
+    cart = []; document.getElementById('moneyReceived').value=''; alert("Sale Suspended."); saveData(); updateCart(); updateParkedSalesCount();
 }
 
 function recallParkedSale(id) {
@@ -1601,9 +1676,8 @@ function recallParkedSale(id) {
     if (index === -1) return;
     const sale = parkedSales[index]; 
     
-    // Fallbacks just in case data was saved poorly
     cart = sale.items && Array.isArray(sale.items) ? sale.items.map(i=>({...i})) : [];
-    document.getElementById('moneyReceived').value = sale.moneyReceived ? sale.moneyReceived.toFixed(2) : "0.00"; 
+    document.getElementById('moneyReceived').value = sale.moneyReceived ? sale.moneyReceived.toFixed(2) : ""; 
     document.getElementById('paymentMethod').value = sale.paymentMethod || "Cash";
     
     parkedSales.splice(index, 1); saveData(); updateCart(); updateParkedSalesCount(); togglePanel('parkedSalesPanel');
@@ -1612,8 +1686,6 @@ function recallParkedSale(id) {
 function renderParkedSalesPanel() {
     const list = document.getElementById('parkedSalesList');
     list.innerHTML = '';
-    
-    // Safety check: Filter out any completely broken sales from memory
     parkedSales = parkedSales.filter(sale => sale && sale.id);
 
     if (parkedSales.length === 0) {
@@ -1624,8 +1696,6 @@ function renderParkedSalesPanel() {
     parkedSales.forEach(sale => {
         const card = document.createElement('div');
         card.className = 'parked-sale-card';
-        
-        // Super robust fallbacks so it never crashes on bad UI memory
         const totalStr = sale.total ? parseFloat(sale.total).toFixed(2) : "0.00";
         const itemsArr = sale.items && Array.isArray(sale.items) ? sale.items : [];
         const itemsStr = itemsArr.length > 0 ? itemsArr.map(i => `${i.name || 'Unknown'} (x${i.quantity || 1})`).join(', ') : "No items";
@@ -1746,7 +1816,6 @@ function calculateDailyCashBalance() {
     const cashSales = todayTransactions.filter(t => t.paymentMethod === 'Cash').reduce((s, t) => s + t.paid, 0);
     const autoUpiSales = todayTransactions.filter(t => t.paymentMethod === 'UPI').reduce((s, t) => s + t.total, 0);
     
-    // Check override for calculated display
     const useManualUpi = document.getElementById('overrideUpiCheckbox').checked;
     const upiValue = useManualUpi ? (parseFloat(document.getElementById('manualUpiInput').value) || 0) : autoUpiSales;
 
@@ -1801,7 +1870,7 @@ function renderAnalysisPanel() {
 function resetAllData() { if(confirm("Reset ALL data?")){ localStorage.clear(); location.reload(); } }
 
 // =======================================================
-// RAW MATERIALS LOGIC WITH EDIT, DELETE, CHECKBOXES & CUSTOMER INVOICE
+// RAW MATERIALS LOGIC
 // =======================================================
 
 function toggleAllRawMats(source) {
