@@ -22,6 +22,47 @@
         min-height: 100vh;
         position: relative;
     }
+
+    /* SPLASH SCREEN STYLES */
+    #splashScreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #000000; /* Dark background to make the GIF pop */
+        z-index: 999999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+    #splashScreen img {
+        max-width: 80%;
+        max-height: 50vh;
+        border-radius: 12px;
+        box-shadow: 0 0 30px rgba(0, 188, 212, 0.3);
+    }
+    .splash-text {
+        margin-top: 20px;
+        font-weight: bold;
+        color: #00bcd4;
+        font-size: 1.5em;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+        0% { opacity: 0.7; }
+        50% { opacity: 1; text-shadow: 0 0 10px rgba(0, 188, 212, 0.5); }
+        100% { opacity: 0.7; }
+    }
+    .splash-hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
     
     .watermark-ui {
         position: fixed; bottom: 5px; right: 10px; font-size: 0.8em;
@@ -76,12 +117,12 @@
     .inventory-controls button, .bill-controls button, .add-bill-btn, 
     .date-filters button, .calc-button, 
     #inventoryManagementPanel, #historyPanel, #notesPanel, #analysisPanel, #calculatorPanel, 
-    #paymentHistoryModal, #parkedSalesPanel, #shiftHistoryPanel, #productionPanel, #settingsPanel, #workersPanel, #rawMaterialsPanel {
+    #paymentHistoryModal, #parkedSalesPanel, #shiftHistoryPanel, #productionPanel, #settingsPanel, #workersPanel, #rawMaterialsPanel, #creditsPanel {
         transition: all 0.3s ease-in-out; 
     }
 
     #inventoryManagementPanel, #historyPanel, #notesPanel, #analysisPanel, #calculatorPanel, 
-    #paymentHistoryModal, #parkedSalesPanel, #shiftHistoryPanel, #productionPanel, #settingsPanel, #workersPanel, #rawMaterialsPanel {
+    #paymentHistoryModal, #parkedSalesPanel, #shiftHistoryPanel, #productionPanel, #settingsPanel, #workersPanel, #rawMaterialsPanel, #creditsPanel {
         background: #ffffff; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
         height: 100vh; z-index: 1000; display: none; box-sizing: border-box;
         padding: 15px; overflow-y: auto; color: #333; 
@@ -151,19 +192,19 @@
     #analysisBtn { background: #00bcd4; } 
     #printBillBtn { background: #ffc107; color: #333;} 
     #printTokenBtn { background: #4caf50; } 
-    #printLang1Btn { background: #e91e63; } /* Pink/Red for Lang 1 */
-    #printLang2Btn { background: #9c27b0; } /* Purple for Lang 2 */
+    #printLang1Btn { background: #e91e63; } 
+    #printLang2Btn { background: #9c27b0; } 
     #suspendSaleBtn { background: #3f51b5; flex: 1 1 100%; }
     #recallSalesBtn { background: #f44336; }
 
-    #completeSaleBtn { padding: 15px; margin-top: 10px; font-size: 1.2em; font-weight: bold; color: white; background: #4caf50; border: none; border-radius: 8px; box-shadow: 0 4px 0 #388e3c; cursor: pointer; }
+    #completeSaleBtn { padding: 15px; margin-top: 10px; font-size: 1.2em; font-weight: bold; color: white; background: #4caf50; border: none; border-radius: 8px; box-shadow: 0 4px 0 #388e3c; cursor: pointer; transition: all 0.2s; }
     #completeSaleBtn:hover { background: #388e3c; transform: translateY(-1px); }
     #completeSaleBtn:disabled { background: #b0b0b0; cursor: not-allowed; box-shadow: none; border-bottom: none; }
 
     /* Calculator Styles */
-    .calc-container { display: flex; flex-direction: column; height: 80vh; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 10px; background: #fff; transition: max-width 0.3s ease; }
-    .calc-size-mobile { max-width: 360px; width: 100%; }
-    .calc-size-tablet { max-width: 600px; width: 100%; }
+    .calc-container { display: flex; flex-direction: column; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 10px; background: #fff; transition: max-width 0.3s ease; }
+    .calc-size-mobile { max-width: 360px; width: 100%; height: 70vh; }
+    .calc-size-tablet { max-width: 600px; width: 100%; height: 80vh; }
     .calc-size-pc { max-width: 90vw; width: 100%; height: 85vh; }
     
     .calculator-keypad { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 1fr; gap: 10px; padding: 15px; background: #f9f9f9; flex: 1; border-radius: 0 0 10px 10px; overflow-y: auto; }
@@ -180,7 +221,7 @@
     .parked-sale-card, .shift-card { background: #f9f9f9; border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 15px; margin-bottom: 10px; border-radius: 8px; border-left: 5px solid #3f51b5; }
     .shift-card { border-left: 5px solid #ff5722; }
     .parked-sale-header, .shift-header { display: flex; justify-content: space-between; font-weight: bold; padding-bottom: 5px; margin-bottom: 5px; border-bottom: 1px dashed #ccc; }
-    .parked-sale-controls, .shift-controls { display: flex; gap: 8px; margin-top: 10px; }
+    .parked-sale-controls, .shift-controls { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
     .parked-sale-controls button, .shift-controls button { flex: 1; padding: 10px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; }
     .recall-btn { background: #4caf50; }
     .print-shift-btn { background: #ffc107; color: #333;}
@@ -260,6 +301,11 @@
 </head>
 <body onload="loadData()">
 
+<div id="splashScreen">
+    <img src="https://www.dropbox.com/scl/fi/lt9478zc4rechduhk1o3z/km_20251211_480p_15f_20251211_001308.gif?rlkey=o3dhiu3ts3lolr7j0l6mvd28u&st=sr5xhv3a&raw=1" alt="VK POS Splash Logo">
+    <div class="splash-text">VK INTERACTIVES</div>
+</div>
+
 <div class="watermark-ui">VK_INTERACTIVES</div>
 
 <div class="container" id="mainContainer">
@@ -268,6 +314,7 @@
         <div id="mainHeaderTitle" style="font-weight: bold; font-size: 1.1em; color: #00bcd4;">VK POS</div>
         <div class="header-controls">
              <button class="header-btn view-toggle-btn" onclick="toggleLayout()">🖥️ View</button>
+             <button class="header-btn" onclick="togglePanel('creditsPanel')" style="background: #e91e63;">Credits 📒</button>
              <button class="header-btn" onclick="togglePanel('settingsPanel')" style="background: #607d8b;">Settings ⚙️</button>
              <button class="header-btn" id="startShiftBtn" onclick="startShift()" style="background: #4caf50;">Start Shift 🚀</button>
              <button class="header-btn" id="closeShiftBtn" onclick="closeShift()" disabled style="background: #ff5722;">Close Shift 🔒</button>
@@ -303,15 +350,16 @@
                 <span style="font-weight: bold;">Total Product Price:</span>
                 <span style="font-weight: bold; color: #ff5722;">₹<span id="subTotal">0.00</span></span>
             </div>
+            
             <div class="payment-method-line">
                 <span style="font-weight: bold;">Payment Method:</span>
                 <select id="paymentMethod">
                     <option value="Cash">Cash</option>
                     <option value="Card">Card</option>
                     <option value="UPI">UPI</option>
-                    <option value="Credit">Credit (Outstanding)</option>
                 </select>
             </div>
+            
             <div class="input-line">
                 <span style="font-weight: bold;">Money Received (₹):</span>
                 <input type="number" id="moneyReceived" value="" placeholder="0.00" oninput="calculateChange()" step="0.01" min="0">
@@ -321,7 +369,7 @@
                 <span style="font-weight: bold;">₹<span id="remainingChange">0.00</span></span>
             </div>
             <button id="suspendSaleBtn" onclick="suspendSale()" disabled>Park/Suspend Sale ⏸️</button>
-            <button id="completeSaleBtn" onclick="completeSale()" disabled>Complete Sale</button>
+            <button id="completeSaleBtn" onclick="handleCompleteSaleClick()" disabled>Complete Sale</button>
             <div class="print-analysis-controls">
                 <button id="calcBtnMobile" onclick="togglePanel('calculatorPanel')">Calc 🧮</button>
                 <button id="recallSalesBtn" onclick="togglePanel('parkedSalesPanel')">Recall Parked Sales (<span id="parkedSalesCount">0</span>) 📁</button>
@@ -332,6 +380,28 @@
                 <button id="printLang2Btn" onclick="printLastTransaction('billLang2')">Print Bill (Hindi) 🖨️</button>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="creditsPanel">
+    <div class="panel-header">
+        <h4>Customer Credits 📒</h4>
+        <button onclick="togglePanel('creditsPanel')" class="panel-close-btn">Close ✕</button>
+    </div>
+    <div style="padding: 10px;">
+        <div style="background: #ffebee; padding: 15px; border-radius: 8px; border: 1px solid #f44336; margin-bottom: 15px;">
+            <h5 style="margin-top: 0; color: #d32f2f;">➕ Add New Customer Credit</h5>
+            <input type="text" id="newCreditName" placeholder="Customer Name" style="width: 100%; margin-bottom: 8px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            <input type="text" id="newCreditDesc" placeholder="Items or Description" style="width: 100%; margin-bottom: 8px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                <input type="number" id="newCreditTotal" placeholder="Total Amount (₹)" style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                <input type="number" id="newCreditAdvance" placeholder="Advance Paid (₹)" style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            </div>
+            <button onclick="addNewCreditRecord()" style="width: 100%; padding: 10px; background: #e91e63; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Save Credit Record</button>
+        </div>
+        
+        <h5 style="margin-top: 0; color: #e91e63; border-bottom: 1px solid #eee; padding-bottom: 5px;">Active Credits:</h5>
+        <div id="creditsList"></div>
     </div>
 </div>
 
@@ -462,8 +532,6 @@
         <input type="text" id="settingsTagline" placeholder="Where Every Journey Holds a Secret" style="width: 100%; margin-bottom: 15px;">
 
         <h5 style="color: #607d8b; border-top: 1px solid #ccc; padding-top: 10px; margin-top: 20px;">🌍 Multi-Language Print Settings</h5>
-        <p style="font-size: 0.8em; color: #666; margin-bottom: 10px;">Choose which languages appear on the bottom two print buttons.</p>
-
         <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">Print Button 1 Language:</label>
         <select id="settingsLang1" style="width: 100%; margin-bottom: 10px; padding: 8px;">
             <option value="ta">Tamil (தமிழ்)</option>
@@ -483,6 +551,16 @@
             <option value="ar">Arabic (عربي)</option>
             <option value="fr">French (Français)</option>
         </select>
+
+        <h5 style="color: #607d8b; border-top: 1px solid #ccc; padding-top: 10px; margin-top: 20px;">🖨️ Shift Report Print Toggles</h5>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; background: #f0f8ff; padding: 15px; border-radius: 8px;">
+            <label><input type="checkbox" id="setSrSales"> Show Sales Summary</label>
+            <label><input type="checkbox" id="setSrExp"> Show Expenses</label>
+            <label><input type="checkbox" id="setSrAtt"> Show Attendance</label>
+            <label><input type="checkbox" id="setSrStock"> Show Closing Stock</label>
+            <label><input type="checkbox" id="setSrArr"> Show New Arrivals</label>
+            <label><input type="checkbox" id="setSrChart"> Show Daily Chart</label>
+        </div>
 
         <button onclick="saveSettings()" style="width: 100%; padding: 12px; background: #4caf50; color: white; border: none; border-radius: 6px; font-weight: bold;">Save Settings 💾</button>
         
@@ -650,7 +728,7 @@
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px;">
                     <label style="font-size: 0.8em; font-weight: bold; color: #333; margin:0;">Total Manual UPI Counted (₹):</label>
                     <div style="display: flex; align-items: center; gap: 5px; background: #ffe0b2; padding: 2px 8px; border-radius: 4px;">
-                        <input type="checkbox" id="overrideUpiCheckbox" onchange="calculateDailyCashBalance()" style="width: 16px; height: 16px; margin: 0; cursor: pointer;">
+                        <input type="checkbox" id="overrideUpiCheckbox" onchange="calculateDailyCashBalance(); saveFormulaPreference();" style="width: 16px; height: 16px; margin: 0; cursor: pointer;">
                         <label for="overrideUpiCheckbox" style="font-size: 0.8em; color: #d32f2f; font-weight: bold; cursor: pointer;">Override Auto-UPI</label>
                     </div>
                 </div>
@@ -658,13 +736,25 @@
                 <input type="number" id="manualUpiInput" placeholder="Enter UPI total from phone..." style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #ff9800; background: #fff !important;" oninput="calculateDailyCashBalance()">
 
                 <label style="font-size: 0.8em; font-weight: bold; display: block; margin-bottom: 5px; color: #333;">Select Calculation Formula:</label>
-                <select id="balanceFormula" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ff9800; background: #fff;" onchange="calculateDailyCashBalance()">
+                <select id="balanceFormula" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ff9800; background: #fff;" onchange="calculateDailyCashBalance(); saveFormulaPreference();">
                     <option value="1">Cash Sales + PayIn - Expenses (Standard)</option>
                     <option value="2">All Sales (Cash + UPI) - Expenses</option>
                     <option value="3">Starting Cash + Cash Sales - Expenses</option>
                     <option value="4">UPI + Cash Sales + Starting Cash + Expenses = Total</option>
                     <option value="5">UPI - Expenses + Cash Sales + Starting Cash = Total</option>
+                    <option value="6">(UPI + Cash Sales) - PayIn + Starting Cash</option>
+                    <option value="7">All Sales - All Expenses - PayIn</option>
+                    <option value="8">Cash Sales Only (Ignore Start/UPI/Exp)</option>
+                    <option value="custom">⚙️ Custom / Build Your Own</option>
                 </select>
+
+                <div id="customFormulaGrid" style="display:none; margin-top: 10px; background: #fff; padding: 10px; border: 1px dashed #ff9800; border-radius: 4px;">
+                    <label style="display:block; margin-bottom:5px;"><input type="checkbox" id="cfCash" onchange="calculateDailyCashBalance(); saveFormulaPreference();"> ➕ Add Cash Sales</label>
+                    <label style="display:block; margin-bottom:5px;"><input type="checkbox" id="cfUPI" onchange="calculateDailyCashBalance(); saveFormulaPreference();"> ➕ Add UPI Sales</label>
+                    <label style="display:block; margin-bottom:5px;"><input type="checkbox" id="cfStart" onchange="calculateDailyCashBalance(); saveFormulaPreference();"> ➕ Add Starting Cash</label>
+                    <label style="display:block; margin-bottom:5px;"><input type="checkbox" id="cfPayIn" onchange="calculateDailyCashBalance(); saveFormulaPreference();"> ➕ Add PayIns</label>
+                    <label style="display:block;"><input type="checkbox" id="cfExp" onchange="calculateDailyCashBalance(); saveFormulaPreference();"> ➖ Subtract Expenses</label>
+                </div>
             </div>
             <button onclick="calculateDailyCashBalance()" style="width: 100%; padding: 10px; background: #ff9800; color: white; border: none; border-radius: 8px; font-weight: bold;">
                 Recalculate Today's Balance
@@ -678,15 +768,15 @@
         </div>
     </div>
     <div style="margin-bottom: 15px; border-bottom: 1px dashed #ccc; padding-bottom: 10px;">
-        <h5 style="margin-top: 0; color: #4caf50;">Log New Bill/Outstanding:</h5>
-        <input type="text" id="billDescription" placeholder="Description (e.g., Gas Bill, Customer Credit)" style="margin-bottom: 5px;" />
+        <h5 style="margin-top: 0; color: #4caf50;">Log New Shop Bill/Expense:</h5>
+        <input type="text" id="billDescription" placeholder="Description (e.g., Gas Bill)" style="margin-bottom: 5px;" />
         <div class="bill-input-group" style="display: flex; gap: 5px;">
             <input type="number" id="billTotal" placeholder="Total (₹)" min="0.01" step="0.01" style="flex: 1;">
             <input type="number" id="billPaid" placeholder="Paid Now (₹)" value="0.00" min="0.00" step="0.01" style="flex: 1;">
         </div>
         <button class="add-bill-btn" onclick="addBill()" style="width: 100%; padding: 10px; background: #4caf50; color: white; border: none; border-radius: 8px; margin-top: 10px; font-weight: bold;">Add Bill/Outstanding</button>
     </div>
-    <h5 style="margin-top: 0; color: #4caf50;">Outstanding Bills/Credits:</h5>
+    <h5 style="margin-top: 0; color: #4caf50;">Outstanding Shop Bills:</h5>
     <div id="billsList"></div>
 </div>
 
@@ -718,6 +808,7 @@ let shifts = [];
 let currentShift = null; 
 let workers = []; 
 let attendanceLog = []; 
+let customerCredits = []; // FEATURE 1
 
 // Raw Materials Database & History Log
 let rawMaterials = []; 
@@ -731,17 +822,10 @@ let nextShiftId = 1;
 let nextArrivalId = 1; 
 
 let businessProfile = {
-    companyName: "VK POS",
-    phone: "",
-    email: "",
-    address: "",
-    license: "",
-    tagline: "Where Every Journey Holds a Secret",
-    logo: "",
-    instagram: "", 
-    facebook: "",
-    lang1: "ta",
-    lang2: "hi"
+    companyName: "VK POS", phone: "", email: "", address: "", license: "",
+    tagline: "Where Every Journey Holds a Secret", logo: "",
+    instagram: "", facebook: "", lang1: "ta", lang2: "hi",
+    srSales: true, srExp: true, srAtt: true, srStock: true, srArr: true, srChart: true
 };
 
 // =======================================================
@@ -792,7 +876,7 @@ function setCalcSize(size) {
 
 function togglePanel(panelId) {
     const panel = document.getElementById(panelId);
-    const allPanels = ['inventoryManagementPanel', 'historyPanel', 'notesPanel', 'analysisPanel', 'calculatorPanel', 'paymentHistoryModal', 'parkedSalesPanel', 'shiftHistoryPanel', 'productionPanel', 'settingsPanel', 'workersPanel', 'rawMaterialsPanel'];
+    const allPanels = ['inventoryManagementPanel', 'historyPanel', 'notesPanel', 'analysisPanel', 'calculatorPanel', 'paymentHistoryModal', 'parkedSalesPanel', 'shiftHistoryPanel', 'productionPanel', 'settingsPanel', 'workersPanel', 'rawMaterialsPanel', 'creditsPanel'];
 
     if (panel.classList.contains('panel-open')) {
         panel.classList.remove('panel-open');
@@ -821,6 +905,7 @@ function togglePanel(panelId) {
                 case 'settingsPanel': renderSettingsPanel(); break;
                 case 'workersPanel': renderWorkersPanel(); break; 
                 case 'rawMaterialsPanel': renderRawMaterialsPanel(); break;
+                case 'creditsPanel': renderCreditsPanel(); break;
             }
         }, 10); 
     }
@@ -862,6 +947,13 @@ function renderSettingsPanel() {
     
     document.getElementById('settingsLang1').value = businessProfile.lang1 || "ta";
     document.getElementById('settingsLang2').value = businessProfile.lang2 || "hi";
+
+    document.getElementById('setSrSales').checked = businessProfile.srSales !== false;
+    document.getElementById('setSrExp').checked = businessProfile.srExp !== false;
+    document.getElementById('setSrAtt').checked = businessProfile.srAtt !== false;
+    document.getElementById('setSrStock').checked = businessProfile.srStock !== false;
+    document.getElementById('setSrArr').checked = businessProfile.srArr !== false;
+    document.getElementById('setSrChart').checked = businessProfile.srChart !== false;
     
     if (businessProfile.logo) {
         document.getElementById('settingsLogoPreview').src = businessProfile.logo;
@@ -884,11 +976,18 @@ function saveSettings() {
     
     businessProfile.lang1 = document.getElementById('settingsLang1').value;
     businessProfile.lang2 = document.getElementById('settingsLang2').value;
+
+    businessProfile.srSales = document.getElementById('setSrSales').checked;
+    businessProfile.srExp = document.getElementById('setSrExp').checked;
+    businessProfile.srAtt = document.getElementById('setSrAtt').checked;
+    businessProfile.srStock = document.getElementById('setSrStock').checked;
+    businessProfile.srArr = document.getElementById('setSrArr').checked;
+    businessProfile.srChart = document.getElementById('setSrChart').checked;
     
     localStorage.setItem('posBusinessProfile', JSON.stringify(businessProfile));
     updateHeaderTitle();
     togglePanel('settingsPanel');
-    alert("Business Profile Saved!");
+    alert("System Settings Saved!");
 }
 
 function updateHeaderTitle() {
@@ -898,7 +997,132 @@ function updateHeaderTitle() {
 }
 
 // =======================================================
-// WORKER ATTENDANCE (NOW PER-SHIFT)
+// FEATURE 1: STANDALONE CUSTOMER CREDITS SYSTEM
+// =======================================================
+function addNewCreditRecord() {
+    const name = document.getElementById('newCreditName').value.trim();
+    const desc = document.getElementById('newCreditDesc').value.trim();
+    const total = parseFloat(document.getElementById('newCreditTotal').value);
+    const advance = parseFloat(document.getElementById('newCreditAdvance').value) || 0;
+
+    if(!name || isNaN(total) || total <= 0) {
+        alert("Please enter a valid Customer Name and Total Amount.");
+        return;
+    }
+
+    customerCredits.push({ 
+        id: Date.now(), 
+        name: name, 
+        description: desc || 'Manual Credit Log', 
+        total: total, 
+        advance: advance, 
+        timestamp: new Date().toISOString() 
+    });
+
+    if(advance > 0) {
+        dailyPayNotes.push({
+            id: nextNoteId++, 
+            description: `Credit Advance: ${name}`, 
+            amount: advance, 
+            type: 'PayIn', 
+            timestamp: new Date().toISOString()
+        });
+        if(document.getElementById('notesPanel').classList.contains('panel-open') || document.getElementById('creditsPanel').classList.contains('panel-open')){
+            calculateDailyCashBalance();
+        }
+    }
+
+    saveData();
+    renderCreditsPanel();
+    
+    document.getElementById('newCreditName').value = '';
+    document.getElementById('newCreditDesc').value = '';
+    document.getElementById('newCreditTotal').value = '';
+    document.getElementById('newCreditAdvance').value = '';
+
+    alert(`Credit record for ${name} added successfully!`);
+}
+
+function renderCreditsPanel() {
+    const list = document.getElementById('creditsList');
+    if (customerCredits.length === 0) {
+        list.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">No outstanding customer credits.</p>';
+        return;
+    }
+    list.innerHTML = customerCredits.map(c => {
+        const itemsStr = c.items && Array.isArray(c.items) ? c.items.map(i=>`${i.name} x${i.quantity}`).join(', ') : (c.description || 'Manual Credit Log');
+        return `
+        <div class="parked-sale-card" style="border-left-color: #e91e63;">
+            <div class="parked-sale-header"><span>💳 ${c.name}</span><span style="color: #e91e63;">Total: ₹${c.total.toFixed(2)}</span></div>
+            <div class="parked-summary" style="margin-bottom:10px;">
+                <small>${new Date(c.timestamp).toLocaleString()}</small><br>
+                Desc/Items: ${itemsStr}<br>
+                <span style="color: #4caf50;">Advance Paid: ₹${c.advance.toFixed(2)}</span> | 
+                <strong style="color: #d32f2f;">Balance: ₹${(c.total - c.advance).toFixed(2)}</strong>
+            </div>
+            <div class="parked-sale-controls">
+                <button onclick="printCustomerCredit(${c.id})" style="background:#ffc107;color:#333;">Print 🖨️</button>
+                <button onclick="markCreditRepaid(${c.id})" style="background:#4caf50;">Mark Repaid ✅</button>
+                <button onclick="deleteCredit(${c.id})" style="background:#f44336;">Delete 🗑️</button>
+            </div>
+        </div>
+        `;
+    }).join('');
+}
+
+function markCreditRepaid(id) {
+    const credit = customerCredits.find(c => c.id === id);
+    if(!credit) return;
+    const balance = credit.total - credit.advance;
+    if(confirm(`Mark ${credit.name}'s credit as Fully Repaid?`)) {
+        if(confirm(`Do you want to add this cash (₹${balance.toFixed(2)}) to today's drawer? (Logs as a PayIn)`)) {
+            dailyPayNotes.push({id: nextNoteId++, description: `Repaid Credit: ${credit.name}`, amount: balance, type: 'PayIn', timestamp: new Date().toISOString()});
+        }
+        customerCredits = customerCredits.filter(c => c.id !== id);
+        saveData();
+        renderCreditsPanel();
+        if(document.getElementById('notesPanel').classList.contains('panel-open') || document.getElementById('creditsPanel').classList.contains('panel-open')) { 
+            calculateDailyCashBalance(); 
+        }
+    }
+}
+
+function deleteCredit(id) {
+    if(confirm("Permanently delete this credit record? (Stock will NOT be restored)")) {
+        customerCredits = customerCredits.filter(c => c.id !== id);
+        saveData();
+        renderCreditsPanel();
+    }
+}
+
+function printCustomerCredit(id) {
+    const credit = customerCredits.find(c => c.id === id);
+    if(!credit) return;
+    
+    let itemsHtml = '';
+    if (credit.items && Array.isArray(credit.items)) {
+        itemsHtml = credit.items.map(item => `<div class="receipt-line">${item.name} x ${item.quantity}<span>₹${(item.price * item.quantity).toFixed(2)}</span></div>`).join('');
+    } else {
+        itemsHtml = `<div class="receipt-line">${credit.description || 'Items/Service'}<span>₹${credit.total.toFixed(2)}</span></div>`;
+    }
+    
+    let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo">` : '';
+    let bizHeader = `${logoHtml}<strong>${businessProfile.companyName}</strong><br>`;
+    
+    document.getElementById('receiptOutput').innerHTML = `<div style="width: 100%;">
+        <div class="receipt-header">${bizHeader}OUTSTANDING CREDIT BILL<br>${new Date(credit.timestamp).toLocaleString()}<br><br><b>CUSTOMER: ${credit.name}</b></div>
+        <div class="receipt-separator"></div>${itemsHtml}<div class="receipt-separator"></div>
+        <div class="receipt-line total-line-print"><strong>TOTAL:</strong> <span><strong>₹${credit.total.toFixed(2)}</strong></span></div>
+        <div class="receipt-line" style="color:#555;">Advance Paid: <span>₹${credit.advance.toFixed(2)}</span></div>
+        <div class="receipt-separator"></div>
+        <div class="receipt-line total-line-print"><strong>BALANCE DUE:</strong> <span><strong>₹${(credit.total - credit.advance).toFixed(2)}</strong></span></div>
+        <div class="receipt-footer"><br>${businessProfile.tagline}</div><div class="watermark-print">VK_INTERACTIVES</div>
+    </div>`;
+    window.print();
+}
+
+// =======================================================
+// WORKER ATTENDANCE (PER-SHIFT)
 // =======================================================
 function addNewWorker() {
     const name = document.getElementById('newWorkerName').value.trim();
@@ -1110,10 +1334,39 @@ function saveData() {
         localStorage.setItem('posBusinessProfile', JSON.stringify(businessProfile));
         localStorage.setItem('posWorkers', JSON.stringify(workers)); 
         localStorage.setItem('posAttendanceLog', JSON.stringify(attendanceLog)); 
+        localStorage.setItem('posCustomerCredits', JSON.stringify(customerCredits));
         
         localStorage.setItem('posRawMaterials', JSON.stringify(rawMaterials));
         localStorage.setItem('posRawMatHistory', JSON.stringify(rawMatHistory));
     } catch (e) { console.error("Error saving data:", e); }
+}
+
+function loadFormulaPreference() {
+    const prefStr = localStorage.getItem('posFormulaPref');
+    if(prefStr) {
+        try {
+            const pref = JSON.parse(prefStr);
+            document.getElementById('balanceFormula').value = pref.formula || '1';
+            document.getElementById('overrideUpiCheckbox').checked = pref.overrideUpi || false;
+            document.getElementById('cfCash').checked = pref.cfCash || false;
+            document.getElementById('cfUPI').checked = pref.cfUPI || false;
+            document.getElementById('cfStart').checked = pref.cfStart || false;
+            document.getElementById('cfPayIn').checked = pref.cfPayIn || false;
+            document.getElementById('cfExp').checked = pref.cfExp || false;
+        } catch(e) {}
+    }
+}
+
+function saveFormulaPreference() {
+    localStorage.setItem('posFormulaPref', JSON.stringify({
+        formula: document.getElementById('balanceFormula').value,
+        overrideUpi: document.getElementById('overrideUpiCheckbox').checked,
+        cfCash: document.getElementById('cfCash').checked,
+        cfUPI: document.getElementById('cfUPI').checked,
+        cfStart: document.getElementById('cfStart').checked,
+        cfPayIn: document.getElementById('cfPayIn').checked,
+        cfExp: document.getElementById('cfExp').checked
+    }));
 }
 
 function loadData() {
@@ -1121,11 +1374,10 @@ function loadData() {
         loadLayoutPreference();
 
         const storedProfile = localStorage.getItem('posBusinessProfile');
-        if (storedProfile) businessProfile = JSON.parse(storedProfile);
-        
-        // Ensure defaults if old save doesn't have them
-        if (!businessProfile.lang1) businessProfile.lang1 = "ta";
-        if (!businessProfile.lang2) businessProfile.lang2 = "hi";
+        if (storedProfile) {
+            let parsed = JSON.parse(storedProfile);
+            businessProfile = { ...businessProfile, ...parsed };
+        }
         
         updateHeaderTitle(); 
 
@@ -1140,6 +1392,7 @@ function loadData() {
         const storedCurrentShift = localStorage.getItem('posCurrentShift');
         const storedWorkers = localStorage.getItem('posWorkers'); 
         const storedAttendanceLog = localStorage.getItem('posAttendanceLog');
+        const storedCredits = localStorage.getItem('posCustomerCredits');
         
         const storedRawMaterials = localStorage.getItem('posRawMaterials');
         const storedRawMatHist = localStorage.getItem('posRawMatHistory');
@@ -1155,6 +1408,7 @@ function loadData() {
         
         if (storedRawMaterials) rawMaterials = JSON.parse(storedRawMaterials);
         if (storedRawMatHist) rawMatHistory = JSON.parse(storedRawMatHist);
+        if (storedCredits) customerCredits = JSON.parse(storedCredits);
 
         if (storedTransactions) {
             transactions = JSON.parse(storedTransactions).map(tx => ({
@@ -1193,10 +1447,21 @@ function loadData() {
         nextArrivalId = parseInt(localStorage.getItem('posNextArrivalId')) || 1; 
         nextShiftId = parseInt(localStorage.getItem('posNextShiftId')) || 1;
 
+        loadFormulaPreference();
         updateCart();
         updateParkedSalesCount(); 
         updateShiftButtons(); 
         renderFavorites(); 
+
+        // HANDLE SPLASH SCREEN
+        setTimeout(() => {
+            const splash = document.getElementById('splashScreen');
+            if (splash) {
+                splash.classList.add('splash-hidden');
+                setTimeout(() => { splash.style.display = 'none'; }, 500);
+            }
+        }, 3000);
+
     } catch (e) { console.error("Error loading data.", e); }
 }
 
@@ -1351,7 +1616,12 @@ function closeShift() {
     const newArrivals = newArrivalsLog.slice(shiftEnd.startArrivalLogCount);
 
     let totalSales = shiftTransactions.reduce((sum, tx) => sum + tx.total, 0);
-    let totalCashReceived = shiftTransactions.reduce((sum, tx) => sum + tx.paid, 0);
+    
+    // CASH MATH FIX FOR SHIFTS (Preserved logic in case old 'Credit' transactions exist)
+    let totalCashFromSales = shiftTransactions.filter(t => t.paymentMethod === 'Cash').reduce((s, t) => s + t.total, 0);
+    let totalCreditAdvances = shiftTransactions.filter(t => t.paymentMethod === 'Credit').reduce((s, t) => s + t.paid, 0);
+    let totalCashReceived = totalCashFromSales + totalCreditAdvances; 
+
     const totalExpenses = newDailyPayNotes.filter(n => n.type === 'Expense').reduce((sum, n) => sum + n.amount, 0);
     const totalPayIn = newDailyPayNotes.filter(n => n.type === 'PayIn').reduce((sum, n) => sum + n.amount, 0);
     
@@ -1409,16 +1679,26 @@ function printShiftReport(shift) {
             soldItemsMap[item.name] += item.quantity;
         });
         if (tx.paymentMethod === 'Cash') totalCashFromSales += tx.total;
+        if (tx.paymentMethod === 'Credit') totalCashFromSales += tx.paid;
     });
 
     const upiValue = shift.summary.upiValue || 0;
     const upiLabel = shift.summary.isManualUpi ? "Manual UPI" : "Auto UPI (POS)";
 
-    let soldItemsHtml = Object.entries(soldItemsMap).map(([name, qty]) => `<div class="receipt-line">${name} <span>${qty}</span></div>`).join('');
-    let dailyPayHtml = shift.summary.newDailyPayNotes.map(note => `<div class="receipt-line" style="font-size: 0.9em;"><span>${note.description.substring(0, 20)}</span><span>${note.type === 'PayIn' ? '+' : '-'} ₹${formatAmount(note.amount)}</span></div>`).join('');
+    let soldItemsHtml = '';
+    if (businessProfile.srSales) {
+        soldItemsHtml = Object.entries(soldItemsMap).map(([name, qty]) => `<div class="receipt-line">${name} <span>${qty}</span></div>`).join('');
+        soldItemsHtml = `<div class="shift-report-section"><h5>SALES SUMMARY</h5>${soldItemsHtml}<div class="receipt-separator"></div><div class="receipt-line total-line-print"><strong>TOTAL SALES:</strong> <span><strong>₹${formatAmount(shift.summary.totalSales)}</strong></span></div></div>`;
+    }
+
+    let dailyPayHtml = '';
+    if (businessProfile.srExp) {
+        let entries = shift.summary.newDailyPayNotes.map(note => `<div class="receipt-line" style="font-size: 0.9em;"><span>${note.description.substring(0, 20)}</span><span>${note.type === 'PayIn' ? '+' : '-'} ₹${formatAmount(note.amount)}</span></div>`).join('');
+        dailyPayHtml = `<div class="receipt-separator"></div><div class="shift-report-section"><h5>EXPENSES DETAILED</h5>${entries}</div>`;
+    }
     
     let newArrivalsHtml = ''; let totalArrivalQty = 0;
-    if (shift.summary.newArrivals && shift.summary.newArrivals.length > 0) {
+    if (businessProfile.srArr && shift.summary.newArrivals && shift.summary.newArrivals.length > 0) {
         shift.summary.newArrivals.forEach(arrival => {
             newArrivalsHtml += `<div class="receipt-line">${arrival.name} <span>${arrival.quantity}</span></div>`;
             totalArrivalQty += arrival.quantity;
@@ -1427,46 +1707,49 @@ function printShiftReport(shift) {
     }
 
     let inventoryHtml = '';
-    if (shift.endInventorySnapshot && shift.endInventorySnapshot.length > 0) {
+    if (businessProfile.srStock && shift.endInventorySnapshot && shift.endInventorySnapshot.length > 0) {
         inventoryHtml += `<div class="receipt-separator"></div><div class="shift-report-section"><h5>CLOSING STOCK</h5>`;
         shift.endInventorySnapshot.forEach(item => { inventoryHtml += `<div class="receipt-line">${item.name} <span>${item.stock}</span></div>`; });
         inventoryHtml += `</div>`;
     }
 
-    const todayStr = new Date().toDateString();
-    const yesterdayStr = new Date(Date.now() - 86400000).toDateString();
-    const todaySalesTotal = transactions.filter(tx => new Date(tx.timestamp).toDateString() === todayStr).reduce((s,tx)=>s+tx.total,0);
-    const yesterdaySalesTotal = transactions.filter(tx => new Date(tx.timestamp).toDateString() === yesterdayStr).reduce((s,tx)=>s+tx.total,0);
-    
     let dailyPieHtml = '';
-    if(todaySalesTotal > 0 || yesterdaySalesTotal > 0) {
-        const totalSales2Days = todaySalesTotal + yesterdaySalesTotal;
-        const todayPct = (todaySalesTotal / totalSales2Days) * 100;
-        dailyPieHtml = `
-            <div class="receipt-separator"></div>
-            <div class="shift-report-section">
-                <h5>DAILY SUMMARY CHART</h5>
-                <div style="display:flex; align-items:center; justify-content:center; gap: 15px; margin-top: 5px;">
-                    <div class="pie-chart" style="width:70px; height:70px; border-radius:50%; background: conic-gradient(#4caf50 0% ${todayPct}%, #ff9800 ${todayPct}% 100%);"></div>
-                    <div style="font-size: 0.9em; text-align: left;">
-                        <div><span class="pie-color-box" style="background:#4caf50;width:10px;height:10px;display:inline-block;margin-right:4px;"></span> Today: ₹${todaySalesTotal.toFixed(0)}</div>
-                        <div><span class="pie-color-box" style="background:#ff9800;width:10px;height:10px;display:inline-block;margin-right:4px;"></span> Yest: ₹${yesterdaySalesTotal.toFixed(0)}</div>
+    if (businessProfile.srChart) {
+        const todayStr = new Date().toDateString();
+        const yesterdayStr = new Date(Date.now() - 86400000).toDateString();
+        const todaySalesTotal = transactions.filter(tx => new Date(tx.timestamp).toDateString() === todayStr).reduce((s,tx)=>s+tx.total,0);
+        const yesterdaySalesTotal = transactions.filter(tx => new Date(tx.timestamp).toDateString() === yesterdayStr).reduce((s,tx)=>s+tx.total,0);
+        if(todaySalesTotal > 0 || yesterdaySalesTotal > 0) {
+            const totalSales2Days = todaySalesTotal + yesterdaySalesTotal;
+            const todayPct = (todaySalesTotal / totalSales2Days) * 100;
+            dailyPieHtml = `
+                <div class="receipt-separator"></div>
+                <div class="shift-report-section">
+                    <h5>DAILY SUMMARY CHART</h5>
+                    <div style="display:flex; align-items:center; justify-content:center; gap: 15px; margin-top: 5px;">
+                        <div class="pie-chart" style="width:70px; height:70px; border-radius:50%; background: conic-gradient(#4caf50 0% ${todayPct}%, #ff9800 ${todayPct}% 100%);"></div>
+                        <div style="font-size: 0.9em; text-align: left;">
+                            <div><span class="pie-color-box" style="background:#4caf50;width:10px;height:10px;display:inline-block;margin-right:4px;"></span> Today: ₹${todaySalesTotal.toFixed(0)}</div>
+                            <div><span class="pie-color-box" style="background:#ff9800;width:10px;height:10px;display:inline-block;margin-right:4px;"></span> Yest: ₹${yesterdaySalesTotal.toFixed(0)}</div>
+                        </div>
                     </div>
-                </div>
-            </div>`;
+                </div>`;
+        }
     }
 
-    const shiftAtt = attendanceLog.filter(a => a.shiftId === shift.id);
     let attendanceHtml = '';
-    if(shiftAtt.length > 0) {
-        attendanceHtml += `<div class="receipt-separator"></div><div class="shift-report-section"><h5>WORKER ATTENDANCE</h5>`;
-        shiftAtt.forEach(a => {
-            if (a.status === 'Completed') attendanceHtml += `<div class="receipt-line">${a.name} (${a.age}y) <span>${a.hours} Hrs</span></div>`;
-            else if (a.status === 'Active') attendanceHtml += `<div class="receipt-line">${a.name} (${a.age}y) <span>Active</span></div>`;
-            else if (a.status === 'Absent') attendanceHtml += `<div class="receipt-line">${a.name} (${a.age}y) <span>Absent</span></div>`;
-            else if (a.hours > 0) attendanceHtml += `<div class="receipt-line">${a.name} (${a.age}y) <span>${a.hours} Hrs</span></div>`;
-        });
-        attendanceHtml += `</div>`;
+    if (businessProfile.srAtt) {
+        const shiftAtt = attendanceLog.filter(a => a.shiftId === shift.id);
+        if(shiftAtt.length > 0) {
+            attendanceHtml += `<div class="receipt-separator"></div><div class="shift-report-section"><h5>WORKER ATTENDANCE</h5>`;
+            shiftAtt.forEach(a => {
+                if (a.status === 'Completed') attendanceHtml += `<div class="receipt-line">${a.name} (${a.age}y) <span>${a.hours} Hrs</span></div>`;
+                else if (a.status === 'Active') attendanceHtml += `<div class="receipt-line">${a.name} (${a.age}y) <span>Active</span></div>`;
+                else if (a.status === 'Absent') attendanceHtml += `<div class="receipt-line">${a.name} (${a.age}y) <span>Absent</span></div>`;
+                else if (a.hours > 0) attendanceHtml += `<div class="receipt-line">${a.name} (${a.age}y) <span>${a.hours} Hrs</span></div>`;
+            });
+            attendanceHtml += `</div>`;
+        }
     }
 
     const absoluteTotal = shift.startingCash + totalCashFromSales + upiValue + shift.summary.totalExpenses;
@@ -1477,9 +1760,8 @@ function printShiftReport(shift) {
         <div id="shiftReportContent" style="width: 100%; max-width: 80mm;">
             <div class="receipt-header">${logoHtml}<strong>${businessProfile.companyName}</strong><br>${businessProfile.phone ? 'Tel: '+businessProfile.phone+'<br>' : ''}SHIFT REPORT #${shift.id}<br>Start: ${formatDateForReceipt(shift.startTime)}<br>End: ${formatDateForReceipt(shift.endTime)}</div>
             <div class="receipt-separator"></div>
-            <div class="shift-report-section"><h5>SALES SUMMARY</h5>${soldItemsHtml}<div class="receipt-separator"></div><div class="receipt-line total-line-print"><strong>TOTAL SALES:</strong> <span><strong>₹${formatAmount(shift.summary.totalSales)}</strong></span></div></div>
-            <div class="receipt-separator"></div>
-            <div class="shift-report-section"><h5>EXPENSES DETAILED</h5>${dailyPayHtml}</div>
+            ${soldItemsHtml}
+            ${dailyPayHtml}
             <div class="receipt-separator"></div>
             <div class="shift-report-section">
                 <h5>CASH CALCULATION</h5>
@@ -1499,7 +1781,7 @@ function printShiftReport(shift) {
 }
 
 // =======================================================
-// POS / CART
+// POS / CART & TRIPLE TAP FEATURE
 // =======================================================
 function scanBarcode() {
     const code = document.getElementById('searchInput').value.trim();
@@ -1545,31 +1827,63 @@ function updateQuantity(cartIndex, change) {
     }
     updateCart();
 }
-function completeSale() {
+
+let saleTapCount = 0;
+let saleTapTimer;
+
+function handleCompleteSaleClick() {
+    saleTapCount++;
+    clearTimeout(saleTapTimer);
+    saleTapTimer = setTimeout(() => { saleTapCount = 0; }, 400);
+
+    if (saleTapCount >= 3) {
+        saleTapCount = 0;
+        let grandTotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
+        document.getElementById('moneyReceived').value = grandTotal.toFixed(2);
+        calculateChange();
+        completeSale(true); 
+    } else {
+        completeSale(false);
+    }
+}
+
+function completeSale(forceBypass = false) {
     if (cart.length === 0) return;
     const grandTotal = cart.reduce((total, item) => total + (parseFloat(item.price) * item.quantity), 0);
     const moneyReceived = parseFloat(document.getElementById('moneyReceived').value) || 0;
     const paymentMethod = document.getElementById('paymentMethod').value; 
-    if (moneyReceived < grandTotal && paymentMethod !== 'Credit') { alert("Payment incomplete."); return; }
     
+    if (moneyReceived < grandTotal && !forceBypass) {
+        const btn = document.getElementById('completeSaleBtn');
+        const oldText = btn.innerText;
+        btn.innerText = "Insufficient Payment! ⚠️";
+        btn.style.background = "#f44336";
+        setTimeout(() => { 
+            btn.innerText = oldText; 
+            btn.style.background = "#4caf50"; 
+        }, 1200);
+        return; 
+    }
+    
+    // Process Inventory
     cart.forEach(cartItem => {
         const inventoryItem = items.find(i => i.name === cartItem.name);
         if (inventoryItem) { inventoryItem.stock -= cartItem.quantity; if (inventoryItem.stock < 0) inventoryItem.stock = 0; }
     });
     
     const changeAmount = moneyReceived - grandTotal;
-    if (paymentMethod === 'Credit' && changeAmount < 0) {
-        shopNotes.push({ id: nextNoteId++, description: `Credit: ${cart.map(i => `${i.name}x${i.quantity}`).join(', ')}`, total: grandTotal, paid: moneyReceived, timestamp: new Date().toISOString(), paymentHistory: (moneyReceived > 0) ? [{ amount: moneyReceived, timestamp: new Date().toISOString(), method: 'Down Payment' }] : [] });
-    }
 
     transactions.push({ timestamp: new Date().toISOString(), total: grandTotal, paid: moneyReceived, change: changeAmount, items: cart.map(item => ({...item})), paymentMethod: paymentMethod, tokenId: nextTokenId++ });
+    
     alert(`Sale Completed! Change: ₹${changeAmount.toFixed(2)}.`);
     
     cart = []; 
     saveData(); 
     document.getElementById('moneyReceived').value = ''; 
+    document.getElementById('paymentMethod').value = 'Cash';
     updateCart(); 
 }
+
 function updateCart() {
     const cartItems = document.getElementById('cartItems'); cartItems.innerHTML = ''; let grandTotal = 0;
     cart.forEach((item, index) => {
@@ -1755,7 +2069,8 @@ function editTransaction(index) {
     const tx = transactions[index];
     tx.items.forEach(txItem => { const inventoryItem = items.find(i => i.name === txItem.name); if (inventoryItem) inventoryItem.stock += txItem.quantity; });
     cart = tx.items.map(i => ({...i}));
-    document.getElementById('moneyReceived').value = tx.paid.toFixed(2); document.getElementById('paymentMethod').value = tx.paymentMethod;
+    document.getElementById('moneyReceived').value = tx.paid.toFixed(2); 
+    document.getElementById('paymentMethod').value = tx.paymentMethod;
     transactions.splice(index, 1); saveData(); updateCart(); togglePanel('historyPanel'); alert("Bill moved to cart! Stock has been restored temporarily.");
 }
 
@@ -1804,16 +2119,24 @@ function addNewProductArrival() {
 function addExpiryNote(){ const n=document.getElementById('expiryItemName').value, d=document.getElementById('arrivalDate').value, l=parseInt(document.getElementById('shelfLifeDays').value); if(n&&d&&l){ const ex=new Date(d); ex.setDate(ex.getDate()+l); expiryNotes.push({id:Date.now(),itemName:n,expiryDate:ex.toISOString().split('T')[0],arrivalDate:d,shelfLifeDays:l}); saveData(); renderInventoryPanel('expiry'); } }
 
 // =======================================================
-// NOTES / BILLS / ANALYSIS
+// NOTES / BILLS / ANALYSIS / ADVANCED CASH ENGINE
 // =======================================================
 function addBill(){ const d=document.getElementById('billDescription').value, t=parseFloat(document.getElementById('billTotal').value), p=parseFloat(document.getElementById('billPaid').value); if(d&&t){shopNotes.push({id:nextNoteId++,description:d,total:t,paid:p||0,timestamp:new Date().toISOString(),paymentHistory:p>0?[{amount:p,timestamp:new Date().toISOString(),method:'Initial'}]:[]}); saveData(); renderNotesPanel();} }
 function addDailyPayNote(){ const d=document.getElementById('dailyPayDescription').value, a=parseFloat(document.getElementById('dailyPayAmount').value), t=document.getElementById('dailyPayType').value; if(d&&a){dailyPayNotes.push({id:nextNoteId++,description:d,amount:a,type:t,timestamp:new Date().toISOString()}); saveData(); renderNotesPanel(); calculateDailyCashBalance();} }
+
 function calculateDailyCashBalance() {
     const today = new Date().toDateString();
     const formula = document.getElementById('balanceFormula').value;
     
+    if (formula === 'custom') document.getElementById('customFormulaGrid').style.display = 'block';
+    else document.getElementById('customFormulaGrid').style.display = 'none';
+
     const todayTransactions = transactions.filter(t => new Date(t.timestamp).toDateString() === today);
-    const cashSales = todayTransactions.filter(t => t.paymentMethod === 'Cash').reduce((s, t) => s + t.paid, 0);
+    
+    const cashSales = todayTransactions.filter(t => t.paymentMethod === 'Cash').reduce((s, t) => s + t.total, 0);
+    const creditAdvances = todayTransactions.filter(t => t.paymentMethod === 'Credit').reduce((s, t) => s + t.paid, 0);
+    const totalPhysicalCashIn = cashSales + creditAdvances;
+    
     const autoUpiSales = todayTransactions.filter(t => t.paymentMethod === 'UPI').reduce((s, t) => s + t.total, 0);
     
     const useManualUpi = document.getElementById('overrideUpiCheckbox').checked;
@@ -1825,15 +2148,27 @@ function calculateDailyCashBalance() {
     
     let net = 0;
     switch(formula) {
-        case "1": net = cashSales + payIn - expenses; break;
-        case "2": net = (cashSales + upiValue) - expenses; break;
-        case "3": net = startingCash + cashSales - expenses; break;
-        case "4": net = upiValue + cashSales + startingCash + expenses; break;
-        case "5": net = upiValue - expenses + cashSales + startingCash; break;
-        default: net = cashSales + payIn - expenses;
+        case "1": net = totalPhysicalCashIn + payIn - expenses; break;
+        case "2": net = (totalPhysicalCashIn + upiValue) - expenses; break;
+        case "3": net = startingCash + totalPhysicalCashIn - expenses; break;
+        case "4": net = upiValue + totalPhysicalCashIn + startingCash + expenses; break;
+        case "5": net = upiValue - expenses + totalPhysicalCashIn + startingCash; break;
+        case "6": net = (upiValue + totalPhysicalCashIn) - payIn + startingCash; break;
+        case "7": net = (totalPhysicalCashIn + upiValue) - expenses - payIn; break;
+        case "8": net = totalPhysicalCashIn; break;
+        case "custom": 
+            net = 0;
+            if(document.getElementById('cfCash').checked) net += totalPhysicalCashIn;
+            if(document.getElementById('cfUPI').checked) net += upiValue;
+            if(document.getElementById('cfStart').checked) net += startingCash;
+            if(document.getElementById('cfPayIn').checked) net += payIn;
+            if(document.getElementById('cfExp').checked) net -= expenses;
+            break;
+        default: net = totalPhysicalCashIn + payIn - expenses;
     }
     document.getElementById('dailyCashBalanceResult').innerHTML = `<div class="cash-balance-summary ${net < 0 ? 'negative' : ''}"><span>Calculated Balance:</span><span class="value">₹${Math.abs(net).toFixed(2)}</span></div>`;
 }
+
 function renderNotesPanel() {
     document.getElementById('billsList').innerHTML = shopNotes.map(b => `<div class="bill-card"><div><b>${b.description}</b> <span>₹${b.total}</span></div><div>Paid: ₹${b.paid}</div></div>`).join('');
     document.getElementById('dailyPayLog').innerHTML = dailyPayNotes.filter(n=>new Date(n.timestamp).toDateString()===new Date().toDateString()).map(n=>`<div class="daily-pay-record" style="border-left-color:${n.type==='PayIn'?'#4caf50':'#d32f2f'}"><span>${n.description}</span><span>${n.type==='PayIn'?'+':'-'} ${n.amount}</span></div>`).join('');
@@ -2053,7 +2388,6 @@ function updateRawMaterialStock() {
     }
 }
 
-// --- PRINT CUSTOMER INVOICE ---
 function printCustomerInvoice() {
     const checkboxes = document.querySelectorAll('.raw-mat-check:checked');
     if(checkboxes.length === 0) {
@@ -2129,7 +2463,6 @@ function printCustomerInvoice() {
     window.print();
 }
 
-// --- PRINT DETAILED REPORT WITH TAMIL TRANSLATION ---
 function printRawMaterialsReport(lang = 'en') {
     const t = {
         title: lang === 'ta' ? 'மூலப்பொருட்கள் விரிவான அறிக்கை' : 'RAW MATERIALS DETAILED REPORT',
