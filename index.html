@@ -30,7 +30,7 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: #000000; /* Dark background to make the GIF pop */
+        background-color: #000000;
         z-index: 999999;
         display: flex;
         flex-direction: column;
@@ -117,12 +117,12 @@
     .inventory-controls button, .bill-controls button, .add-bill-btn, 
     .date-filters button, .calc-button, 
     #inventoryManagementPanel, #historyPanel, #notesPanel, #analysisPanel, #calculatorPanel, 
-    #paymentHistoryModal, #parkedSalesPanel, #shiftHistoryPanel, #productionPanel, #settingsPanel, #workersPanel, #rawMaterialsPanel, #creditsPanel {
+    #paymentHistoryModal, #parkedSalesPanel, #shiftHistoryPanel, #productionPanel, #settingsPanel, #workersPanel, #rawMaterialsPanel, #creditsPanel, #tagsPanel {
         transition: all 0.3s ease-in-out; 
     }
 
     #inventoryManagementPanel, #historyPanel, #notesPanel, #analysisPanel, #calculatorPanel, 
-    #paymentHistoryModal, #parkedSalesPanel, #shiftHistoryPanel, #productionPanel, #settingsPanel, #workersPanel, #rawMaterialsPanel, #creditsPanel {
+    #paymentHistoryModal, #parkedSalesPanel, #shiftHistoryPanel, #productionPanel, #settingsPanel, #workersPanel, #rawMaterialsPanel, #creditsPanel, #tagsPanel {
         background: #ffffff; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
         height: 100vh; z-index: 1000; display: none; box-sizing: border-box;
         padding: 15px; overflow-y: auto; color: #333; 
@@ -232,7 +232,7 @@
     .inventory-inputs input { width: 60px; text-align: right; }
     .inventory-controls button { background: #ff5722; color: white; border: none; padding: 8px; border-radius: 4px; margin-top: 5px; cursor: pointer; }
     
-    .new-arrival-form input, .new-arrival-form button { width: 100%; padding: 10px; border-radius: 4px; margin-bottom: 5px; border: 1px solid #ccc; box-sizing: border-box; }
+    .new-arrival-form input, .new-arrival-form button, .new-arrival-form select { width: 100%; padding: 10px; border-radius: 4px; margin-bottom: 5px; border: 1px solid #ccc; box-sizing: border-box; }
     .new-arrival-form button { background: #00bcd4; color: white; font-weight: bold; border: none; margin-top: 10px; }
     .arrival-log-item { padding: 10px; background: #f0f8ff; border-left: 4px solid #3f51b5; margin-bottom: 8px; border-radius: 4px; font-size: 0.9em; }
 
@@ -295,7 +295,21 @@
         .total-line-print { font-size: 1.2em; border-top: 1px solid #000; padding-top: 2px; }
         .watermark-print { text-align: center; font-size: 10px; font-weight: bold; margin-top: 20px; padding-top: 5px; border-top: 1px solid #000; font-family: monospace; }
         
-        .print-logo { max-width: 100px; max-height: 100px; margin: 0 auto 5px auto; display: block; }
+        /* Removed max-height here so the inline JS styling takes priority */
+        .print-logo { margin: 0 auto 5px auto; display: block; }
+
+        .price-tag-print {
+            border: 1px dashed #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin: 0 auto;
+            padding: 5px;
+            box-sizing: border-box;
+            page-break-after: always;
+        }
     }
 </style>
 </head>
@@ -314,6 +328,7 @@
         <div id="mainHeaderTitle" style="font-weight: bold; font-size: 1.1em; color: #00bcd4;">VK POS</div>
         <div class="header-controls">
              <button class="header-btn view-toggle-btn" onclick="toggleLayout()">🖥️ View</button>
+             <button class="header-btn" onclick="togglePanel('tagsPanel')" style="background: #ff9800;">Tags 🏷️</button>
              <button class="header-btn" onclick="togglePanel('creditsPanel')" style="background: #e91e63;">Credits 📒</button>
              <button class="header-btn" onclick="togglePanel('settingsPanel')" style="background: #607d8b;">Settings ⚙️</button>
              <button class="header-btn" id="startShiftBtn" onclick="startShift()" style="background: #4caf50;">Start Shift 🚀</button>
@@ -383,6 +398,30 @@
     </div>
 </div>
 
+<div id="tagsPanel">
+    <div class="panel-header">
+        <h4>Price Tag Generator 🏷️</h4>
+        <button onclick="togglePanel('tagsPanel')" class="panel-close-btn">Close ✕</button>
+    </div>
+    <div style="padding: 15px;">
+        <div style="background: #e0f7fa; padding: 15px; border-radius: 8px; border: 1px solid #00bcd4; margin-bottom: 20px;">
+            <h5 style="margin-top: 0; color: #00bcd4;">Create Price Tag</h5>
+            <input type="text" id="tagName" placeholder="Item Name" style="width:100%; margin-bottom:10px; padding:10px; border-radius: 4px; border: 1px solid #ccc;">
+            <input type="text" id="tagDetail" placeholder="Optional Detail (e.g. 500g, Large)" style="width:100%; margin-bottom:10px; padding:10px; border-radius: 4px; border: 1px solid #ccc;">
+            <input type="number" id="tagPrice" placeholder="Price (₹)" style="width:100%; margin-bottom:10px; padding:10px; border-radius: 4px; border: 1px solid #ccc;">
+            
+            <label style="font-size: 0.8em; font-weight: bold;">Print Size (Width x Height in mm):</label>
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <input type="text" id="tagSizeW" placeholder="50" value="50" style="flex:1; padding:10px; border-radius: 4px; border: 1px solid #ccc;">
+                <span style="align-self: center;">x</span>
+                <input type="text" id="tagSizeH" placeholder="30" value="30" style="flex:1; padding:10px; border-radius: 4px; border: 1px solid #ccc;">
+            </div>
+            
+            <button onclick="printPriceTag()" style="width: 100%; padding: 12px; background: #00bcd4; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Print Tag 🖨️</button>
+        </div>
+    </div>
+</div>
+
 <div id="creditsPanel">
     <div class="panel-header">
         <h4>Customer Credits 📒</h4>
@@ -397,7 +436,7 @@
                 <input type="number" id="newCreditTotal" placeholder="Total Amount (₹)" style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
                 <input type="number" id="newCreditAdvance" placeholder="Advance Paid (₹)" style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
             </div>
-            <button onclick="addNewCreditRecord()" style="width: 100%; padding: 10px; background: #e91e63; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Save Credit Record</button>
+            <button onclick="addNewCreditRecord()" style="width: 100%; padding: 10px; background: #e91e63; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Save New Record</button>
         </div>
         
         <h5 style="margin-top: 0; color: #e91e63; border-bottom: 1px solid #eee; padding-bottom: 5px;">Active Credits:</h5>
@@ -497,6 +536,11 @@
         <button onclick="togglePanel('settingsPanel')" class="panel-close-btn">Close ✕</button>
     </div>
     <div style="padding: 10px;">
+        <h5 style="color: #607d8b; border-top: 1px solid #ccc; padding-top: 10px; margin-top: 20px;">📱 App Interface</h5>
+        <button onclick="toggleAppFullScreen()" style="width: 100%; padding: 12px; background: #673ab7; color: white; border: none; border-radius: 6px; font-weight: bold; margin-bottom: 15px;">
+            Enter Full Screen Mode 🖥️
+        </button>
+
         <h5 style="color: #607d8b;">🏢 Business Profile (Receipt Data)</h5>
         <p style="font-size: 0.8em; color: #666; margin-bottom: 10px;">Enter details below to display on printed receipts.</p>
         
@@ -507,6 +551,12 @@
         </div>
         <div style="text-align: center; margin-bottom: 15px;">
             <img id="settingsLogoPreview" src="" alt="Logo Preview" style="max-width: 120px; max-height: 80px; display: none; border: 1px solid #ccc; border-radius: 4px; padding: 5px;">
+        </div>
+
+        <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">Logo Print Size:</label>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+            <input type="range" id="settingsLogoSize" min="40" max="250" value="100" style="flex: 1;" oninput="document.getElementById('logoSizeDisplay').innerText = this.value + 'px'">
+            <span id="logoSizeDisplay" style="font-weight: bold; min-width: 50px;">100px</span>
         </div>
 
         <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">Business Name:</label>
@@ -568,7 +618,7 @@
             <h6>Software Information</h6>
             <div class="software-info-row">
                 <span>Version</span>
-                <span style="font-weight:bold;">v11.1.0-Global</span>
+                <span style="font-weight:bold;">v11.3.0-Global</span>
             </div>
             <div class="software-info-row">
                 <span>Developer</span>
@@ -808,7 +858,7 @@ let shifts = [];
 let currentShift = null; 
 let workers = []; 
 let attendanceLog = []; 
-let customerCredits = []; // FEATURE 1
+let customerCredits = [];
 
 // Raw Materials Database & History Log
 let rawMaterials = []; 
@@ -823,7 +873,7 @@ let nextArrivalId = 1;
 
 let businessProfile = {
     companyName: "VK POS", phone: "", email: "", address: "", license: "",
-    tagline: "Where Every Journey Holds a Secret", logo: "",
+    tagline: "Where Every Journey Holds a Secret", logo: "", logoSize: 100,
     instagram: "", facebook: "", lang1: "ta", lang2: "hi",
     srSales: true, srExp: true, srAtt: true, srStock: true, srArr: true, srChart: true
 };
@@ -876,7 +926,7 @@ function setCalcSize(size) {
 
 function togglePanel(panelId) {
     const panel = document.getElementById(panelId);
-    const allPanels = ['inventoryManagementPanel', 'historyPanel', 'notesPanel', 'analysisPanel', 'calculatorPanel', 'paymentHistoryModal', 'parkedSalesPanel', 'shiftHistoryPanel', 'productionPanel', 'settingsPanel', 'workersPanel', 'rawMaterialsPanel', 'creditsPanel'];
+    const allPanels = ['inventoryManagementPanel', 'historyPanel', 'notesPanel', 'analysisPanel', 'calculatorPanel', 'paymentHistoryModal', 'parkedSalesPanel', 'shiftHistoryPanel', 'productionPanel', 'settingsPanel', 'workersPanel', 'rawMaterialsPanel', 'creditsPanel', 'tagsPanel'];
 
     if (panel.classList.contains('panel-open')) {
         panel.classList.remove('panel-open');
@@ -912,8 +962,20 @@ function togglePanel(panelId) {
 }
 
 // =======================================================
-// SETTINGS WITH LOGO & SOCIAL UPLOAD
+// FULL SCREEN & SETTINGS
 // =======================================================
+function toggleAppFullScreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+            alert(`Error attempting to enable full-screen mode: ${err.message}`);
+        });
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
+}
+
 function previewLogo(event) {
     const file = event.target.files[0];
     if (file) {
@@ -945,6 +1007,9 @@ function renderSettingsPanel() {
     document.getElementById('settingsInsta').value = businessProfile.instagram || "";
     document.getElementById('settingsFB').value = businessProfile.facebook || "";
     
+    document.getElementById('settingsLogoSize').value = businessProfile.logoSize || 100;
+    document.getElementById('logoSizeDisplay').innerText = (businessProfile.logoSize || 100) + 'px';
+    
     document.getElementById('settingsLang1').value = businessProfile.lang1 || "ta";
     document.getElementById('settingsLang2').value = businessProfile.lang2 || "hi";
 
@@ -974,6 +1039,8 @@ function saveSettings() {
     businessProfile.instagram = document.getElementById('settingsInsta').value.trim();
     businessProfile.facebook = document.getElementById('settingsFB').value.trim();
     
+    businessProfile.logoSize = parseInt(document.getElementById('settingsLogoSize').value) || 100;
+    
     businessProfile.lang1 = document.getElementById('settingsLang1').value;
     businessProfile.lang2 = document.getElementById('settingsLang2').value;
 
@@ -997,7 +1064,7 @@ function updateHeaderTitle() {
 }
 
 // =======================================================
-// FEATURE 1: STANDALONE CUSTOMER CREDITS SYSTEM
+// CUSTOMER CREDITS SYSTEM (BULLETPROOFED)
 // =======================================================
 function addNewCreditRecord() {
     const name = document.getElementById('newCreditName').value.trim();
@@ -1010,10 +1077,12 @@ function addNewCreditRecord() {
         return;
     }
 
+    if (!Array.isArray(customerCredits)) customerCredits = [];
+
     customerCredits.push({ 
         id: Date.now(), 
         name: name, 
-        description: desc || 'Manual Credit Log', 
+        description: desc || 'Initial Credit Log', 
         total: total, 
         advance: advance, 
         timestamp: new Date().toISOString() 
@@ -1043,37 +1112,85 @@ function addNewCreditRecord() {
     alert(`Credit record for ${name} added successfully!`);
 }
 
+function addMoreCreditToCustomer(id) {
+    const credit = customerCredits.find(c => c.id === id);
+    if(!credit) return;
+    
+    const addAmount = prompt(`Enter new credit amount to ADD for ${credit.name} (₹):`);
+    if(addAmount === null || addAmount.trim() === '') return;
+    
+    const parsedAmount = parseFloat(addAmount);
+    if(isNaN(parsedAmount) || parsedAmount <= 0) { 
+        alert("Invalid amount entered."); 
+        return; 
+    }
+    
+    const addDesc = prompt("Enter description for this addition (optional):", "Added extra items");
+    
+    // Safely parse old values just in case
+    credit.total = parseFloat(credit.total || 0) + parsedAmount;
+    
+    if (addDesc) {
+        credit.description += ` | [+] ${addDesc} (₹${parsedAmount.toFixed(2)})`;
+    }
+    
+    saveData();
+    renderCreditsPanel();
+    alert(`Added ₹${parsedAmount.toFixed(2)} to ${credit.name}'s credit!`);
+}
+
 function renderCreditsPanel() {
     const list = document.getElementById('creditsList');
-    if (customerCredits.length === 0) {
+    if (!list) return;
+
+    // Force array to prevent crashes from old corrupted data
+    if (!Array.isArray(customerCredits)) customerCredits = [];
+
+    // Filter out malformed records
+    const activeCredits = customerCredits.filter(c => c && c.id);
+    
+    if (activeCredits.length === 0) {
         list.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">No outstanding customer credits.</p>';
         return;
     }
-    list.innerHTML = customerCredits.map(c => {
+    
+    let html = '';
+    activeCredits.forEach(c => {
+        // Safely parse floats to fix cache crashes
+        const t = parseFloat(c.total || 0);
+        const a = parseFloat(c.advance || 0);
+        const bal = t - a;
+        
         const itemsStr = c.items && Array.isArray(c.items) ? c.items.map(i=>`${i.name} x${i.quantity}`).join(', ') : (c.description || 'Manual Credit Log');
-        return `
+        
+        html += `
         <div class="parked-sale-card" style="border-left-color: #e91e63;">
-            <div class="parked-sale-header"><span>💳 ${c.name}</span><span style="color: #e91e63;">Total: ₹${c.total.toFixed(2)}</span></div>
+            <div class="parked-sale-header"><span>💳 ${c.name}</span><span style="color: #e91e63;">Total: ₹${t.toFixed(2)}</span></div>
             <div class="parked-summary" style="margin-bottom:10px;">
                 <small>${new Date(c.timestamp).toLocaleString()}</small><br>
                 Desc/Items: ${itemsStr}<br>
-                <span style="color: #4caf50;">Advance Paid: ₹${c.advance.toFixed(2)}</span> | 
-                <strong style="color: #d32f2f;">Balance: ₹${(c.total - c.advance).toFixed(2)}</strong>
+                <span style="color: #4caf50;">Advance Paid: ₹${a.toFixed(2)}</span> | 
+                <strong style="color: #d32f2f;">Balance: ₹${bal.toFixed(2)}</strong>
             </div>
             <div class="parked-sale-controls">
+                <button onclick="addMoreCreditToCustomer(${c.id})" style="background:#2196f3; color: white;">Add Credit ➕</button>
                 <button onclick="printCustomerCredit(${c.id})" style="background:#ffc107;color:#333;">Print 🖨️</button>
                 <button onclick="markCreditRepaid(${c.id})" style="background:#4caf50;">Mark Repaid ✅</button>
                 <button onclick="deleteCredit(${c.id})" style="background:#f44336;">Delete 🗑️</button>
             </div>
         </div>
         `;
-    }).join('');
+    });
+    
+    list.innerHTML = html;
 }
 
 function markCreditRepaid(id) {
     const credit = customerCredits.find(c => c.id === id);
     if(!credit) return;
-    const balance = credit.total - credit.advance;
+    
+    const balance = parseFloat(credit.total || 0) - parseFloat(credit.advance || 0);
+    
     if(confirm(`Mark ${credit.name}'s credit as Fully Repaid?`)) {
         if(confirm(`Do you want to add this cash (₹${balance.toFixed(2)}) to today's drawer? (Logs as a PayIn)`)) {
             dailyPayNotes.push({id: nextNoteId++, description: `Repaid Credit: ${credit.name}`, amount: balance, type: 'PayIn', timestamp: new Date().toISOString()});
@@ -1099,23 +1216,27 @@ function printCustomerCredit(id) {
     const credit = customerCredits.find(c => c.id === id);
     if(!credit) return;
     
+    const t = parseFloat(credit.total || 0);
+    const a = parseFloat(credit.advance || 0);
+    const bal = t - a;
+    
     let itemsHtml = '';
     if (credit.items && Array.isArray(credit.items)) {
         itemsHtml = credit.items.map(item => `<div class="receipt-line">${item.name} x ${item.quantity}<span>₹${(item.price * item.quantity).toFixed(2)}</span></div>`).join('');
     } else {
-        itemsHtml = `<div class="receipt-line">${credit.description || 'Items/Service'}<span>₹${credit.total.toFixed(2)}</span></div>`;
+        itemsHtml = `<div class="receipt-line">${credit.description || 'Items/Service'}<span>₹${t.toFixed(2)}</span></div>`;
     }
     
-    let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo">` : '';
+    let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo" style="max-width: ${businessProfile.logoSize || 100}px; max-height: ${businessProfile.logoSize || 100}px; width: auto; height: auto;">` : '';
     let bizHeader = `${logoHtml}<strong>${businessProfile.companyName}</strong><br>`;
     
     document.getElementById('receiptOutput').innerHTML = `<div style="width: 100%;">
         <div class="receipt-header">${bizHeader}OUTSTANDING CREDIT BILL<br>${new Date(credit.timestamp).toLocaleString()}<br><br><b>CUSTOMER: ${credit.name}</b></div>
         <div class="receipt-separator"></div>${itemsHtml}<div class="receipt-separator"></div>
-        <div class="receipt-line total-line-print"><strong>TOTAL:</strong> <span><strong>₹${credit.total.toFixed(2)}</strong></span></div>
-        <div class="receipt-line" style="color:#555;">Advance Paid: <span>₹${credit.advance.toFixed(2)}</span></div>
+        <div class="receipt-line total-line-print"><strong>TOTAL:</strong> <span><strong>₹${t.toFixed(2)}</strong></span></div>
+        <div class="receipt-line" style="color:#555;">Advance Paid: <span>₹${a.toFixed(2)}</span></div>
         <div class="receipt-separator"></div>
-        <div class="receipt-line total-line-print"><strong>BALANCE DUE:</strong> <span><strong>₹${(credit.total - credit.advance).toFixed(2)}</strong></span></div>
+        <div class="receipt-line total-line-print"><strong>BALANCE DUE:</strong> <span><strong>₹${bal.toFixed(2)}</strong></span></div>
         <div class="receipt-footer"><br>${businessProfile.tagline}</div><div class="watermark-print">VK_INTERACTIVES</div>
     </div>`;
     window.print();
@@ -1408,7 +1529,18 @@ function loadData() {
         
         if (storedRawMaterials) rawMaterials = JSON.parse(storedRawMaterials);
         if (storedRawMatHist) rawMatHistory = JSON.parse(storedRawMatHist);
-        if (storedCredits) customerCredits = JSON.parse(storedCredits);
+        
+        // Fix for buggy array cache
+        if (storedCredits) {
+            try {
+                customerCredits = JSON.parse(storedCredits);
+                if (!Array.isArray(customerCredits)) customerCredits = [];
+            } catch(e) {
+                customerCredits = [];
+            }
+        } else {
+            customerCredits = [];
+        }
 
         if (storedTransactions) {
             transactions = JSON.parse(storedTransactions).map(tx => ({
@@ -1754,7 +1886,7 @@ function printShiftReport(shift) {
 
     const absoluteTotal = shift.startingCash + totalCashFromSales + upiValue + shift.summary.totalExpenses;
     
-    let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo">` : '';
+    let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo" style="max-width: ${businessProfile.logoSize || 100}px; max-height: ${businessProfile.logoSize || 100}px; width: auto; height: auto;">` : '';
 
     document.getElementById('receiptOutput').innerHTML = `
         <div id="shiftReportContent" style="width: 100%; max-width: 80mm;">
@@ -1912,8 +2044,27 @@ function calculateChange() {
 }
 
 // =======================================================
-// PRINTING
+// TAGS & PRINTING
 // =======================================================
+function printPriceTag() {
+    const name = document.getElementById('tagName').value.trim() || "Item Name";
+    const detail = document.getElementById('tagDetail').value.trim();
+    const price = parseFloat(document.getElementById('tagPrice').value) || 0;
+    const w = document.getElementById('tagSizeW').value || "50";
+    const h = document.getElementById('tagSizeH').value || "30";
+
+    const tagHtml = `
+        <div class="price-tag-print" style="width: ${w}mm; height: ${h}mm;">
+            <div style="font-weight: bold; font-size: 1.2em; border-bottom: 1px solid #000; width: 100%; padding-bottom: 2px; margin-bottom: 2px;">${name}</div>
+            ${detail ? `<div style="font-size: 0.9em; margin: 2px 0;">${detail}</div>` : ''}
+            <div style="font-weight: bold; font-size: 1.5em; margin-top: 2px;">₹${price.toFixed(2)}</div>
+        </div>
+    `;
+
+    document.getElementById('receiptOutput').innerHTML = tagHtml;
+    window.print();
+}
+
 function printLastTransaction(type = 'bill') {
     if (transactions.length === 0) { alert("No history."); return; }
     
@@ -1930,7 +2081,7 @@ function printBill(tx, txId, langCode = 'en') {
     const t = posTranslations[langCode] || posTranslations['en'];
     
     let itemsHtml = tx.items.map(item => `<div class="receipt-line">${item.name} x ${item.quantity}<span>₹${(item.price * item.quantity).toFixed(2)}</span></div>`).join('');
-    let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo">` : '';
+    let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo" style="max-width: ${businessProfile.logoSize || 100}px; max-height: ${businessProfile.logoSize || 100}px; width: auto; height: auto;">` : '';
     let bizHeader = `${logoHtml}<strong>${businessProfile.companyName}</strong><br>`;
     if (businessProfile.address) bizHeader += `${businessProfile.address}<br>`;
     if (businessProfile.phone) bizHeader += `Tel: ${businessProfile.phone}<br>`;
@@ -1951,7 +2102,7 @@ function printBill(tx, txId, langCode = 'en') {
 }
 
 function printToken(tx) {
-    let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo">` : '';
+    let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo" style="max-width: ${businessProfile.logoSize || 100}px; max-height: ${businessProfile.logoSize || 100}px; width: auto; height: auto;">` : '';
     let tokenItems = tx.items.map((item, i) => `<div class="token-header">${logoHtml}${businessProfile.companyName}<br>TOKEN #${tx.tokenId}</div><div style="display:flex;justify-content:space-between;font-weight:bold;"><span>${item.name}</span><span>QTY: ${item.quantity}</span></div>${i < tx.items.length-1 ? '<div style="text-align:center;margin:10px 0;">✂︎----------------</div>' : ''}`).join('');
     return `<div id="tokenContent" style="width: 100%;">${tokenItems}<div class="watermark-print">VK INTERACTIVES</div></div>`;
 }
@@ -2089,7 +2240,22 @@ function renderInventoryPanel(view='stock') {
         const itemsList = items.map(item => `<div class="inventory-item inventory-item-edit"><div style="font-weight:bold; font-size:1.1em; color:#00bcd4;">${item.name}</div><div class="inventory-inputs" style="display:flex; gap:5px; margin-top:5px; align-items:center;"><span style="font-size:0.9em;">Price: ₹</span><input type="number" value="${item.price}" onchange="updateInventory('${item.name}','price',this.value)" style="flex:1;"><span style="font-size:0.9em;">Stock:</span><input type="number" value="${item.stock}" onchange="updateInventory('${item.name}','stock',this.value)" style="flex:1; font-weight:bold;"></div><input type="text" value="${item.barcode||''}" onchange="updateInventory('${item.name}','barcode',this.value)" placeholder="Barcode" style="width:100%; margin-top:5px; font-size:0.9em; color:#777;"></div>`).join('');
         content = addForm + searchBar + '<div id="inventoryListContainer">' + itemsList + '</div>';
     } else if (view === 'arrivals') {
-        content = `<div class="new-arrival-form" style="padding:15px;background:#e8f5e9;border-radius:8px;margin-bottom:15px;"><h5 style="margin-top:0;color:#388e3c;">Log New Stock Arrival 📦+</h5><input type="text" id="arrivalItemName" placeholder="Item Name (e.g., Bread)" /><input type="number" id="arrivalItemPrice" placeholder="Price (₹)" min="0.01" step="0.01" /><input type="number" id="arrivalItemQuantity" placeholder="Quantity/Stock" min="1" step="1" /><input type="number" id="arrivalShelfLife" placeholder="Shelf Life (Days)" min="1" step="1" /><button onclick="addNewProductArrival()">Log Arrival & Update Stock</button></div><h5 style="margin-top:0;color:#3f51b5;">Today's Arrivals Log:</h5><div id="arrivalsLogList">${newArrivalsLog.map(n => `<div class="arrival-log-item"><b>${n.name}</b> x ${n.quantity} @ ₹${n.price} | Shelf: ${n.shelfLifeDays} days</div>`).join('')}${newArrivalsLog.length === 0 ? '<p style="text-align:center;color:#888;">No arrivals logged for this shift.</p>' : ''}</div>`;
+        content = `<div class="new-arrival-form" style="padding:15px;background:#e8f5e9;border-radius:8px;margin-bottom:15px;">
+            <h5 style="margin-top:0;color:#388e3c;">Log New Stock Arrival 📦+</h5>
+            <input type="text" id="arrivalItemName" placeholder="Item Name (e.g., Bread)" />
+            <input type="number" id="arrivalItemPrice" placeholder="Price (₹)" min="0.01" step="0.01" />
+            <div style="display:flex; gap:5px; margin-bottom:5px;">
+                <input type="number" id="arrivalItemQuantity" placeholder="Quantity/Stock" min="1" step="1" style="flex:1; margin-bottom:0;" />
+                <select id="arrivalMode" style="flex:1; margin-bottom:0;">
+                    <option value="add">➕ Add to Stock</option>
+                    <option value="override">⚠️ Override Stock</option>
+                </select>
+            </div>
+            <input type="number" id="arrivalShelfLife" placeholder="Shelf Life (Days)" min="1" step="1" />
+            <button onclick="addNewProductArrival()">Log Arrival & Update Stock</button>
+        </div>
+        <h5 style="margin-top:0;color:#3f51b5;">Today's Arrivals Log:</h5>
+        <div id="arrivalsLogList">${newArrivalsLog.map(n => `<div class="arrival-log-item"><b>${n.name}</b> x ${n.quantity} @ ₹${n.price} | Shelf: ${n.shelfLifeDays} days</div>`).join('')}${newArrivalsLog.length === 0 ? '<p style="text-align:center;color:#888;">No arrivals logged for this shift.</p>' : ''}</div>`;
     } else { 
         content = `<div style="padding:10px;background:#e0f7fa;"><select id="expiryItemName"><option value="">Select</option>${items.map(i=>`<option>${i.name}</option>`).join('')}</select><input type="date" id="arrivalDate"><input type="number" id="shelfLifeDays" value="2"><button onclick="addExpiryNote()">Log Expiry</button></div>` + expiryNotes.map(n => `<div class="inventory-item"><b>${n.itemName}</b><br>Expires: ${n.expiryDate}</div>`).join('');
     }
@@ -2107,14 +2273,41 @@ function filterInventoryList() {
 }
 function updateInventory(name, field, val) { const i = items.findIndex(x => x.name === name); if (i > -1) { items[i][field] = (field==='price')?parseFloat(val).toFixed(2):(field==='stock'?parseInt(val):val); saveData(); } }
 function addNewProduct() { const n=document.getElementById('newPName').value, p=parseFloat(document.getElementById('newPPrice').value), s=parseInt(document.getElementById('newPStock').value); if(n&&p&&!isNaN(s)){items.push({name:n,price:p.toFixed(2),stock:s,barcode:'', isFav: false}); saveData(); renderInventoryPanel('stock');} }
+
 function addNewProductArrival() {
-    const name = document.getElementById('arrivalItemName').value.trim(), price = parseFloat(document.getElementById('arrivalItemPrice').value), quantity = parseInt(document.getElementById('arrivalItemQuantity').value), shelfLifeDays = parseInt(document.getElementById('arrivalShelfLife').value);
-    if (!name || isNaN(price) || isNaN(quantity) || isNaN(shelfLifeDays) || quantity <= 0 || price <= 0) { alert("Invalid inputs."); return; }
+    const name = document.getElementById('arrivalItemName').value.trim();
+    const price = parseFloat(document.getElementById('arrivalItemPrice').value);
+    const quantity = parseInt(document.getElementById('arrivalItemQuantity').value);
+    const shelfLifeDays = parseInt(document.getElementById('arrivalShelfLife').value);
+    const mode = document.getElementById('arrivalMode').value;
+    
+    if (!name || isNaN(price) || isNaN(quantity) || isNaN(shelfLifeDays) || quantity <= 0 || price <= 0) { 
+        alert("Invalid inputs."); 
+        return; 
+    }
+    
     const itemIndex = items.findIndex(item => item.name.toLowerCase() === name.toLowerCase());
-    if (itemIndex > -1) { items[itemIndex].stock += quantity; items[itemIndex].price = price.toFixed(2); } else { items.push({ name: name, price: price.toFixed(2), stock: quantity, barcode: '', isFav: false }); }
+    
+    if (itemIndex > -1) { 
+        if (mode === 'override') {
+            items[itemIndex].stock = quantity;
+        } else {
+            items[itemIndex].stock += quantity; 
+        }
+        items[itemIndex].price = price.toFixed(2); 
+    } else { 
+        items.push({ name: name, price: price.toFixed(2), stock: quantity, barcode: '', isFav: false }); 
+    }
+    
     newArrivalsLog.push({ id: nextArrivalId++, name: name, price: price.toFixed(2), quantity: quantity, shelfLifeDays: shelfLifeDays, timestamp: new Date().toISOString() });
-    document.getElementById('arrivalItemName').value = ''; document.getElementById('arrivalItemPrice').value = ''; document.getElementById('arrivalItemQuantity').value = ''; document.getElementById('arrivalShelfLife').value = '';
-    saveData(); renderInventoryPanel('arrivals'); 
+    
+    document.getElementById('arrivalItemName').value = ''; 
+    document.getElementById('arrivalItemPrice').value = ''; 
+    document.getElementById('arrivalItemQuantity').value = ''; 
+    document.getElementById('arrivalShelfLife').value = '';
+    
+    saveData(); 
+    renderInventoryPanel('arrivals'); 
 }
 function addExpiryNote(){ const n=document.getElementById('expiryItemName').value, d=document.getElementById('arrivalDate').value, l=parseInt(document.getElementById('shelfLifeDays').value); if(n&&d&&l){ const ex=new Date(d); ex.setDate(ex.getDate()+l); expiryNotes.push({id:Date.now(),itemName:n,expiryDate:ex.toISOString().split('T')[0],arrivalDate:d,shelfLifeDays:l}); saveData(); renderInventoryPanel('expiry'); } }
 
@@ -2398,7 +2591,7 @@ function printCustomerInvoice() {
     const selectedIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
     const selectedItems = rawMaterials.filter(m => selectedIds.includes(m.id));
 
-    let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo">` : '';
+    let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo" style="max-width: ${businessProfile.logoSize || 100}px; max-height: ${businessProfile.logoSize || 100}px; width: auto; height: auto;">` : '';
     let bizHeader = `${logoHtml}<strong>${businessProfile.companyName}</strong><br>`;
     if (businessProfile.address) bizHeader += `${businessProfile.address}<br>`;
     if (businessProfile.phone) bizHeader += `Phone: ${businessProfile.phone}<br>`;
@@ -2481,7 +2674,7 @@ function printRawMaterialsReport(lang = 'en') {
         toLabel: lang === 'ta' ? 'வாடிக்கையாளர்:' : 'To:'
     };
 
-    let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo">` : '';
+    let logoHtml = businessProfile.logo ? `<img src="${businessProfile.logo}" class="print-logo" style="max-width: ${businessProfile.logoSize || 100}px; max-height: ${businessProfile.logoSize || 100}px; width: auto; height: auto;">` : '';
     let bizHeader = `${logoHtml}<strong>${businessProfile.companyName}</strong><br>`;
     if (businessProfile.address) bizHeader += `${businessProfile.address}<br>`;
     bizHeader += `${t.title}<br>${new Date().toLocaleString()}`;
@@ -2550,9 +2743,17 @@ function printRawMaterialsReport(lang = 'en') {
     
     window.print();
 }
-</script>
 
-<script>
+// =======================================================
+// EVENT LISTENERS
+// =======================================================
+window.addEventListener('beforeunload', function (e) {
+    if (cart && cart.length > 0) {
+        e.preventDefault();
+        e.returnValue = '';
+    }
+});
+
 (function() {
     let highlightedIndex = -1;
     document.addEventListener('keydown', function(e) {
