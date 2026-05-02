@@ -9,6 +9,10 @@
     REVISED BRIGHT, SMOOTH & CLEAN STYLES
     =======================================================
     */
+    :root {
+        --receipt-font: 'Courier New', monospace; /* Default print font */
+    }
+
     body { 
         font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
         margin: 0; 
@@ -277,7 +281,8 @@
 
     @media print {
         body > *:not(#receiptOutput) { display: none !important; }
-        body { width: 80mm; margin: 0; padding: 0; background: none; color: #000000 !important; font-family: 'Courier New', monospace; font-size: 12px; font-weight: 900 !important; }
+        /* Notice font-family uses var(--receipt-font) here! */
+        body { width: 80mm; margin: 0; padding: 0; background: none; color: #000000 !important; font-family: var(--receipt-font) !important; font-size: 12px; font-weight: 900 !important; }
         
         /* Forces receipt to show during print */
         #receiptOutput { display: block !important; width: 100%; max-width: 80mm; padding: 2px; box-sizing: border-box; }
@@ -295,7 +300,6 @@
         .total-line-print { font-size: 1.2em; border-top: 1px solid #000; padding-top: 2px; }
         .watermark-print { text-align: center; font-size: 10px; font-weight: bold; margin-top: 20px; padding-top: 5px; border-top: 1px solid #000; font-family: monospace; }
         
-        /* Removed max-height here so the inline JS styling takes priority */
         .print-logo { margin: 0 auto 5px auto; display: block; }
 
         .price-tag-print {
@@ -408,8 +412,11 @@
             <h5 style="margin-top: 0; color: #00bcd4;">Create Price Tag</h5>
             <input type="text" id="tagName" placeholder="Item Name" style="width:100%; margin-bottom:10px; padding:10px; border-radius: 4px; border: 1px solid #ccc;">
             <input type="text" id="tagDetail" placeholder="Optional Detail (e.g. 500g, Large)" style="width:100%; margin-bottom:10px; padding:10px; border-radius: 4px; border: 1px solid #ccc;">
-            <input type="number" id="tagPrice" placeholder="Price (₹)" style="width:100%; margin-bottom:10px; padding:10px; border-radius: 4px; border: 1px solid #ccc;">
+            <input type="number" id="tagPrice" placeholder="Price (₹)" style="width:100%; margin-bottom:15px; padding:10px; border-radius: 4px; border: 1px solid #ccc;">
             
+            <label style="font-size: 0.8em; font-weight: bold;">Tag Text Size (px):</label>
+            <input type="number" id="tagTextSize" placeholder="24" value="24" style="width:100%; margin-bottom:15px; padding:10px; border-radius: 4px; border: 1px solid #ccc;">
+
             <label style="font-size: 0.8em; font-weight: bold;">Print Size (Width x Height in mm):</label>
             <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                 <input type="text" id="tagSizeW" placeholder="50" value="50" style="flex:1; padding:10px; border-radius: 4px; border: 1px solid #ccc;">
@@ -559,6 +566,21 @@
             <span id="logoSizeDisplay" style="font-weight: bold; min-width: 50px;">100px</span>
         </div>
 
+        <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">Receipt Font:</label>
+        <select id="settingsFont" style="width: 100%; margin-bottom: 10px; padding: 8px;">
+            <option value="'Courier New', monospace">Courier New (Standard POS)</option>
+            <option value="monospace">Monospace</option>
+            <option value="'Segoe UI', sans-serif">Segoe UI</option>
+            <option value="Arial, sans-serif">Arial</option>
+            <option value="'Times New Roman', serif">Times New Roman</option>
+            <option value="Georgia, serif">Georgia</option>
+            <option value="Verdana, sans-serif">Verdana</option>
+            <option value="Tahoma, sans-serif">Tahoma</option>
+            <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+            <option value="Impact, sans-serif">Impact (Bold)</option>
+            <option value="'Comic Sans MS', cursive">Comic Sans (Fun)</option>
+        </select>
+
         <label style="font-weight: bold; display: block; margin-bottom: 2px; font-size: 0.9em;">Business Name:</label>
         <input type="text" id="settingsCompanyName" placeholder="e.g. My Awesome Shop" style="width: 100%; margin-bottom: 10px;">
         
@@ -618,7 +640,7 @@
             <h6>Software Information</h6>
             <div class="software-info-row">
                 <span>Version</span>
-                <span style="font-weight:bold;">v11.3.0-Global</span>
+                <span style="font-weight:bold;">v11.4.0-Global</span>
             </div>
             <div class="software-info-row">
                 <span>Developer</span>
@@ -874,6 +896,7 @@ let nextArrivalId = 1;
 let businessProfile = {
     companyName: "VK POS", phone: "", email: "", address: "", license: "",
     tagline: "Where Every Journey Holds a Secret", logo: "", logoSize: 100,
+    receiptFont: "'Courier New', monospace",
     instagram: "", facebook: "", lang1: "ta", lang2: "hi",
     srSales: true, srExp: true, srAtt: true, srStock: true, srArr: true, srChart: true
 };
@@ -1010,6 +1033,8 @@ function renderSettingsPanel() {
     document.getElementById('settingsLogoSize').value = businessProfile.logoSize || 100;
     document.getElementById('logoSizeDisplay').innerText = (businessProfile.logoSize || 100) + 'px';
     
+    document.getElementById('settingsFont').value = businessProfile.receiptFont || "'Courier New', monospace";
+
     document.getElementById('settingsLang1').value = businessProfile.lang1 || "ta";
     document.getElementById('settingsLang2').value = businessProfile.lang2 || "hi";
 
@@ -1040,6 +1065,7 @@ function saveSettings() {
     businessProfile.facebook = document.getElementById('settingsFB').value.trim();
     
     businessProfile.logoSize = parseInt(document.getElementById('settingsLogoSize').value) || 100;
+    businessProfile.receiptFont = document.getElementById('settingsFont').value;
     
     businessProfile.lang1 = document.getElementById('settingsLang1').value;
     businessProfile.lang2 = document.getElementById('settingsLang2').value;
@@ -1052,6 +1078,10 @@ function saveSettings() {
     businessProfile.srChart = document.getElementById('setSrChart').checked;
     
     localStorage.setItem('posBusinessProfile', JSON.stringify(businessProfile));
+    
+    // Apply font dynamically
+    document.documentElement.style.setProperty('--receipt-font', businessProfile.receiptFont);
+    
     updateHeaderTitle();
     togglePanel('settingsPanel');
     alert("System Settings Saved!");
@@ -1498,6 +1528,11 @@ function loadData() {
         if (storedProfile) {
             let parsed = JSON.parse(storedProfile);
             businessProfile = { ...businessProfile, ...parsed };
+            
+            // Apply loaded font immediately
+            if(businessProfile.receiptFont) {
+                document.documentElement.style.setProperty('--receipt-font', businessProfile.receiptFont);
+            }
         }
         
         updateHeaderTitle(); 
@@ -2052,12 +2087,17 @@ function printPriceTag() {
     const price = parseFloat(document.getElementById('tagPrice').value) || 0;
     const w = document.getElementById('tagSizeW').value || "50";
     const h = document.getElementById('tagSizeH').value || "30";
+    
+    // Get custom font size
+    const textSize = parseFloat(document.getElementById('tagTextSize').value) || 24;
+    const detailSize = Math.max(10, textSize * 0.5); // scales detail text
+    const priceSize = Math.max(14, textSize * 1.2);  // scales price text
 
     const tagHtml = `
         <div class="price-tag-print" style="width: ${w}mm; height: ${h}mm;">
-            <div style="font-weight: bold; font-size: 1.2em; border-bottom: 1px solid #000; width: 100%; padding-bottom: 2px; margin-bottom: 2px;">${name}</div>
-            ${detail ? `<div style="font-size: 0.9em; margin: 2px 0;">${detail}</div>` : ''}
-            <div style="font-weight: bold; font-size: 1.5em; margin-top: 2px;">₹${price.toFixed(2)}</div>
+            <div style="font-weight: bold; font-size: ${textSize}px; border-bottom: 1px solid #000; width: 100%; padding-bottom: 2px; margin-bottom: 2px; line-height: 1.1;">${name}</div>
+            ${detail ? `<div style="font-size: ${detailSize}px; margin: 2px 0;">${detail}</div>` : ''}
+            <div style="font-weight: bold; font-size: ${priceSize}px; margin-top: 2px;">₹${price.toFixed(2)}</div>
         </div>
     `;
 
